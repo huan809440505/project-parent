@@ -4,3 +4,29 @@ server:
 spring:
   application:
     name: gateway-service
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            #用户服务
+            - id: user-service
+              uri: http://localhost:8091
+              predicates:
+                - Path=/api/user/**
+              filters:
+                - StripPrefix=1
+            #商品服务
+            - id: product-service
+              uri: http://localhost:8092
+              predicates:
+                - Path=/api/product/**
+              filters:
+                - StripPrefix=1
+            #订单服务
+            - id: order-service
+              uri: http://localhost:8093
+              predicates:
+                - Path=/api/order/**
+              filters:
+                - StripPrefix=1
