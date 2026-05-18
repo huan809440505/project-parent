@@ -9,7 +9,6 @@
 ```
 project-parent
 ├── api-starter -- 子模块间的通信接口
-├── auth-service -- oauth2授权服务
 ├── common-starter -- 基础实体对象和工具类
 ├── gateway-service -- 网关服务
 ├── modules -- 自定义服务

@@ -30,3 +30,15 @@ spring:
                 - Path=/api/order/**
               filters:
                 - StripPrefix=1
+#token相关配置
+token:
+  secret: my-secret-key
+  headerName: token
+  expireTime: 3600
+
+#白名单配置
+whitelist:
+  path:
+    include:
+      - /api/user/login
+      - /api/user/register
