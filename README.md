@@ -15,5 +15,6 @@ project-parent
 ├    ├── order-service -- 订单服务
 ├    ├── order-service -- 商品服务
 ├    ├── order-service -- 用户服务
+├── packages -- 组件库
 └── pom.xml -- 工程 Maven 顶级依赖，统一控制版本和依赖
 ```

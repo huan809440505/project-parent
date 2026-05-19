@@ -20,6 +20,7 @@
         <module>common-starter</module>
         <module>api-starter</module>
         <module>modules</module>
+        <module>packages</module>
     </modules>
 
     <repositories>
