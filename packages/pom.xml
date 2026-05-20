@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>rock-redis</module>
+        <module>rock-mybatis</module>
     </modules>
 
     <properties>
