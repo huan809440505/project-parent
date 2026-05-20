@@ -1,4 +1,4 @@
-package com.hyl.rock.config;
+package com.hyl.rock.redis.config;
 
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;

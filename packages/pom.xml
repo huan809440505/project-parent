@@ -14,6 +14,7 @@
     <modules>
         <module>rock-redis</module>
         <module>rock-mybatis</module>
+        <module>rock-log</module>
     </modules>
 
     <properties>

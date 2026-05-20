@@ -1,4 +1,4 @@
-package com.hyl.rock.util;
+package com.hyl.rock.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class RedisUtil {
+public class RedisService {
 
     @Autowired
     private RedisTemplate redisTemplate;

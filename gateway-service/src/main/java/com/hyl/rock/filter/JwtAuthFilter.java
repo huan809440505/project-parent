@@ -2,7 +2,7 @@ package com.hyl.rock.filter;
 
 import com.hyl.rock.config.TokenConfig;
 import com.hyl.rock.config.WhitelistConfig;
-import com.hyl.rock.util.JwtUtil;
+import com.hyl.rock.util.JwtUtils;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Resource;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -43,7 +43,7 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
         }
 
         // 验证并解析token中的用户信息，放入请求头传递给下游微服务
-        Claims claims = JwtUtil.claims(token);
+        Claims claims = JwtUtils.parseToken(token);
         // 构建新的请求对象（Gateway请求头不可直接修改，需通过mutate()创建新对象）
         ServerHttpRequest newRequest = request.mutate()
                 .header("X-User-Id", claims.get("userId").toString()) // 传递用户ID

@@ -1,4 +1,4 @@
-package com.hyl.rock.config;
+package com.hyl.rock.mybatis.config;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
