@@ -12,9 +12,11 @@ project-parent
 ├── common-starter -- 基础实体对象和工具类
 ├── gateway-service -- 网关服务
 ├── modules -- 自定义服务
-├    ├── order-service -- 订单服务
-├    ├── order-service -- 商品服务
-├    ├── order-service -- 用户服务
+├    ├── system-service -- 基础服务
 ├── packages -- 组件库
+├    ├── rock-log 日志组件
+├    ├── rock-mybatis 数据库组件
+├    ├── rock-redis 缓存组件
+├    ├── rock-security 安全组件
 └── pom.xml -- 工程 Maven 顶级依赖，统一控制版本和依赖
 ```
