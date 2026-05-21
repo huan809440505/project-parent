@@ -35,6 +35,10 @@ public class Result<T> {
         return new Result(MessageEnum.SUCCESS, data);
     }
 
+    public static <T> Result<T> fail(String msg) {
+        return new Result(MessageEnum.FAIL, msg);
+    }
+
     public static <T> Result<T> fail(String code, String msg) {
         return new Result(code, msg);
     }

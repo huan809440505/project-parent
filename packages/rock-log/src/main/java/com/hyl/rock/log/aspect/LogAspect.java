@@ -1,16 +1,16 @@
 package com.hyl.rock.log.aspect;
 
 import com.alibaba.fastjson2.JSON;
-import com.hyl.rock.entity.SysOperLog;
+import com.hyl.rock.domain.SysOperLog;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessStatus;
 import com.hyl.rock.log.filter.PropertyPreExcludeFilter;
 import com.hyl.rock.log.service.AsyncLogService;
 import com.hyl.rock.text.Convert;
-import com.hyl.rock.util.ExceptionUtil;
-import com.hyl.rock.util.IpUtils;
-import com.hyl.rock.util.ServletUtils;
-import com.hyl.rock.util.StringUtils;
+import com.hyl.rock.utils.ExceptionUtil;
+import com.hyl.rock.utils.IpUtils;
+import com.hyl.rock.utils.ServletUtils;
+import com.hyl.rock.utils.StringUtils;
 import io.swagger.models.HttpMethod;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

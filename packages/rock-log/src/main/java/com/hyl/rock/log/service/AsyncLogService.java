@@ -1,8 +1,6 @@
 package com.hyl.rock.log.service;
 
-import com.hyl.rock.constant.SecurityConstants;
-import com.hyl.rock.entity.SysOperLog;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.hyl.rock.domain.SysOperLog;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 

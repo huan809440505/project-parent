@@ -2,7 +2,7 @@ package com.hyl.rock.filter;
 
 import com.hyl.rock.config.TokenConfig;
 import com.hyl.rock.config.WhitelistConfig;
-import com.hyl.rock.util.JwtUtils;
+import com.hyl.rock.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Resource;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

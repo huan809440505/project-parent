@@ -1,7 +1,7 @@
 package com.hyl.rock.text;
 
 
-import com.hyl.rock.util.StringUtils;
+import com.hyl.rock.utils.StringUtils;
 
 /**
  * 字符串格式化

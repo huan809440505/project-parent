@@ -1,7 +1,7 @@
 package com.hyl.rock.text;
 
 
-import com.hyl.rock.util.StringUtils;
+import com.hyl.rock.utils.StringUtils;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;

@@ -1,2 +1,2 @@
 com.hyl.rock.redis.config.RedisConfig
-com.hyl.rock.redis.service.RedisService
+com.hyl.rock.redis.service.RedisMapper

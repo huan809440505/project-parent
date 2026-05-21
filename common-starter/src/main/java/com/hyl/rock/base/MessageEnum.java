@@ -3,7 +3,8 @@ package com.hyl.rock.base;
 import lombok.Getter;
 
 public enum MessageEnum {
-    SUCCESS("10000", "SUCCESS")
+    SUCCESS("10000", "SUCCESS"),
+    FAIL("10001", "FAIL"),
     ;
 
     @Getter
