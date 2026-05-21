@@ -13,6 +13,7 @@ project-parent
 ├── gateway-service -- 网关服务
 ├── modules -- 自定义服务
 ├    ├── system-service -- 基础服务
+├    ├── file-service -- 文件服务
 ├── packages -- 组件库
 ├    ├── rock-log 日志组件
 ├    ├── rock-mybatis 数据库组件

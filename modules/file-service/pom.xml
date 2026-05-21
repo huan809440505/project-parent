@@ -5,16 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.example</groupId>
-        <artifactId>project-parent</artifactId>
+        <artifactId>modules</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>modules</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>system-service</module>
-        <module>file-service</module>
-    </modules>
+    <artifactId>file-service</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -25,18 +20,16 @@
     <dependencies>
         <dependency>
             <groupId>org.example</groupId>
-            <artifactId>common-starter</artifactId>
+            <artifactId>rock-log</artifactId>
             <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.example</groupId>
+            <artifactId>api-starter</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
+
 </project>

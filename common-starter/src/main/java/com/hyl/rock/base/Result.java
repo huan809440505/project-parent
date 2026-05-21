@@ -31,6 +31,10 @@ public class Result<T> {
     }
 
 
+    public static <T> Result<T> success() {
+        return new Result(MessageEnum.SUCCESS);
+    }
+
     public static <T> Result<T> success(T data) {
         return new Result(MessageEnum.SUCCESS, data);
     }
