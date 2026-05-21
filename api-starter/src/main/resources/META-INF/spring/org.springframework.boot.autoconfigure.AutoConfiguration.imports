@@ -1,0 +1,3 @@
+com.hyl.rock.api.factory.RemoteFileFallbackFactory
+com.hyl.rock.api.factory.RemoteLogFallbackFactory
+com.hyl.rock.api.factory.RemoteUserFallbackFactory

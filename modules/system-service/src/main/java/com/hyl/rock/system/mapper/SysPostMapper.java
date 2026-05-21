@@ -2,6 +2,7 @@ package com.hyl.rock.system.mapper;
 
 
 import com.hyl.rock.system.domain.SysPost;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * 岗位信息 数据层
  * 
  */
+@Mapper
 public interface SysPostMapper
 {
     /**

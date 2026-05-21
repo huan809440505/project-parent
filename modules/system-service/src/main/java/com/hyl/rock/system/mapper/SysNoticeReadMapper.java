@@ -2,6 +2,7 @@ package com.hyl.rock.system.mapper;
 
 import com.hyl.rock.system.domain.SysNotice;
 import com.hyl.rock.system.domain.SysNoticeRead;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Map;
  * 公告已读记录 数据层
  *
  */
+@Mapper
 public interface SysNoticeReadMapper
 {
     /**

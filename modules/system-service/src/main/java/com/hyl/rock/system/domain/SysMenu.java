@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hyl.rock.base.BaseEmptyEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,9 +14,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 菜单权限表 sys_menu
@@ -120,16 +117,4 @@ public class SysMenu extends BaseEmptyEntity {
     @TableField(exist = false)
     private List<SysMenu> children = new ArrayList<SysMenu>();
 
-    /** 请求参数 */
-    @ApiModelProperty(name = "请求参数")
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @TableField(exist = false)
-    private Map<String, Object> params;
-
-    public Map<String, Object> getParams() {
-        if (params == null) {
-            params = new HashMap<>();
-        }
-        return params;
-    }
 }

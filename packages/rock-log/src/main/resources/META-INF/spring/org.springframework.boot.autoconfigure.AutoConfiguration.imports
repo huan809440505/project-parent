@@ -1,1 +1,2 @@
-com.hyl.rock.config.MybatisPlusConfig
+com.hyl.rock.log.aspect.LogAspect
+com.hyl.rock.log.service.AsyncLogService

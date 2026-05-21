@@ -1,14 +1,24 @@
 package com.hyl.rock.base;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 public class BaseEmptyEntity implements Serializable {
+
+    /** 搜索值 */
+    @JsonIgnore
+    @ApiModelProperty(name = "搜索值")
+    @TableField(exist = false)
+    private String searchValue;
 
     /**
      * 创建时间
@@ -44,4 +54,19 @@ public class BaseEmptyEntity implements Serializable {
     @ApiModelProperty(name = "备注")
     @TableField("remark")
     private String remark;
+
+    /** 请求参数 */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @ApiModelProperty(name = "请求参数")
+    @TableField(exist = false)
+    private Map<String, Object> params;
+
+    public Map<String, Object> getParams()
+    {
+        if (params == null)
+        {
+            params = new HashMap<>();
+        }
+        return params;
+    }
 }

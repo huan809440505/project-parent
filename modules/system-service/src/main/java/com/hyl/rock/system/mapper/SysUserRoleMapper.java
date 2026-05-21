@@ -1,6 +1,7 @@
 package com.hyl.rock.system.mapper;
 
 import com.hyl.rock.system.domain.SysUserRole;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
  * 用户与角色关联表 数据层
  * 
  */
+@Mapper
 public interface SysUserRoleMapper
 {
     /**

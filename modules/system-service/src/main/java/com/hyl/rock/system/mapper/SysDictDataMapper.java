@@ -1,6 +1,7 @@
 package com.hyl.rock.system.mapper;
 
 import com.hyl.rock.domain.SysDictData;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
  * 字典表 数据层
  * 
  */
+@Mapper
 public interface SysDictDataMapper
 {
     /**

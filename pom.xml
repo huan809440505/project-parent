@@ -46,10 +46,12 @@
         <pagehelper.boot.version>2.1.0</pagehelper.boot.version>
         <poi.version>4.1.2</poi.version>
         <commons.io.version>2.21.0</commons.io.version>
+        <druid.version>1.2.27</druid.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- SpringCloud 依赖配置 -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -74,10 +76,19 @@
                 <scope>import</scope>
             </dependency>
 
+            <!--jackson 依赖配置-->
             <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.22</version>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>2.21.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-3-starter</artifactId>
+                <version>${druid.version}</version>
             </dependency>
 
             <!-- pagehelper 分页插件 -->
@@ -143,20 +154,14 @@
                 <version>${jwt.version}</version>
             </dependency>
 
-
-            <!--分页工具-->
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>${pagehelper.boot.version}</version>
-            </dependency>
-
             <!--json工具-->
             <dependency>
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
+
+
 
             <!--糊涂工具-->
             <dependency>
