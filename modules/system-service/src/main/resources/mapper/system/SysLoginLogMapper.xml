@@ -14,12 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<insert id="insertLoginLog" parameterType="com.hyl.rock.domain.SysLoginLog">
-		insert into sys_login_in_for (user_name, status, ipaddr, msg, access_time)
+		insert into sys_login_log (user_name, status, ipaddr, msg, access_time)
 		values (#{userName}, #{status}, #{ipaddr}, #{msg}, sysdate())
 	</insert>
 	
 	<select id="selectLoginLogList" parameterType="com.hyl.rock.domain.SysLoginLog" resultMap="SysLoginInForResult">
-		select info_id, user_name, ipaddr, status, msg, access_time from sys_login_in_for
+		select info_id, user_name, ipaddr, status, msg, access_time from sys_login_log
 		<where>
 			<if test="ipaddr != null and ipaddr != ''">
 				AND ipaddr like concat('%', #{ipaddr}, '%')
@@ -41,14 +41,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<delete id="deleteLoginLogByIds" parameterType="java.lang.Long">
- 		delete from sys_login_in_for where info_id in
+ 		delete from sys_login_log where info_id in
  		<foreach collection="array" item="infoId" open="(" separator="," close=")">
  			#{infoId}
         </foreach> 
  	</delete>
     
     <update id="cleanLoginLog">
-        truncate table sys_login_in_for
+        truncate table sys_login_log
     </update>
     
 </mapper> 
