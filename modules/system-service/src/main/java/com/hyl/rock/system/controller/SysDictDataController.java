@@ -12,6 +12,7 @@ import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
 import com.hyl.rock.entity.page.TableDataInfo;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class SysDictDataController extends BaseController
     @Autowired
     private ISysDictTypeService dictTypeService;
 
+    @Operation(summary = "获取数据字典列表")
     @GetMapping("/list")
     public TableDataInfo list(SysDictData dictData)
     {
@@ -44,6 +46,7 @@ public class SysDictDataController extends BaseController
         return getDataTable(list);
     }
 
+    @Operation(summary = "导出数据字典列表")
     @Log(title = "字典数据", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysDictData dictData)
@@ -56,6 +59,7 @@ public class SysDictDataController extends BaseController
     /**
      * 查询字典数据详细
      */
+    @Operation(summary = "查询字典数据详细")
     @GetMapping(value = "/{dictCode}")
     public AjaxResult getInfo(@PathVariable Long dictCode)
     {
@@ -65,6 +69,7 @@ public class SysDictDataController extends BaseController
     /**
      * 根据字典类型查询字典数据信息
      */
+    @Operation(summary = "根据字典类型查询字典数据信息")
     @GetMapping(value = "/type/{dictType}")
     public AjaxResult dictType(@PathVariable String dictType)
     {
@@ -79,6 +84,7 @@ public class SysDictDataController extends BaseController
     /**
      * 新增字典类型
      */
+    @Operation(summary = "新增字典类型")
     @Log(title = "字典数据", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysDictData dict)
@@ -90,6 +96,7 @@ public class SysDictDataController extends BaseController
     /**
      * 修改保存字典类型
      */
+    @Operation(summary = "修改保存字典类型")
     @Log(title = "字典数据", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysDictData dict)
@@ -101,6 +108,7 @@ public class SysDictDataController extends BaseController
     /**
      * 删除字典类型
      */
+    @Operation(summary = "删除字典类型")
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{dictCodes}")
     public AjaxResult remove(@PathVariable Long[] dictCodes)

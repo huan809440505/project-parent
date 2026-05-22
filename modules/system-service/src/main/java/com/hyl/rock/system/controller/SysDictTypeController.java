@@ -2,6 +2,7 @@ package com.hyl.rock.system.controller;
 
 
 import com.hyl.rock.domain.SysDictType;
+import com.hyl.rock.entity.page.TableDataInfo;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
@@ -9,7 +10,7 @@ import com.hyl.rock.system.service.ISysDictTypeService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
-import com.hyl.rock.entity.page.TableDataInfo;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class SysDictTypeController extends BaseController
     @Autowired
     private ISysDictTypeService dictTypeService;
 
+    @Operation(summary = "获取数据字典类型列表")
     @GetMapping("/list")
     public TableDataInfo list(SysDictType dictType)
     {
@@ -38,6 +40,7 @@ public class SysDictTypeController extends BaseController
         return getDataTable(list);
     }
 
+    @Operation(summary = "导出数据字典类型列表")
     @Log(title = "字典类型", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysDictType dictType)
@@ -50,6 +53,7 @@ public class SysDictTypeController extends BaseController
     /**
      * 查询字典类型详细
      */
+    @Operation(summary = "查询字典类型详细")
     @GetMapping(value = "/{dictId}")
     public AjaxResult getInfo(@PathVariable Long dictId)
     {
@@ -59,6 +63,7 @@ public class SysDictTypeController extends BaseController
     /**
      * 新增字典类型
      */
+    @Operation(summary = "新增字典类型")
     @Log(title = "字典类型", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysDictType dict)
@@ -74,6 +79,7 @@ public class SysDictTypeController extends BaseController
     /**
      * 修改字典类型
      */
+    @Operation(summary = "修改字典类型")
     @Log(title = "字典类型", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysDictType dict)
@@ -89,6 +95,7 @@ public class SysDictTypeController extends BaseController
     /**
      * 删除字典类型
      */
+    @Operation(summary = "删除字典类型")
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{dictIds}")
     public AjaxResult remove(@PathVariable Long[] dictIds)
@@ -100,6 +107,7 @@ public class SysDictTypeController extends BaseController
     /**
      * 刷新字典缓存
      */
+    @Operation(summary = "刷新字典缓存")
     @Log(title = "字典类型", businessType = BusinessType.CLEAN)
     @DeleteMapping("/refreshCache")
     public AjaxResult refreshCache()
@@ -111,8 +119,9 @@ public class SysDictTypeController extends BaseController
     /**
      * 获取字典选择框列表
      */
-    @GetMapping("/optionselect")
-    public AjaxResult optionselect()
+    @Operation(summary = "获取字典选择框列表")
+    @GetMapping("/optionSelect")
+    public AjaxResult optionSelect()
     {
         List<SysDictType> dictTypes = dictTypeService.selectDictTypeAll();
         return success(dictTypes);

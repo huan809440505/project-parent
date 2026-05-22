@@ -1,6 +1,7 @@
 package com.hyl.rock.system.controller;
 
 
+import com.hyl.rock.entity.page.TableDataInfo;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
@@ -9,7 +10,7 @@ import com.hyl.rock.system.service.ISysPostService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
-import com.hyl.rock.entity.page.TableDataInfo;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class SysPostController extends BaseController
     /**
      * 获取岗位列表
      */
+    @Operation(summary = "获取岗位列表")
     @GetMapping("/list")
     public TableDataInfo list(SysPost post)
     {
@@ -41,6 +43,7 @@ public class SysPostController extends BaseController
         return getDataTable(list);
     }
 
+    @Operation(summary = "导出岗位列表")
     @Log(title = "岗位管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysPost post)
@@ -53,6 +56,7 @@ public class SysPostController extends BaseController
     /**
      * 根据岗位编号获取详细信息
      */
+    @Operation(summary = "根据岗位编号获取详细信息")
     @GetMapping(value = "/{postId}")
     public AjaxResult getInfo(@PathVariable Long postId)
     {
@@ -62,6 +66,7 @@ public class SysPostController extends BaseController
     /**
      * 新增岗位
      */
+    @Operation(summary = "新增岗位")
     @Log(title = "岗位管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysPost post)
@@ -81,6 +86,7 @@ public class SysPostController extends BaseController
     /**
      * 修改岗位
      */
+    @Operation(summary = "修改岗位")
     @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysPost post)
@@ -100,6 +106,7 @@ public class SysPostController extends BaseController
     /**
      * 删除岗位
      */
+    @Operation(summary = "删除岗位")
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{postIds}")
     public AjaxResult remove(@PathVariable Long[] postIds)
@@ -110,8 +117,9 @@ public class SysPostController extends BaseController
     /**
      * 获取岗位选择框列表
      */
-    @GetMapping("/optionselect")
-    public AjaxResult optionselect()
+    @Operation(summary = "获取岗位选择框列表")
+    @GetMapping("/optionSelect")
+    public AjaxResult optionSelect()
     {
         List<SysPost> posts = postService.selectPostAll();
         return success(posts);

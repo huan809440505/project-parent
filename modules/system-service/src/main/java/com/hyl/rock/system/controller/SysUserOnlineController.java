@@ -12,6 +12,7 @@ import com.hyl.rock.system.service.ISysUserOnlineService;
 import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,7 @@ public class SysUserOnlineController extends BaseController
     @Autowired
     private RedisService redisService;
 
+    @Operation(summary = "获取在线用户列表")
     @GetMapping("/list")
     public TableDataInfo list(String ipaddr, String userName)
     {
@@ -69,6 +71,7 @@ public class SysUserOnlineController extends BaseController
     /**
      * 强退用户
      */
+    @Operation(summary = "强退用户")
     @Log(title = "在线用户", businessType = BusinessType.FORCE)
     @DeleteMapping("/{tokenId}")
     public AjaxResult forceLogout(@PathVariable String tokenId)

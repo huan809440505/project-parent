@@ -9,6 +9,7 @@ import com.hyl.rock.system.service.ISysOperLogService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class SysOperLogController extends BaseController
     @Autowired
     private ISysOperLogService operLogService;
 
+    @Operation(summary = "获取操作日志列表")
     @GetMapping("/list")
     public TableDataInfo list(SysOperLog operLog)
     {
@@ -36,6 +38,7 @@ public class SysOperLogController extends BaseController
         return getDataTable(list);
     }
 
+    @Operation(summary = "导出操作日志列表")
     @Log(title = "操作日志", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysOperLog operLog)
@@ -45,6 +48,7 @@ public class SysOperLogController extends BaseController
         util.exportExcel(response, list, "操作日志");
     }
 
+    @Operation(summary = "删除操作日志")
     @Log(title = "操作日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{operIds}")
     public AjaxResult remove(@PathVariable Long[] operIds)
@@ -52,6 +56,7 @@ public class SysOperLogController extends BaseController
         return toAjax(operLogService.deleteOperLogByIds(operIds));
     }
 
+    @Operation(summary = "清空操作日志")
     @Log(title = "操作日志", businessType = BusinessType.CLEAN)
     @DeleteMapping("/clean")
     public AjaxResult clean()
@@ -60,6 +65,7 @@ public class SysOperLogController extends BaseController
         return success();
     }
 
+    @Operation(summary = "添加操作日志")
     @PostMapping
     public AjaxResult add(@RequestBody SysOperLog operLog)
     {

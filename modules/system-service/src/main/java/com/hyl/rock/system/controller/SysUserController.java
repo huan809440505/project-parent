@@ -18,6 +18,7 @@ import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
 import com.hyl.rock.entity.page.TableDataInfo;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.ArrayUtils;
@@ -65,6 +66,7 @@ public class SysUserController extends BaseController
     /**
      * 获取用户列表
      */
+    @Operation(summary = "获取用户列表")
     @GetMapping("/list")
     public TableDataInfo list(SysUser user)
     {
@@ -73,6 +75,7 @@ public class SysUserController extends BaseController
         return getDataTable(list);
     }
 
+    @Operation(summary = "导出用户列表")
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysUser user)
@@ -82,6 +85,7 @@ public class SysUserController extends BaseController
         util.exportExcel(response, list, "用户数据");
     }
 
+    @Operation(summary = "导入用户列表")
     @Log(title = "用户管理", businessType = BusinessType.IMPORT)
     @PostMapping("/importData")
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
@@ -93,6 +97,7 @@ public class SysUserController extends BaseController
         return success(message);
     }
 
+    @Operation(summary = "导入用户列表")
     @PostMapping("/importTemplate")
     public void importTemplate(HttpServletResponse response) throws IOException
     {
@@ -103,6 +108,7 @@ public class SysUserController extends BaseController
     /**
      * 获取当前用户信息
      */
+    @Operation(summary = "获取当前用户信息")
     @GetMapping("/info/{username}")
     public Result<LoginUser> info(@PathVariable("username") String username)
     {
@@ -125,6 +131,7 @@ public class SysUserController extends BaseController
     /**
      * 注册用户信息
      */
+    @Operation(summary = "注册用户信息")
     @PostMapping("/register")
     public Result<Boolean> register(@RequestBody SysUser sysUser)
     {
@@ -143,8 +150,9 @@ public class SysUserController extends BaseController
     /**
      *记录用户登录IP地址和登录时间
      */
-    @PutMapping("/recordlogin")
-    public Result<Boolean> recordlogin(@RequestBody SysUser sysUser)
+    @Operation(summary = "记录用户登录IP地址和登录时间")
+    @PutMapping("/recordLogin")
+    public Result<Boolean> recordLogin(@RequestBody SysUser sysUser)
     {
         return Result.success(userService.updateLoginInfo(sysUser));
     }
@@ -154,6 +162,7 @@ public class SysUserController extends BaseController
      * 
      * @return 用户信息
      */
+    @Operation(summary = "获取用户信息")
     @GetMapping("getInfo")
     public AjaxResult getInfo()
     {
@@ -211,6 +220,7 @@ public class SysUserController extends BaseController
     /**
      * 根据用户编号获取详细信息
      */
+    @Operation(summary = "根据用户编号获取详细信息")
     @GetMapping(value = { "/", "/{userId}" })
     public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId)
     {
@@ -232,6 +242,7 @@ public class SysUserController extends BaseController
     /**
      * 新增用户
      */
+    @Operation(summary = "新增用户")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysUser user)
@@ -258,6 +269,7 @@ public class SysUserController extends BaseController
     /**
      * 修改用户
      */
+    @Operation(summary = "修改用户")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysUser user)
@@ -285,6 +297,7 @@ public class SysUserController extends BaseController
     /**
      * 删除用户
      */
+    @Operation(summary = "删除用户")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{userIds}")
     public AjaxResult remove(@PathVariable Long[] userIds)
@@ -299,6 +312,7 @@ public class SysUserController extends BaseController
     /**
      * 重置密码
      */
+    @Operation(summary = "重置密码")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/resetPwd")
     public AjaxResult resetPwd(@RequestBody SysUser user)
@@ -313,6 +327,7 @@ public class SysUserController extends BaseController
     /**
      * 状态修改
      */
+    @Operation(summary = "状态修改")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
     public AjaxResult changeStatus(@RequestBody SysUser user)
@@ -326,6 +341,7 @@ public class SysUserController extends BaseController
     /**
      * 根据用户编号获取授权角色
      */
+    @Operation(summary = "根据用户编号获取授权角色")
     @GetMapping("/authRole/{userId}")
     public AjaxResult authRole(@PathVariable("userId") Long userId)
     {
@@ -340,6 +356,7 @@ public class SysUserController extends BaseController
     /**
      * 用户授权角色
      */
+    @Operation(summary = "用户授权角色")
     @Log(title = "用户管理", businessType = BusinessType.GRANT)
     @PutMapping("/authRole")
     public AjaxResult insertAuthRole(Long userId, Long[] roleIds)
@@ -353,6 +370,7 @@ public class SysUserController extends BaseController
     /**
      * 获取部门树列表
      */
+    @Operation(summary = "获取部门树列表")
     @GetMapping("/deptTree")
     public AjaxResult deptTree(SysDept dept)
     {

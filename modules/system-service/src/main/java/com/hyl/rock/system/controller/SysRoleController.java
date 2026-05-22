@@ -4,6 +4,7 @@ package com.hyl.rock.system.controller;
 import com.hyl.rock.domain.SysDept;
 import com.hyl.rock.domain.SysRole;
 import com.hyl.rock.domain.SysUser;
+import com.hyl.rock.entity.page.TableDataInfo;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
@@ -14,7 +15,7 @@ import com.hyl.rock.system.service.ISysUserService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
-import com.hyl.rock.entity.page.TableDataInfo;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ public class SysRoleController extends BaseController
     @Autowired
     private ISysDeptService deptService;
 
+    @Operation(summary = "获取角色列表")
     @GetMapping("/list")
     public TableDataInfo list(SysRole role)
     {
@@ -49,6 +51,7 @@ public class SysRoleController extends BaseController
         return getDataTable(list);
     }
 
+    @Operation(summary = "导出角色列表")
     @Log(title = "角色管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysRole role)
@@ -61,6 +64,7 @@ public class SysRoleController extends BaseController
     /**
      * 根据角色编号获取详细信息
      */
+    @Operation(summary = "根据角色编号获取详细信息")
     @GetMapping(value = "/{roleId}")
     public AjaxResult getInfo(@PathVariable Long roleId)
     {
@@ -71,6 +75,7 @@ public class SysRoleController extends BaseController
     /**
      * 新增角色
      */
+    @Operation(summary = "新增角色")
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysRole role)
@@ -91,6 +96,7 @@ public class SysRoleController extends BaseController
     /**
      * 修改保存角色
      */
+    @Operation(summary = "修改保存角色")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysRole role)
@@ -112,6 +118,7 @@ public class SysRoleController extends BaseController
     /**
      * 修改保存数据权限
      */
+    @Operation(summary = "修改保存数据权限")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping("/dataScope")
     public AjaxResult dataScope(@RequestBody SysRole role)
@@ -124,6 +131,7 @@ public class SysRoleController extends BaseController
     /**
      * 状态修改
      */
+    @Operation(summary = "状态修改")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
     public AjaxResult changeStatus(@RequestBody SysRole role)
@@ -137,6 +145,7 @@ public class SysRoleController extends BaseController
     /**
      * 删除角色
      */
+    @Operation(summary = "删除角色")
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{roleIds}")
     public AjaxResult remove(@PathVariable Long[] roleIds)
@@ -147,14 +156,17 @@ public class SysRoleController extends BaseController
     /**
      * 获取角色选择框列表
      */
-    @GetMapping("/optionselect")
-    public AjaxResult optionselect()
+    @Operation(summary = "获取角色选择框列表")
+    @GetMapping("/optionSelect")
+    public AjaxResult optionSelect()
     {
         return success(roleService.selectRoleAll());
     }
+
     /**
      * 查询已分配用户角色列表
      */
+    @Operation(summary = "查询已分配用户角色列表")
     @GetMapping("/authUser/allocatedList")
     public TableDataInfo allocatedList(SysUser user)
     {
@@ -166,6 +178,7 @@ public class SysRoleController extends BaseController
     /**
      * 查询未分配用户角色列表
      */
+    @Operation(summary = "查询未分配用户角色列表")
     @GetMapping("/authUser/unallocatedList")
     public TableDataInfo unallocatedList(SysUser user)
     {
@@ -177,6 +190,7 @@ public class SysRoleController extends BaseController
     /**
      * 取消授权用户
      */
+    @Operation(summary = "取消授权用户")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PutMapping("/authUser/cancel")
     public AjaxResult cancelAuthUser(@RequestBody SysUserRole userRole)
@@ -187,6 +201,7 @@ public class SysRoleController extends BaseController
     /**
      * 批量取消授权用户
      */
+    @Operation(summary = "批量取消授权用户")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PutMapping("/authUser/cancelAll")
     public AjaxResult cancelAuthUserAll(Long roleId, Long[] userIds)
@@ -197,6 +212,7 @@ public class SysRoleController extends BaseController
     /**
      * 批量选择用户授权
      */
+    @Operation(summary = "批量选择用户授权")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PutMapping("/authUser/selectAll")
     public AjaxResult selectAuthUserAll(Long roleId, Long[] userIds)
@@ -208,6 +224,7 @@ public class SysRoleController extends BaseController
     /**
      * 获取对应角色部门树列表
      */
+    @Operation(summary = "获取对应角色部门树列表")
     @GetMapping(value = "/deptTree/{roleId}")
     public AjaxResult deptTree(@PathVariable("roleId") Long roleId)
     {

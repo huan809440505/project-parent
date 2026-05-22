@@ -1,6 +1,7 @@
 package com.hyl.rock.system.controller;
 
 
+import com.hyl.rock.entity.page.TableDataInfo;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
@@ -10,7 +11,7 @@ import com.hyl.rock.system.service.ISysNoticeService;
 import com.hyl.rock.text.Convert;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
-import com.hyl.rock.entity.page.TableDataInfo;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -36,6 +37,7 @@ public class SysNoticeController extends BaseController
     /**
      * 获取通知公告列表
      */
+    @Operation(summary = "获取通知公告列表")
     @GetMapping("/list")
     public TableDataInfo list(SysNotice notice)
     {
@@ -47,6 +49,7 @@ public class SysNoticeController extends BaseController
     /**
      * 根据通知公告编号获取详细信息
      */
+    @Operation(summary = "根据通知公告编号获取详细信息")
     @GetMapping(value = "/{noticeId}")
     public AjaxResult getInfo(@PathVariable Long noticeId)
     {
@@ -56,6 +59,7 @@ public class SysNoticeController extends BaseController
     /**
      * 新增通知公告
      */
+    @Operation(summary = "新增通知公告")
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysNotice notice)
@@ -67,6 +71,7 @@ public class SysNoticeController extends BaseController
     /**
      * 修改通知公告
      */
+    @Operation(summary = "修改通知公告")
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysNotice notice)
@@ -78,6 +83,7 @@ public class SysNoticeController extends BaseController
     /**
      * 首页顶部公告列表（返回全部正常公告，带当前用户已读标记，最多5条）
      */
+    @Operation(summary = "首页顶部公告列表")
     @GetMapping("/listTop")
     @ResponseBody
     public AjaxResult listTop()
@@ -93,6 +99,7 @@ public class SysNoticeController extends BaseController
     /**
      * 标记公告已读
      */
+    @Operation(summary = "标记公告已读")
     @PostMapping("/markRead")
     @ResponseBody
     public AjaxResult markRead(Long noticeId)
@@ -105,6 +112,7 @@ public class SysNoticeController extends BaseController
     /**
      * 批量标记已读
      */
+    @Operation(summary = "批量标记已读")
     @PostMapping("/markReadAll")
     @ResponseBody
     public AjaxResult markReadAll(String ids)
@@ -118,6 +126,7 @@ public class SysNoticeController extends BaseController
     /**
      * 已读用户列表数据
      */
+    @Operation(summary = "已读用户列表数据")
     @GetMapping("/readUsers/list")
     @ResponseBody
     public TableDataInfo readUsersList(Long noticeId, String searchValue)
@@ -130,6 +139,7 @@ public class SysNoticeController extends BaseController
     /**
      * 删除通知公告
      */
+    @Operation(summary = "删除通知公告")
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @DeleteMapping("/{noticeIds}")
     public AjaxResult remove(@PathVariable Long[] noticeIds)

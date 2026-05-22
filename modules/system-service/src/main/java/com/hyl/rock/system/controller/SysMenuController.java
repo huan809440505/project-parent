@@ -10,6 +10,7 @@ import com.hyl.rock.system.service.ISysMenuService;
 import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -33,6 +34,7 @@ public class SysMenuController extends BaseController
     /**
      * 获取菜单列表
      */
+    @Operation(summary = "获取菜单列表")
     @GetMapping("/list")
     public AjaxResult list(SysMenu menu)
     {
@@ -44,6 +46,7 @@ public class SysMenuController extends BaseController
     /**
      * 根据菜单编号获取详细信息
      */
+    @Operation(summary = "根据菜单编号获取详细信息")
     @GetMapping(value = "/{menuId}")
     public AjaxResult getInfo(@PathVariable Long menuId)
     {
@@ -53,8 +56,9 @@ public class SysMenuController extends BaseController
     /**
      * 获取菜单下拉树列表
      */
-    @GetMapping("/treeselect")
-    public AjaxResult treeselect(SysMenu menu)
+    @Operation(summary = "获取菜单下拉树列表")
+    @GetMapping("/treeSelect")
+    public AjaxResult treeSelect(SysMenu menu)
     {
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuList(menu, userId);
@@ -64,8 +68,9 @@ public class SysMenuController extends BaseController
     /**
      * 加载对应角色菜单列表树
      */
-    @GetMapping(value = "/roleMenuTreeselect/{roleId}")
-    public AjaxResult roleMenuTreeselect(@PathVariable("roleId") Long roleId)
+    @Operation(summary = "加载对应角色菜单列表树")
+    @GetMapping(value = "/roleMenuTreeSelect/{roleId}")
+    public AjaxResult roleMenuTreeSelect(@PathVariable("roleId") Long roleId)
     {
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuList(userId);
@@ -78,6 +83,7 @@ public class SysMenuController extends BaseController
     /**
      * 新增菜单
      */
+    @Operation(summary = "新增菜单")
     @Log(title = "菜单管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysMenu menu)
@@ -101,6 +107,7 @@ public class SysMenuController extends BaseController
     /**
      * 修改菜单
      */
+    @Operation(summary = "修改菜单")
     @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysMenu menu)
@@ -128,6 +135,7 @@ public class SysMenuController extends BaseController
     /**
      * 保存菜单排序
      */
+    @Operation(summary = "保存菜单排序")
     @Log(title = "保存菜单排序", businessType = BusinessType.UPDATE)
     @PutMapping("/updateSort")
     public AjaxResult updateSort(@RequestBody Map<String, String> params)
@@ -141,6 +149,7 @@ public class SysMenuController extends BaseController
     /**
      * 删除菜单
      */
+    @Operation(summary = "删除菜单")
     @Log(title = "菜单管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{menuId}")
     public AjaxResult remove(@PathVariable("menuId") Long menuId)
@@ -161,6 +170,7 @@ public class SysMenuController extends BaseController
      * 
      * @return 路由信息
      */
+    @Operation(summary = "获取路由信息")
     @GetMapping("getRouters")
     public AjaxResult getRouters()
     {

@@ -17,6 +17,7 @@ import com.hyl.rock.utils.file.FileTypeUtils;
 import com.hyl.rock.utils.file.MimeTypeUtils;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,7 @@ public class SysProfileController extends BaseController
     /**
      * 个人信息
      */
+    @Operation(summary = "个人信息")
     @GetMapping
     public AjaxResult profile()
     {
@@ -60,6 +62,7 @@ public class SysProfileController extends BaseController
     /**
      * 修改用户
      */
+    @Operation(summary = "修改用户")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult updateProfile(@RequestBody SysUser user)
@@ -90,6 +93,7 @@ public class SysProfileController extends BaseController
     /**
      * 重置密码
      */
+    @Operation(summary = "重置密码")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping("/updatePwd")
     public AjaxResult updatePwd(@RequestBody Map<String, String> params)
@@ -122,6 +126,7 @@ public class SysProfileController extends BaseController
     /**
      * 头像上传
      */
+    @Operation(summary = "头像上传")
     @Log(title = "用户头像", businessType = BusinessType.UPDATE)
     @PostMapping("/avatar")
     public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file)

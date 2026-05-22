@@ -10,6 +10,7 @@ import com.hyl.rock.system.service.ISysDeptService;
 import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class SysDeptController extends BaseController
     /**
      * 获取部门列表
      */
+    @Operation(summary = "获取部门列表")
     @GetMapping("/list")
     public AjaxResult list(SysDept dept)
     {
@@ -44,6 +46,7 @@ public class SysDeptController extends BaseController
     /**
      * 查询部门列表（排除节点）
      */
+    @Operation(summary = "查询部门列表（排除节点）")
     @GetMapping("/list/exclude/{deptId}")
     public AjaxResult excludeChild(@PathVariable(value = "deptId", required = false) Long deptId)
     {
@@ -55,6 +58,7 @@ public class SysDeptController extends BaseController
     /**
      * 根据部门编号获取详细信息
      */
+    @Operation(summary = "根据部门编号获取详细信息")
     @GetMapping(value = "/{deptId}")
     public AjaxResult getInfo(@PathVariable Long deptId)
     {
@@ -65,6 +69,7 @@ public class SysDeptController extends BaseController
     /**
      * 新增部门
      */
+    @Operation(summary = "新增部门")
     @Log(title = "部门管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysDept dept)
@@ -80,6 +85,7 @@ public class SysDeptController extends BaseController
     /**
      * 修改部门
      */
+    @Operation(summary = "修改部门")
     @Log(title = "部门管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysDept dept)
@@ -105,6 +111,7 @@ public class SysDeptController extends BaseController
     /**
      * 保存部门排序
      */
+    @Operation(summary = "保存部门排序")
     @Log(title = "保存部门排序", businessType = BusinessType.UPDATE)
     @PutMapping("/updateSort")
     public AjaxResult updateSort(@RequestBody Map<String, String> params)
@@ -118,6 +125,7 @@ public class SysDeptController extends BaseController
     /**
      * 删除部门
      */
+    @Operation(summary = "删除部门")
     @Log(title = "部门管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{deptId}")
     public AjaxResult remove(@PathVariable Long deptId)

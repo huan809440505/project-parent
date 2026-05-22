@@ -9,6 +9,7 @@ import com.hyl.rock.system.service.ISysConfigService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class SysConfigController extends BaseController
     /**
      * 获取参数配置列表
      */
+    @Operation(summary = "获取参数配置列表")
     @GetMapping("/list")
     public TableDataInfo list(SysConfig config) {
         startPage();
@@ -39,6 +41,7 @@ public class SysConfigController extends BaseController
         return getDataTable(list);
     }
 
+    @Operation(summary = "导出参数配置列表")
     @Log(title = "参数管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysConfig config) {
@@ -50,6 +53,7 @@ public class SysConfigController extends BaseController
     /**
      * 根据参数编号获取详细信息
      */
+    @Operation(summary = "根据参数编号获取详细信息")
     @GetMapping(value = "/{configId}")
     public AjaxResult getInfo(@PathVariable Long configId)
     {
@@ -59,6 +63,7 @@ public class SysConfigController extends BaseController
     /**
      * 根据参数键名查询参数值
      */
+    @Operation(summary = "根据参数键名查询参数值")
     @GetMapping(value = "/configKey/{configKey}")
     public AjaxResult getConfigKey(@PathVariable String configKey) {
         return success(configService.selectConfigByKey(configKey));
@@ -67,6 +72,7 @@ public class SysConfigController extends BaseController
     /**
      * 新增参数配置
      */
+    @Operation(summary = "新增参数配置")
     @Log(title = "参数管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysConfig config) {
@@ -80,6 +86,7 @@ public class SysConfigController extends BaseController
     /**
      * 修改参数配置
      */
+    @Operation(summary = "修改参数配置")
     @Log(title = "参数管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysConfig config) {
@@ -93,6 +100,7 @@ public class SysConfigController extends BaseController
     /**
      * 删除参数配置
      */
+    @Operation(summary = "删除参数配置")
     @Log(title = "参数管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{configIds}")
     public AjaxResult remove(@PathVariable Long[] configIds) {
@@ -103,6 +111,7 @@ public class SysConfigController extends BaseController
     /**
      * 刷新参数缓存
      */
+    @Operation(summary = "刷新参数缓存")
     @Log(title = "参数管理", businessType = BusinessType.CLEAN)
     @DeleteMapping("/refreshCache")
     public AjaxResult refreshCache() {
