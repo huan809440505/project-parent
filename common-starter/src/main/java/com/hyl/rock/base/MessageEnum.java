@@ -3,17 +3,17 @@ package com.hyl.rock.base;
 import lombok.Getter;
 
 public enum MessageEnum {
-    SUCCESS("10000", "SUCCESS"),
-    FAIL("10001", "FAIL"),
+    SUCCESS(200, "SUCCESS"),
+    FAIL(500, "FAIL"),
     ;
 
     @Getter
-    private String code;
+    private final Integer code;
 
     @Getter
-    private String message;
+    private final String message;
 
-    MessageEnum(String code, String message) {
+    MessageEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

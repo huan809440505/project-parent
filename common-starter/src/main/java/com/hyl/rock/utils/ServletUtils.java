@@ -1,15 +1,23 @@
 package com.hyl.rock.utils;
 
+import com.alibaba.fastjson2.JSON;
+import com.hyl.rock.base.Result;
 import com.hyl.rock.constant.Constants;
 import com.hyl.rock.text.Convert;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.LinkedCaseInsensitiveMap;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -265,5 +273,61 @@ public class ServletUtils
         }
     }
 
+    /**
+     * 设置webflux模型响应
+     *
+     * @param response ServerHttpResponse
+     * @param value 响应内容
+     * @return Mono<Void>
+     */
+    public static Mono<Void> webFluxResponseWriter(ServerHttpResponse response, Object value)
+    {
+        return webFluxResponseWriter(response, HttpStatus.OK, value, Constants.FAIL);
+    }
 
+    /**
+     * 设置webflux模型响应
+     *
+     * @param response ServerHttpResponse
+     * @param code 响应状态码
+     * @param value 响应内容
+     * @return Mono<Void>
+     */
+    public static Mono<Void> webFluxResponseWriter(ServerHttpResponse response, Object value, int code)
+    {
+        return webFluxResponseWriter(response, HttpStatus.OK, value, code);
+    }
+
+    /**
+     * 设置webflux模型响应
+     *
+     * @param response ServerHttpResponse
+     * @param status http状态码
+     * @param code 响应状态码
+     * @param value 响应内容
+     * @return Mono<Void>
+     */
+    public static Mono<Void> webFluxResponseWriter(ServerHttpResponse response, HttpStatus status, Object value, int code)
+    {
+        return webFluxResponseWriter(response, MediaType.APPLICATION_JSON_VALUE, status, value, code);
+    }
+
+    /**
+     * 设置webflux模型响应
+     *
+     * @param response ServerHttpResponse
+     * @param contentType content-type
+     * @param status http状态码
+     * @param code 响应状态码
+     * @param value 响应内容
+     * @return Mono<Void>
+     */
+    public static Mono<Void> webFluxResponseWriter(ServerHttpResponse response, String contentType, HttpStatus status, Object value, int code)
+    {
+        response.setStatusCode(status);
+        response.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType);
+        Result<?> result = Result.fail(code, value.toString());
+        DataBuffer dataBuffer = response.bufferFactory().wrap(JSON.toJSONString(result).getBytes());
+        return response.writeWith(Mono.just(dataBuffer));
+    }
 }

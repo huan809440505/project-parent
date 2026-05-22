@@ -37,8 +37,8 @@ token:
   expireTime: 3600
 
 #白名单配置
-whitelist:
-  path:
-    include:
+security:
+  ignore:
+    whites:
       - /api/user/login
       - /api/user/register

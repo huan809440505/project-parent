@@ -31,6 +31,11 @@
             <artifactId>common-starter</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>api-starter</artifactId>
+            <version>1.0</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

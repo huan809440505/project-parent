@@ -1,7 +1,7 @@
-package com.hyl.rock.filter;
+package com.hyl.rock.gateway.filter;
 
-import com.hyl.rock.config.TokenConfig;
-import com.hyl.rock.config.WhitelistConfig;
+import com.hyl.rock.gateway.config.TokenConfig;
+import com.hyl.rock.gateway.config.IgnoreWhiteProperties;
 import com.hyl.rock.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Resource;
@@ -21,7 +21,7 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
     @Resource
     private TokenConfig tokenConfig;
     @Resource
-    private WhitelistConfig whitelistConfig;
+    private IgnoreWhiteProperties whiteProperties;
 
 
     @Override
@@ -58,7 +58,7 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
      * 判断请求路径是否在白名单的列表中
      */
     private boolean isIgnorePath(String requestPath) {
-        return whitelistConfig.getInclude().contains(requestPath);
+        return whiteProperties.getWhites().contains(requestPath);
     }
 
     /**

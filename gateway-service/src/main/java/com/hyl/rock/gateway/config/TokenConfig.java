@@ -1,4 +1,4 @@
-package com.hyl.rock.config;
+package com.hyl.rock.gateway.config;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
