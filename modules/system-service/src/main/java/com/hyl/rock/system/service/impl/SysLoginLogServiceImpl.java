@@ -1,9 +1,9 @@
 package com.hyl.rock.system.service.impl;
 
 
-import com.hyl.rock.domain.SysLoginInFor;
-import com.hyl.rock.system.mapper.SysLoginInForMapper;
-import com.hyl.rock.system.service.ISysLoginInForService;
+import com.hyl.rock.domain.SysLoginLog;
+import com.hyl.rock.system.mapper.SysLoginLogMapper;
+import com.hyl.rock.system.service.ISysLoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +14,11 @@ import java.util.List;
  * 
  */
 @Service
-public class SysLoginInForServiceImpl implements ISysLoginInForService
+public class SysLoginLogServiceImpl implements ISysLoginLogService
 {
 
     @Autowired
-    private SysLoginInForMapper loginInForMapper;
+    private SysLoginLogMapper loginInForMapper;
 
     /**
      * 新增系统登录日志
@@ -26,9 +26,9 @@ public class SysLoginInForServiceImpl implements ISysLoginInForService
      * @param loginInFor 访问日志对象
      */
     @Override
-    public int insertLoginInFor(SysLoginInFor loginInFor)
+    public int insertLoginLog(SysLoginLog loginInFor)
     {
-        return loginInForMapper.insertLoginInFor(loginInFor);
+        return loginInForMapper.insertLoginLog(loginInFor);
     }
 
     /**
@@ -38,9 +38,9 @@ public class SysLoginInForServiceImpl implements ISysLoginInForService
      * @return 登录记录集合
      */
     @Override
-    public List<SysLoginInFor> selectLogininforList(SysLoginInFor loginInFor)
+    public List<SysLoginLog> selectLoginLogList(SysLoginLog loginInFor)
     {
-        return loginInForMapper.selectLoginInForList(loginInFor);
+        return loginInForMapper.selectLoginLogList(loginInFor);
     }
 
     /**
@@ -50,17 +50,17 @@ public class SysLoginInForServiceImpl implements ISysLoginInForService
      * @return 结果
      */
     @Override
-    public int deleteLoginInForByIds(Long[] infoIds)
+    public int deleteLoginLogByIds(Long[] infoIds)
     {
-        return loginInForMapper.deleteLoginInForByIds(infoIds);
+        return loginInForMapper.deleteLoginLogByIds(infoIds);
     }
 
     /**
      * 清空系统登录日志
      */
     @Override
-    public void cleanLoginInFor()
+    public void cleanLoginLog()
     {
-        loginInForMapper.cleanLoginInFor();
+        loginInForMapper.cleanLoginLog();
     }
 }

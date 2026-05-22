@@ -13,13 +13,13 @@ import lombok.EqualsAndHashCode;
 import java.util.Date;
 
 /**
- * 系统访问记录表 sys_login_in_for
+ * 系统访问记录表 sys_login_log
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Schema(name = "系统访问记录表")
-@TableName("sys_login_in_for")
-public class SysLoginInFor extends BaseEmptyEntity {
+@TableName("sys_login_log")
+public class SysLoginLog extends BaseEmptyEntity {
 
     /** ID */
     @Schema(name = "序号")

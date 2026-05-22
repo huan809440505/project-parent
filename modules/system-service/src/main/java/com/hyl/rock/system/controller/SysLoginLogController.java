@@ -2,12 +2,12 @@ package com.hyl.rock.system.controller;
 
 
 import com.hyl.rock.constant.CacheConstants;
-import com.hyl.rock.domain.SysLoginInFor;
+import com.hyl.rock.domain.SysLoginLog;
 import com.hyl.rock.entity.page.TableDataInfo;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.redis.service.RedisService;
-import com.hyl.rock.system.service.ISysLoginInForService;
+import com.hyl.rock.system.service.ISysLoginLogService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
@@ -25,31 +25,31 @@ import java.util.List;
  */
 @Tag(name = "系统访问记录控制器")
 @RestController
-@RequestMapping("/loginInFor")
-public class SysLoginInForController extends BaseController
+@RequestMapping("/loginLog")
+public class SysLoginLogController extends BaseController
 {
     @Autowired
-    private ISysLoginInForService loginInForService;
+    private ISysLoginLogService loginInForService;
 
     @Autowired
     private RedisService redisService;
 
     @Operation(summary = "获取系统访问记录列表")
     @GetMapping("/list")
-    public TableDataInfo list(SysLoginInFor loginInFor)
+    public TableDataInfo list(SysLoginLog loginInFor)
     {
         startPage();
-        List<SysLoginInFor> list = loginInForService.selectLogininforList(loginInFor);
+        List<SysLoginLog> list = loginInForService.selectLoginLogList(loginInFor);
         return getDataTable(list);
     }
 
     @Operation(summary = "导出登录日志")
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysLoginInFor loginInFor)
+    public void export(HttpServletResponse response, SysLoginLog loginInFor)
     {
-        List<SysLoginInFor> list = loginInForService.selectLogininforList(loginInFor);
-        ExcelUtil<SysLoginInFor> util = new ExcelUtil<>(SysLoginInFor.class);
+        List<SysLoginLog> list = loginInForService.selectLoginLogList(loginInFor);
+        ExcelUtil<SysLoginLog> util = new ExcelUtil<>(SysLoginLog.class);
         util.exportExcel(response, list, "登录日志");
     }
 
@@ -58,7 +58,7 @@ public class SysLoginInForController extends BaseController
     @DeleteMapping("/{infoIds}")
     public AjaxResult remove(@PathVariable Long[] infoIds)
     {
-        return toAjax(loginInForService.deleteLoginInForByIds(infoIds));
+        return toAjax(loginInForService.deleteLoginLogByIds(infoIds));
     }
 
     @Operation(summary = "清空登录日志")
@@ -66,7 +66,7 @@ public class SysLoginInForController extends BaseController
     @DeleteMapping("/clean")
     public AjaxResult clean()
     {
-        loginInForService.cleanLoginInFor();
+        loginInForService.cleanLoginLog();
         return success();
     }
 
@@ -81,8 +81,8 @@ public class SysLoginInForController extends BaseController
 
     @Operation(summary = "添加登陆日志")
     @PostMapping
-    public AjaxResult add(@RequestBody SysLoginInFor loginInFor)
+    public AjaxResult add(@RequestBody SysLoginLog loginInFor)
     {
-        return toAjax(loginInForService.insertLoginInFor(loginInFor));
+        return toAjax(loginInForService.insertLoginLog(loginInFor));
     }
 }

@@ -1,7 +1,7 @@
 package com.hyl.rock.system.mapper;
 
 
-import com.hyl.rock.domain.SysLoginInFor;
+import com.hyl.rock.domain.SysLoginLog;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -11,22 +11,22 @@ import java.util.List;
  * 
  */
 @Mapper
-public interface SysLoginInForMapper
+public interface SysLoginLogMapper
 {
     /**
      * 新增系统登录日志
      * 
-     * @param loginInFor 访问日志对象
+     * @param loginLog 访问日志对象
      */
-    public int insertLoginInFor(SysLoginInFor loginInFor);
+    public int insertLoginLog(SysLoginLog loginLog);
 
     /**
      * 查询系统登录日志集合
      * 
-     * @param loginInFor 访问日志对象
+     * @param loginLog 访问日志对象
      * @return 登录记录集合
      */
-    public List<SysLoginInFor> selectLoginInForList(SysLoginInFor loginInFor);
+    public List<SysLoginLog> selectLoginLogList(SysLoginLog loginLog);
 
     /**
      * 批量删除系统登录日志
@@ -34,12 +34,12 @@ public interface SysLoginInForMapper
      * @param infoIds 需要删除的登录日志ID
      * @return 结果
      */
-    public int deleteLoginInForByIds(Long[] infoIds);
+    public int deleteLoginLogByIds(Long[] infoIds);
 
     /**
      * 清空系统登录日志
      * 
      * @return 结果
      */
-    public int cleanLoginInFor();
+    public int cleanLoginLog();
 }
