@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
     
     <!-- 查询条件 -->
-	<sql id="sqlwhereSearch">
+	<sql id="sqlWhereSearch">
 		<where>
 			<if test="configId !=null">
 				and config_id = #{configId}
@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectConfig" parameterType="com.hyl.rock.system.domain.SysConfig" resultMap="SysConfigResult">
         <include refid="selectConfigVo"/>
-        <include refid="sqlwhereSearch"/>
+        <include refid="sqlWhereSearch"/>
     </select>
     
     <select id="selectConfigList" parameterType="com.hyl.rock.system.domain.SysConfig" resultMap="SysConfigResult">
