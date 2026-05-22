@@ -1,9 +1,9 @@
 package com.hyl.rock.utils;
 
 import com.github.pagehelper.PageHelper;
+import com.hyl.rock.entity.page.PageDomain;
+import com.hyl.rock.entity.page.TableSupport;
 import com.hyl.rock.utils.sql.SqlUtil;
-import com.hyl.rock.web.page.PageDomain;
-import com.hyl.rock.web.page.TableSupport;
 
 /**
  * 分页工具类

@@ -1,5 +1,6 @@
 package com.hyl.rock.system.controller;
 
+import com.hyl.rock.entity.page.TableDataInfo;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
@@ -8,7 +9,7 @@ import com.hyl.rock.system.service.ISysConfigService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
-import com.hyl.rock.web.page.TableDataInfo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +21,7 @@ import java.util.List;
  * 参数配置 信息操作处理
  * 
  */
+@Tag(name = "参数配置控制器")
 @RestController
 @RequestMapping("/config")
 public class SysConfigController extends BaseController

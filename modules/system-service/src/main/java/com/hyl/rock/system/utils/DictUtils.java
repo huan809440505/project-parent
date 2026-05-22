@@ -1,4 +1,4 @@
-package com.hyl.rock.security.utils;
+package com.hyl.rock.system.utils;
 
 
 import com.alibaba.fastjson2.JSONArray;

@@ -9,7 +9,8 @@ import com.hyl.rock.system.service.ISysPostService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
-import com.hyl.rock.web.page.TableDataInfo;
+import com.hyl.rock.entity.page.TableDataInfo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +22,7 @@ import java.util.List;
  * 岗位信息操作处理
  * 
  */
+@Tag(name = "岗位信息控制器")
 @RestController
 @RequestMapping("/post")
 public class SysPostController extends BaseController

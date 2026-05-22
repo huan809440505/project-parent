@@ -1,37 +1,36 @@
-package com.hyl.rock.web.page;
+package com.hyl.rock.entity.page;
 
 
 import com.hyl.rock.utils.StringUtils;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
  * 分页数据
  * 
  */
-@ApiModel(value = "分页数据")
 @Data
+@Schema(name = "分页数据")
 public class PageDomain {
 
     /** 当前记录起始索引 */
-    @ApiModelProperty(name = "当前记录起始索引")
+    @Schema(name = "当前记录起始索引")
     private Integer pageNum;
 
     /** 每页显示记录数 */
-    @ApiModelProperty(name = "每页显示记录数")
+    @Schema(name = "每页显示记录数")
     private Integer pageSize;
 
     /** 排序列 */
-    @ApiModelProperty(name = "排序列")
+    @Schema(name = "排序列")
     private String orderByColumn;
 
     /** 排序的方向desc或者asc */
-    @ApiModelProperty(name = "排序的方向desc或者asc")
+    @Schema(name = "排序的方向desc或者asc")
     private String isAsc = "asc";
 
     /** 分页参数合理化 */
-    @ApiModelProperty(name = "分页参数合理化")
+    @Schema(name = "分页参数合理化")
     private Boolean reasonable = true;
 
     public String getOrderBy() {

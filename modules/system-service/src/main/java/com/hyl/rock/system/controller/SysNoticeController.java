@@ -10,7 +10,8 @@ import com.hyl.rock.system.service.ISysNoticeService;
 import com.hyl.rock.text.Convert;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
-import com.hyl.rock.web.page.TableDataInfo;
+import com.hyl.rock.entity.page.TableDataInfo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import java.util.List;
  * 公告 信息操作处理
  * 
  */
+@Tag(name = "公告控制器")
 @RestController
 @RequestMapping("/notice")
 public class SysNoticeController extends BaseController

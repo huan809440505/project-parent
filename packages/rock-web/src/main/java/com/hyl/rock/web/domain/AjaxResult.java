@@ -3,7 +3,7 @@ package com.hyl.rock.web.domain;
 
 import com.hyl.rock.constant.HttpStatus;
 import com.hyl.rock.utils.StringUtils;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@ApiModel(value = "操作消息提醒")
+@Schema(name = "操作消息提醒")
 public class AjaxResult extends HashMap<String, Object> {
 
     /** 状态码 */

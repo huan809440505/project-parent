@@ -5,7 +5,7 @@ import com.hyl.rock.constant.HttpStatus;
 import com.hyl.rock.utils.DateUtils;
 import com.hyl.rock.utils.PageUtils;
 import com.hyl.rock.web.domain.AjaxResult;
-import com.hyl.rock.web.page.TableDataInfo;
+import com.hyl.rock.entity.page.TableDataInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;

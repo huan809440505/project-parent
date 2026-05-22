@@ -5,7 +5,7 @@ import com.hyl.rock.constant.UserConstants;
 import com.hyl.rock.domain.SysDept;
 import com.hyl.rock.system.domain.SysMenu;
 import com.hyl.rock.utils.StringUtils;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * TreeSelect树结构实体类
  */
 @Data
-@ApiModel(value = "TreeSelect树结构实体类")
+@Schema(name = "TreeSelect树结构实体类")
 public class TreeSelect implements Serializable {
 
     /** 节点ID */

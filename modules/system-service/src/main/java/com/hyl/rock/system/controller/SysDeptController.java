@@ -10,6 +10,7 @@ import com.hyl.rock.system.service.ISysDeptService;
 import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +23,7 @@ import java.util.Map;
  * 部门信息
  * 
  */
+@Tag(name = "部门信息控制器")
 @RestController
 @RequestMapping("/dept")
 public class SysDeptController extends BaseController

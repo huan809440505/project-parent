@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hyl.rock.system.mapper.SysLogininforMapper">
+<mapper namespace="com.hyl.rock.system.mapper.SysLoginInForMapper">
 
-	<resultMap type="com.hyl.rock.domain.SysLogininfor" id="SysLogininforResult">
+	<resultMap type="com.hyl.rock.domain.SysLoginInFor" id="SysLoginInForResult">
 		<id     property="infoId"        column="info_id"           />
 		<result property="userName"      column="user_name"         />
 		<result property="status"        column="status"            />
@@ -13,13 +13,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="accessTime"    column="access_time"       />
 	</resultMap>
 
-	<insert id="insertLogininfor" parameterType="com.hyl.rock.domain.SysLogininfor">
-		insert into sys_logininfor (user_name, status, ipaddr, msg, access_time)
+	<insert id="insertLoginInFor" parameterType="com.hyl.rock.domain.SysLoginInFor">
+		insert into sys_login_in_for (user_name, status, ipaddr, msg, access_time)
 		values (#{userName}, #{status}, #{ipaddr}, #{msg}, sysdate())
 	</insert>
 	
-	<select id="selectLogininforList" parameterType="com.hyl.rock.domain.SysLogininfor" resultMap="SysLogininforResult">
-		select info_id, user_name, ipaddr, status, msg, access_time from sys_logininfor
+	<select id="selectLoginInForList" parameterType="com.hyl.rock.domain.SysLoginInFor" resultMap="SysLoginInForResult">
+		select info_id, user_name, ipaddr, status, msg, access_time from sys_login_in_for
 		<where>
 			<if test="ipaddr != null and ipaddr != ''">
 				AND ipaddr like concat('%', #{ipaddr}, '%')
@@ -40,15 +40,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by info_id desc
 	</select>
 	
-	<delete id="deleteLogininforByIds" parameterType="java.lang.Long">
- 		delete from sys_logininfor where info_id in
+	<delete id="deleteLoginInForByIds" parameterType="java.lang.Long">
+ 		delete from sys_login_in_for where info_id in
  		<foreach collection="array" item="infoId" open="(" separator="," close=")">
  			#{infoId}
         </foreach> 
  	</delete>
     
-    <update id="cleanLogininfor">
-        truncate table sys_logininfor
+    <update id="cleanLoginInFor">
+        truncate table sys_login_in_for
     </update>
     
 </mapper> 

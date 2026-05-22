@@ -1,27 +1,26 @@
 package com.hyl.rock.system.domain.vo;
 
 import com.hyl.rock.utils.StringUtils;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
  * 路由显示信息
  */
 @Data
-@ApiModel(value = "路由显示信息")
+@Schema(name = "路由显示信息")
 public class MetaVo {
 
     /**
      * 设置该路由在侧边栏和面包屑中展示的名字
      */
-    @ApiModelProperty(name = "路由的名字")
+    @Schema(name = "路由的名字")
     private String title;
 
     /**
      * 设置该路由的图标，对应路径src/assets/icons/svg
      */
-    @ApiModelProperty(name = "路由的图标")
+    @Schema(name = "路由的图标")
     private String icon;
 
     /**
@@ -32,7 +31,7 @@ public class MetaVo {
     /**
      * 内链地址（http(s)://开头）
      */
-    @ApiModelProperty(name = "内链地址")
+    @Schema(name = "内链地址")
     private String link;
 
     public MetaVo() {

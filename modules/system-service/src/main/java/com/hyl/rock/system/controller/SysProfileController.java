@@ -17,6 +17,7 @@ import com.hyl.rock.utils.file.FileTypeUtils;
 import com.hyl.rock.utils.file.MimeTypeUtils;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,7 @@ import java.util.Map;
  * 个人信息 业务处理
  * 
  */
+@Tag(name = "个人信息控制器")
 @RestController
 @RequestMapping("/user/profile")
 public class SysProfileController extends BaseController

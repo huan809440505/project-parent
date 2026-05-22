@@ -28,12 +28,8 @@
             <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>

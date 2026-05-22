@@ -3,6 +3,7 @@ package com.hyl.rock.system.controller;
 
 import com.hyl.rock.constant.CacheConstants;
 import com.hyl.rock.entity.LoginUser;
+import com.hyl.rock.entity.page.TableDataInfo;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.redis.service.RedisService;
@@ -11,7 +12,7 @@ import com.hyl.rock.system.service.ISysUserOnlineService;
 import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
-import com.hyl.rock.web.page.TableDataInfo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ import java.util.List;
  * 在线用户监控
  * 
  */
+@Tag(name = "在线用户监控控制器")
 @RestController
 @RequestMapping("/online")
 public class SysUserOnlineController extends BaseController

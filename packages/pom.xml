@@ -16,6 +16,7 @@
         <module>rock-mybatis</module>
         <module>rock-log</module>
         <module>rock-security</module>
+        <module>rock-web</module>
     </modules>
 
     <properties>

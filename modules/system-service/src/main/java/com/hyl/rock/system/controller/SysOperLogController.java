@@ -2,13 +2,14 @@ package com.hyl.rock.system.controller;
 
 
 import com.hyl.rock.domain.SysOperLog;
+import com.hyl.rock.entity.page.TableDataInfo;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.system.service.ISysOperLogService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
-import com.hyl.rock.web.page.TableDataInfo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +20,10 @@ import java.util.List;
  * 操作日志记录
  * 
  */
+@Tag(name = "操作日志控制器")
 @RestController
-@RequestMapping("/operlog")
-public class SysOperlogController extends BaseController
+@RequestMapping("/operLog")
+public class SysOperLogController extends BaseController
 {
     @Autowired
     private ISysOperLogService operLogService;

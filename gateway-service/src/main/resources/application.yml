@@ -9,27 +9,21 @@ spring:
       server:
         webflux:
           routes:
-            #用户服务
-            - id: user-service
+            #系统服务
+            - id: system-service
               uri: http://localhost:8091
               predicates:
-                - Path=/api/user/**
+                - Path=/api/system/**
               filters:
                 - StripPrefix=1
-            #商品服务
-            - id: product-service
+            #文件服务
+            - id: file-service
               uri: http://localhost:8092
               predicates:
-                - Path=/api/product/**
+                - Path=/api/file/**
               filters:
                 - StripPrefix=1
-            #订单服务
-            - id: order-service
-              uri: http://localhost:8093
-              predicates:
-                - Path=/api/order/**
-              filters:
-                - StripPrefix=1
+
 #token相关配置
 token:
   secret: my-secret-key

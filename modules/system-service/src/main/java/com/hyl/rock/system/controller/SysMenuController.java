@@ -10,6 +10,7 @@ import com.hyl.rock.system.service.ISysMenuService;
 import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import java.util.Map;
  * 菜单信息
  * 
  */
+@Tag(name = "菜单信息控制器")
 @RestController
 @RequestMapping("/menu")
 public class SysMenuController extends BaseController

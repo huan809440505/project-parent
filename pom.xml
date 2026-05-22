@@ -39,7 +39,8 @@
         <spring-cloud.version>2025.0.0</spring-cloud.version>
         <spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
         <jwt.version>0.9.1</jwt.version>
-        <swagger.version>3.0.0</swagger.version>
+        <springdoc.version>2.8.8</springdoc.version>
+        <mybatis-plus.version>3.5.15</mybatis-plus.version>
         <pagehelper.boot.version>1.4.7</pagehelper.boot.version>
         <fastjson.version>2.0.61</fastjson.version>
         <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
@@ -47,6 +48,8 @@
         <poi.version>4.1.2</poi.version>
         <commons.io.version>2.21.0</commons.io.version>
         <druid.version>1.2.27</druid.version>
+        <jackson.version>2.21.3</jackson.version>
+        <hutool.version>5.7.16</hutool.version>
     </properties>
 
     <dependencyManagement>
@@ -80,7 +83,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson</groupId>
                 <artifactId>jackson-bom</artifactId>
-                <version>2.21.3</version>
+                <version>${jackson.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -108,37 +111,22 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
-                <version>3.5.15</version>
+                <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-jsqlparser</artifactId>
-                <version>3.5.15</version>
+                <version>${mybatis-plus.version}</version>
                 <scope>compile</scope>
             </dependency>
 
-            <!--swagger-->
+            <!--swagger 已经停止维护了，使用springdoc替代-->
             <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>2.9.2</version>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc.version}</version>
             </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>2.9.2</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>${swagger.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>io.swagger</groupId>
-                        <artifactId>swagger-models</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
+
 
             <!-- 线程传递值 -->
             <dependency>
@@ -162,12 +150,11 @@
             </dependency>
 
 
-
-            <!--糊涂工具-->
+            <!--hutool工具-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
-                <version>5.7.16</version>
+                <version>${hutool.version}</version>
             </dependency>
 
             <!-- io常用工具类 -->

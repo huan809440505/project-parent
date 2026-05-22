@@ -2,7 +2,7 @@ package com.hyl.rock.api.factory;
 
 import com.hyl.rock.api.RemoteLogService;
 import com.hyl.rock.base.Result;
-import com.hyl.rock.domain.SysLogininfor;
+import com.hyl.rock.domain.SysLoginInFor;
 import com.hyl.rock.domain.SysOperLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,7 @@ public class RemoteLogFallbackFactory implements FallbackFactory<RemoteLogServic
             }
 
             @Override
-            public Result<Boolean> saveLogininfor(SysLogininfor sysLogininfor, String source)
+            public Result<Boolean> saveLoginInFor(SysLoginInFor sysLogininfor, String source)
             {
                 return Result.fail("保存登录日志失败:" + throwable.getMessage());
             }

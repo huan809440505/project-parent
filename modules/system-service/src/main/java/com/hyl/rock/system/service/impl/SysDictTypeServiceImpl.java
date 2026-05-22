@@ -5,7 +5,7 @@ import com.hyl.rock.constant.UserConstants;
 import com.hyl.rock.domain.SysDictData;
 import com.hyl.rock.domain.SysDictType;
 import com.hyl.rock.exception.ServiceException;
-import com.hyl.rock.security.utils.DictUtils;
+import com.hyl.rock.system.utils.DictUtils;
 import com.hyl.rock.system.mapper.SysDictDataMapper;
 import com.hyl.rock.system.mapper.SysDictTypeMapper;
 import com.hyl.rock.system.service.ISysDictTypeService;
