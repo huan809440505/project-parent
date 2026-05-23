@@ -1,6 +1,7 @@
 package com.hyl.rock.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hyl.rock.domain.SysErrLog;
 import com.hyl.rock.system.domain.query.SysErrLogQuery;
@@ -20,8 +21,17 @@ public class SysErrLogServiceImpl extends ServiceImpl<SysErrLogMapper, SysErrLog
     }
 
     @Override
-    public List<SysErrLog> listSysErrLog(SysErrLogQuery query){
+    public List<SysErrLog> selectSysErrLogList(SysErrLogQuery query){
         return baseMapper.selectList(new LambdaQueryWrapper<SysErrLog>()
+                .like(StringUtils.isNotBlank(query.getTitle()), SysErrLog::getTitle, query.getTitle())
+                .ge(StringUtils.isNotEmpty(query.getStartTime()),SysErrLog::getCreateTime,query.getStartTime())
+                .le(StringUtils.isNotEmpty(query.getEndTime()),SysErrLog::getCreateTime,query.getEndTime())
+        );
+    }
+
+    @Override
+    public IPage<SysErrLog> selectSysErrLogPage(IPage page, SysErrLogQuery query) {
+        return baseMapper.selectPage(page,new LambdaQueryWrapper<SysErrLog>()
                 .like(StringUtils.isNotBlank(query.getTitle()), SysErrLog::getTitle, query.getTitle())
                 .ge(StringUtils.isNotEmpty(query.getStartTime()),SysErrLog::getCreateTime,query.getStartTime())
                 .le(StringUtils.isNotEmpty(query.getEndTime()),SysErrLog::getCreateTime,query.getEndTime())

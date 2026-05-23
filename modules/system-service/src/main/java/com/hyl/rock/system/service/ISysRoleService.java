@@ -1,6 +1,7 @@
 package com.hyl.rock.system.service;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysRole;
 import com.hyl.rock.system.domain.SysUserRole;
 
@@ -20,6 +21,7 @@ public interface ISysRoleService
      * @return 角色数据集合信息
      */
     public List<SysRole> selectRoleList(SysRole role);
+    public IPage<SysRole> selectRolePage(IPage page, SysRole role);
 
     /**
      * 根据用户ID查询角色列表

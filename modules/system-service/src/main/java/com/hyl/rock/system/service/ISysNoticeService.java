@@ -1,6 +1,7 @@
 package com.hyl.rock.system.service;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.system.domain.SysNotice;
 
 import java.util.List;
@@ -26,6 +27,8 @@ public interface ISysNoticeService
      * @return 公告集合
      */
     public List<SysNotice> selectNoticeList(SysNotice notice);
+
+    public IPage<SysNotice> selectNoticePage(IPage page, SysNotice notice);
 
     /**
      * 新增公告

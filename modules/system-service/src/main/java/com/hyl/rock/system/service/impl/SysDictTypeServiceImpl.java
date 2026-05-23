@@ -1,14 +1,16 @@
 package com.hyl.rock.system.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.constant.UserConstants;
 import com.hyl.rock.domain.SysDictData;
 import com.hyl.rock.domain.SysDictType;
 import com.hyl.rock.exception.ServiceException;
-import com.hyl.rock.system.utils.DictUtils;
 import com.hyl.rock.system.mapper.SysDictDataMapper;
 import com.hyl.rock.system.mapper.SysDictTypeMapper;
 import com.hyl.rock.system.service.ISysDictTypeService;
+import com.hyl.rock.system.utils.DictUtils;
 import com.hyl.rock.utils.StringUtils;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,27 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService
     public List<SysDictType> selectDictTypeList(SysDictType dictType)
     {
         return dictTypeMapper.selectDictTypeList(dictType);
+    }
+
+    @Override
+    public IPage<SysDictType> selectDictTypePage(IPage page, SysDictType dictType) {
+
+        String beginTime = "";
+        if(dictType.getParams().get("beginTime")!=null){
+            beginTime = dictType.getParams().get("beginTime").toString();
+        }
+        String endTime = "";
+        if(dictType.getParams().get("endTime")!=null){
+            endTime = dictType.getParams().get("endTime").toString();
+        }
+
+        return dictTypeMapper.selectPage(page,new LambdaQueryWrapper<SysDictType>()
+                .like(StringUtils.isNotEmpty(dictType.getDictName()),SysDictType::getDictName,dictType.getDictName())
+                .eq(StringUtils.isNotEmpty(dictType.getStatus()),SysDictType::getStatus,dictType.getStatus())
+                .like(StringUtils.isNotEmpty(dictType.getDictType()),SysDictType::getDictType,dictType.getDictType())
+                .ge(StringUtils.isNotEmpty(beginTime),SysDictType::getCreateTime,dictType.getCreateTime())
+                .le(StringUtils.isNotEmpty(endTime),SysDictType::getCreateTime,dictType.getCreateTime())
+        );
     }
 
     /**

@@ -1,9 +1,12 @@
 package com.hyl.rock.system.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysLoginLog;
 import com.hyl.rock.system.mapper.SysLoginLogMapper;
 import com.hyl.rock.system.service.ISysLoginLogService;
+import com.hyl.rock.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +44,26 @@ public class SysLoginLogServiceImpl implements ISysLoginLogService
     public List<SysLoginLog> selectLoginLogList(SysLoginLog loginInFor)
     {
         return loginInForMapper.selectLoginLogList(loginInFor);
+    }
+
+    @Override
+    public IPage<SysLoginLog> selectLoginLogPage(IPage page, SysLoginLog loginLog) {
+
+        String beginTime = "";
+        if(loginLog.getParams().get("beginTime")!=null){
+            beginTime = loginLog.getParams().get("beginTime").toString();
+        }
+        String endTime = "";
+        if(loginLog.getParams().get("endTime")!=null){
+            endTime = loginLog.getParams().get("endTime").toString();
+        }
+        return loginInForMapper.selectPage(page,new LambdaQueryWrapper<SysLoginLog>()
+                .like(StringUtils.isNotBlank(loginLog.getIpaddr()), SysLoginLog::getIpaddr, loginLog.getIpaddr())
+                .eq(StringUtils.isNotBlank(loginLog.getStatus()), SysLoginLog::getStatus, loginLog.getStatus())
+                .like(StringUtils.isNotBlank(loginLog.getUserName()), SysLoginLog::getUserName, loginLog.getUserName())
+                .ge(StringUtils.isNotEmpty(beginTime),SysLoginLog::getCreateTime,beginTime)
+                .le(StringUtils.isNotEmpty(endTime),SysLoginLog::getCreateTime,endTime)
+        );
     }
 
     /**

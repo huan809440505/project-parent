@@ -1,6 +1,8 @@
 package com.hyl.rock.system.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.constant.UserConstants;
 import com.hyl.rock.exception.ServiceException;
 import com.hyl.rock.system.domain.SysPost;
@@ -36,6 +38,15 @@ public class SysPostServiceImpl implements ISysPostService
     public List<SysPost> selectPostList(SysPost post)
     {
         return postMapper.selectPostList(post);
+    }
+
+    @Override
+    public IPage<SysPost> selectPostPage(IPage page, SysPost post) {
+        return postMapper.selectPage(page, new LambdaQueryWrapper<SysPost>()
+                .like(StringUtils.isNotEmpty(post.getPostCode()),SysPost::getPostCode,post.getPostCode())
+                .eq(StringUtils.isNotEmpty(post.getStatus()),SysPost::getStatus,post.getStatus())
+                .like(StringUtils.isNotEmpty(post.getPostName()),SysPost::getPostName,post.getPostName())
+        );
     }
 
     /**

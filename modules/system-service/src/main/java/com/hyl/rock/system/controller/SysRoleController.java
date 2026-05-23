@@ -1,10 +1,11 @@
 package com.hyl.rock.system.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.hyl.rock.base.Result;
 import com.hyl.rock.domain.SysDept;
 import com.hyl.rock.domain.SysRole;
 import com.hyl.rock.domain.SysUser;
-import com.hyl.rock.entity.page.TableDataInfo;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
@@ -14,7 +15,6 @@ import com.hyl.rock.system.service.ISysRoleService;
 import com.hyl.rock.system.service.ISysUserService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
-import com.hyl.rock.web.domain.AjaxResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,7 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 角色信息
@@ -44,11 +46,10 @@ public class SysRoleController extends BaseController
 
     @Operation(summary = "获取角色列表")
     @GetMapping("/list")
-    public TableDataInfo list(SysRole role)
+    public Result<IPage<SysRole>> list(IPage page, SysRole role)
     {
-        startPage();
-        List<SysRole> list = roleService.selectRoleList(role);
-        return getDataTable(list);
+        IPage<SysRole> pageResult = roleService.selectRolePage(page,role);
+        return success(pageResult);
     }
 
     @Operation(summary = "导出角色列表")
@@ -57,7 +58,7 @@ public class SysRoleController extends BaseController
     public void export(HttpServletResponse response, SysRole role)
     {
         List<SysRole> list = roleService.selectRoleList(role);
-        ExcelUtil<SysRole> util = new ExcelUtil<SysRole>(SysRole.class);
+        ExcelUtil<SysRole> util = new ExcelUtil<>(SysRole.class);
         util.exportExcel(response, list, "角色数据");
     }
 
@@ -66,7 +67,7 @@ public class SysRoleController extends BaseController
      */
     @Operation(summary = "根据角色编号获取详细信息")
     @GetMapping(value = "/{roleId}")
-    public AjaxResult getInfo(@PathVariable Long roleId)
+    public Result<SysRole> getInfo(@PathVariable Long roleId)
     {
         roleService.checkRoleDataScope(roleId);
         return success(roleService.selectRoleById(roleId));
@@ -78,7 +79,7 @@ public class SysRoleController extends BaseController
     @Operation(summary = "新增角色")
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysRole role)
+    public Result<String> add(@Validated @RequestBody SysRole role)
     {
         if (!roleService.checkRoleNameUnique(role))
         {
@@ -99,7 +100,7 @@ public class SysRoleController extends BaseController
     @Operation(summary = "修改保存角色")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysRole role)
+    public Result<String> edit(@Validated @RequestBody SysRole role)
     {
         roleService.checkRoleAllowed(role);
         roleService.checkRoleDataScope(role.getRoleId());
@@ -121,7 +122,7 @@ public class SysRoleController extends BaseController
     @Operation(summary = "修改保存数据权限")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping("/dataScope")
-    public AjaxResult dataScope(@RequestBody SysRole role)
+    public Result<String> dataScope(@RequestBody SysRole role)
     {
         roleService.checkRoleAllowed(role);
         roleService.checkRoleDataScope(role.getRoleId());
@@ -134,7 +135,7 @@ public class SysRoleController extends BaseController
     @Operation(summary = "状态修改")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
-    public AjaxResult changeStatus(@RequestBody SysRole role)
+    public Result<String> changeStatus(@RequestBody SysRole role)
     {
         roleService.checkRoleAllowed(role);
         roleService.checkRoleDataScope(role.getRoleId());
@@ -148,7 +149,7 @@ public class SysRoleController extends BaseController
     @Operation(summary = "删除角色")
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{roleIds}")
-    public AjaxResult remove(@PathVariable Long[] roleIds)
+    public Result<String> remove(@PathVariable Long[] roleIds)
     {
         return toAjax(roleService.deleteRoleByIds(roleIds));
     }
@@ -158,7 +159,7 @@ public class SysRoleController extends BaseController
      */
     @Operation(summary = "获取角色选择框列表")
     @GetMapping("/optionSelect")
-    public AjaxResult optionSelect()
+    public Result<List<SysRole>> optionSelect()
     {
         return success(roleService.selectRoleAll());
     }
@@ -168,11 +169,10 @@ public class SysRoleController extends BaseController
      */
     @Operation(summary = "查询已分配用户角色列表")
     @GetMapping("/authUser/allocatedList")
-    public TableDataInfo allocatedList(SysUser user)
+    public Result<IPage<SysUser>> allocatedList(IPage page,SysUser user)
     {
-        startPage();
-        List<SysUser> list = userService.selectAllocatedList(user);
-        return getDataTable(list);
+        IPage<SysUser> pageResult = userService.selectAllocatedPage(page,user);
+        return success(pageResult);
     }
 
     /**
@@ -180,11 +180,10 @@ public class SysRoleController extends BaseController
      */
     @Operation(summary = "查询未分配用户角色列表")
     @GetMapping("/authUser/unallocatedList")
-    public TableDataInfo unallocatedList(SysUser user)
+    public Result<IPage<SysUser>> unallocatedList(IPage page,SysUser user)
     {
-        startPage();
-        List<SysUser> list = userService.selectUnallocatedList(user);
-        return getDataTable(list);
+        IPage<SysUser> pageResult = userService.selectUnallocatedPage(page,user);
+        return success(pageResult);
     }
 
     /**
@@ -193,7 +192,7 @@ public class SysRoleController extends BaseController
     @Operation(summary = "取消授权用户")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PutMapping("/authUser/cancel")
-    public AjaxResult cancelAuthUser(@RequestBody SysUserRole userRole)
+    public Result<String> cancelAuthUser(@RequestBody SysUserRole userRole)
     {
         return toAjax(roleService.deleteAuthUser(userRole));
     }
@@ -204,7 +203,7 @@ public class SysRoleController extends BaseController
     @Operation(summary = "批量取消授权用户")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PutMapping("/authUser/cancelAll")
-    public AjaxResult cancelAuthUserAll(Long roleId, Long[] userIds)
+    public Result<String> cancelAuthUserAll(Long roleId, Long[] userIds)
     {
         return toAjax(roleService.deleteAuthUsers(roleId, userIds));
     }
@@ -215,7 +214,7 @@ public class SysRoleController extends BaseController
     @Operation(summary = "批量选择用户授权")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PutMapping("/authUser/selectAll")
-    public AjaxResult selectAuthUserAll(Long roleId, Long[] userIds)
+    public Result<String> selectAuthUserAll(Long roleId, Long[] userIds)
     {
         roleService.checkRoleDataScope(roleId);
         return toAjax(roleService.insertAuthUsers(roleId, userIds));
@@ -226,11 +225,11 @@ public class SysRoleController extends BaseController
      */
     @Operation(summary = "获取对应角色部门树列表")
     @GetMapping(value = "/deptTree/{roleId}")
-    public AjaxResult deptTree(@PathVariable("roleId") Long roleId)
+    public Result<Map<String, Object>> deptTree(@PathVariable("roleId") Long roleId)
     {
-        AjaxResult ajax = AjaxResult.success();
+        Map<String, Object> ajax = new HashMap<>();
         ajax.put("checkedKeys", deptService.selectDeptListByRoleId(roleId));
         ajax.put("depts", deptService.selectDeptTreeList(new SysDept()));
-        return ajax;
+        return success(ajax);
     }
 }

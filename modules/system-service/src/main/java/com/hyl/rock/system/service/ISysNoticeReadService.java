@@ -1,6 +1,7 @@
 package com.hyl.rock.system.service;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.system.domain.SysNotice;
 
 import java.util.List;
@@ -52,7 +53,7 @@ public interface ISysNoticeReadService
      * @param searchValue 搜索值
      * @return 已读用户列表
      */
-    public List<Map<String, Object>> selectReadUsersByNoticeId(Long noticeId, String searchValue);
+    public IPage<Map<String, Object>> selectReadUsersByNoticeId(IPage page, Long noticeId, String searchValue);
 
     /**
      * 删除公告时清理对应已读记录

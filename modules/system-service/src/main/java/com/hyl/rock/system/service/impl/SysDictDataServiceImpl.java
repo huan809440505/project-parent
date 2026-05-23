@@ -1,10 +1,13 @@
 package com.hyl.rock.system.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysDictData;
-import com.hyl.rock.system.utils.DictUtils;
 import com.hyl.rock.system.mapper.SysDictDataMapper;
 import com.hyl.rock.system.service.ISysDictDataService;
+import com.hyl.rock.system.utils.DictUtils;
+import com.hyl.rock.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +33,21 @@ public class SysDictDataServiceImpl implements ISysDictDataService
     public List<SysDictData> selectDictDataList(SysDictData dictData)
     {
         return dictDataMapper.selectDictDataList(dictData);
+    }
+
+    /**
+     * 分页查询字典数据
+     * @param page
+     * @param dictData
+     * @return
+     */
+    @Override
+    public IPage<SysDictData> selectDictDataPage(IPage page, SysDictData dictData) {
+        return dictDataMapper.selectPage(page,new LambdaQueryWrapper<SysDictData>()
+                .eq(SysDictData::getStatus,"0")
+                .eq(StringUtils.isNotEmpty(dictData.getDictType()),SysDictData::getDictType,dictData.getDictType())
+                .orderByAsc(SysDictData::getDictSort)
+        );
     }
 
     /**

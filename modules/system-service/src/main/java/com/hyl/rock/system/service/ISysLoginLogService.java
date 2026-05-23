@@ -1,6 +1,7 @@
 package com.hyl.rock.system.service;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysLoginLog;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public interface ISysLoginLogService
      * @return 登录记录集合
      */
     public List<SysLoginLog> selectLoginLogList(SysLoginLog loginLog);
+
+    public IPage<SysLoginLog> selectLoginLogPage(IPage page, SysLoginLog loginLog);
 
     /**
      * 批量删除系统登录日志

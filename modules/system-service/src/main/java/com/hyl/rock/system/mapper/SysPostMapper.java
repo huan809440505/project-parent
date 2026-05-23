@@ -1,6 +1,7 @@
 package com.hyl.rock.system.mapper;
 
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hyl.rock.system.domain.SysPost;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,8 +12,7 @@ import java.util.List;
  * 
  */
 @Mapper
-public interface SysPostMapper
-{
+public interface SysPostMapper extends BaseMapper<SysPost> {
     /**
      * 查询岗位数据集合
      * 

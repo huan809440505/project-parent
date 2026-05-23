@@ -1,6 +1,7 @@
 package com.hyl.rock.system.service.impl;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.system.domain.SysNotice;
 import com.hyl.rock.system.domain.SysNoticeRead;
 import com.hyl.rock.system.mapper.SysNoticeReadMapper;
@@ -68,9 +69,8 @@ public class SysNoticeReadServiceImpl implements ISysNoticeReadService
      * 查询已阅读某公告的用户列表
      */
     @Override
-    public List<Map<String, Object>> selectReadUsersByNoticeId(Long noticeId, String searchValue)
-    {
-        return noticeReadMapper.selectReadUsersByNoticeId(noticeId, searchValue);
+    public IPage<Map<String, Object>> selectReadUsersByNoticeId(IPage page, Long noticeId, String searchValue) {
+        return noticeReadMapper.selectReadUsersByNoticeId(page,noticeId, searchValue);
     }
 
     /**

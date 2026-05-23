@@ -1,6 +1,7 @@
 package com.hyl.rock.system.mapper;
 
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hyl.rock.domain.SysLoginLog;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,8 +12,7 @@ import java.util.List;
  * 
  */
 @Mapper
-public interface SysLoginLogMapper
-{
+public interface SysLoginLogMapper extends BaseMapper<SysLoginLog> {
     /**
      * 新增系统登录日志
      * 

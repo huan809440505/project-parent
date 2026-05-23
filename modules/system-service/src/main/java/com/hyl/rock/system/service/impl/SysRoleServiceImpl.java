@@ -1,6 +1,7 @@
 package com.hyl.rock.system.service.impl;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.constant.UserConstants;
 import com.hyl.rock.domain.SysRole;
 import com.hyl.rock.exception.ServiceException;
@@ -50,6 +51,11 @@ public class SysRoleServiceImpl implements ISysRoleService
     public List<SysRole> selectRoleList(SysRole role)
     {
         return roleMapper.selectRoleList(role);
+    }
+
+    @Override
+    public IPage<SysRole> selectRolePage(IPage page, SysRole role) {
+        return roleMapper.selectRolePage(page, role);
     }
 
     /**

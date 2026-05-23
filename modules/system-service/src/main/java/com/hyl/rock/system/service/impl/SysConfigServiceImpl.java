@@ -1,5 +1,8 @@
 package com.hyl.rock.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hyl.rock.constant.CacheConstants;
 import com.hyl.rock.constant.UserConstants;
 import com.hyl.rock.exception.ServiceException;
@@ -45,11 +48,8 @@ public class SysConfigServiceImpl implements ISysConfigService
      * @return 参数配置信息
      */
     @Override
-    public SysConfig selectConfigById(Long configId)
-    {
-        SysConfig config = new SysConfig();
-        config.setConfigId(configId);
-        return configMapper.selectConfig(config);
+    public SysConfig selectConfigById(Long configId) {
+        return configMapper.selectById(configId);
     }
 
     /**
@@ -59,16 +59,13 @@ public class SysConfigServiceImpl implements ISysConfigService
      * @return 参数键值
      */
     @Override
-    public String selectConfigByKey(String configKey)
-    {
+    public String selectConfigByKey(String configKey) {
         String configValue = Convert.toStr(redisService.getCacheObject(getCacheKey(configKey)));
         if (StringUtils.isNotEmpty(configValue))
         {
             return configValue;
         }
-        SysConfig config = new SysConfig();
-        config.setConfigKey(configKey);
-        SysConfig retConfig = configMapper.selectConfig(config);
+        SysConfig retConfig = configMapper.selectOne(new LambdaQueryWrapper<SysConfig>().eq(SysConfig::getConfigKey, configKey));
         if (StringUtils.isNotNull(retConfig))
         {
             redisService.setCacheObject(getCacheKey(configKey), retConfig.getConfigValue());
@@ -77,16 +74,28 @@ public class SysConfigServiceImpl implements ISysConfigService
         return StringUtils.EMPTY;
     }
 
+    @Override
+    public List<SysConfig> selectConfigList(SysConfig config){
+        return configMapper.selectList(new LambdaQueryWrapper<SysConfig>().
+                like(StringUtils.isNotEmpty(config.getConfigName()), SysConfig::getConfigName, config.getConfigName())
+                .eq(StringUtils.isNotEmpty(config.getConfigType()), SysConfig::getConfigType, config.getConfigType())
+                .like(StringUtils.isNotEmpty(config.getConfigKey()), SysConfig::getConfigKey, config.getConfigKey())
+        );
+    }
+
     /**
      * 查询参数配置列表
-     * 
+     * @param page 分页参数
      * @param config 参数配置信息
      * @return 参数配置集合
      */
     @Override
-    public List<SysConfig> selectConfigList(SysConfig config)
-    {
-        return configMapper.selectConfigList(config);
+    public IPage<SysConfig> selectConfigList(Page page, SysConfig config) {
+        return configMapper.selectPage(page, new LambdaQueryWrapper<SysConfig>().
+                like(StringUtils.isNotEmpty(config.getConfigName()), SysConfig::getConfigName, config.getConfigName())
+                .eq(StringUtils.isNotEmpty(config.getConfigType()), SysConfig::getConfigType, config.getConfigType())
+                .like(StringUtils.isNotEmpty(config.getConfigKey()), SysConfig::getConfigKey, config.getConfigKey())
+        );
     }
 
     /**

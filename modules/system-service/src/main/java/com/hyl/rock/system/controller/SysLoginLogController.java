@@ -1,16 +1,16 @@
 package com.hyl.rock.system.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.hyl.rock.base.Result;
 import com.hyl.rock.constant.CacheConstants;
 import com.hyl.rock.domain.SysLoginLog;
-import com.hyl.rock.entity.page.TableDataInfo;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.redis.service.RedisService;
 import com.hyl.rock.system.service.ISysLoginLogService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
-import com.hyl.rock.web.domain.AjaxResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,11 +36,10 @@ public class SysLoginLogController extends BaseController
 
     @Operation(summary = "获取系统访问记录列表")
     @GetMapping("/list")
-    public TableDataInfo list(SysLoginLog loginInFor)
+    public Result<IPage<SysLoginLog>> list(IPage page, SysLoginLog loginInFor)
     {
-        startPage();
-        List<SysLoginLog> list = loginInForService.selectLoginLogList(loginInFor);
-        return getDataTable(list);
+        IPage<SysLoginLog> pageResult = loginInForService.selectLoginLogPage(page,loginInFor);
+        return success(pageResult);
     }
 
     @Operation(summary = "导出登录日志")
@@ -56,7 +55,7 @@ public class SysLoginLogController extends BaseController
     @Operation(summary = "删除登录日志")
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{infoIds}")
-    public AjaxResult remove(@PathVariable Long[] infoIds)
+    public Result<String> remove(@PathVariable Long[] infoIds)
     {
         return toAjax(loginInForService.deleteLoginLogByIds(infoIds));
     }
@@ -64,7 +63,7 @@ public class SysLoginLogController extends BaseController
     @Operation(summary = "清空登录日志")
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/clean")
-    public AjaxResult clean()
+    public Result<String> clean()
     {
         loginInForService.cleanLoginLog();
         return success();
@@ -73,7 +72,7 @@ public class SysLoginLogController extends BaseController
     @Operation(summary = "账户解锁")
     @Log(title = "账户解锁", businessType = BusinessType.OTHER)
     @GetMapping("/unlock/{userName}")
-    public AjaxResult unlock(@PathVariable("userName") String userName)
+    public Result<String> unlock(@PathVariable("userName") String userName)
     {
         redisService.deleteObject(CacheConstants.PWD_ERR_CNT_KEY + userName);
         return success();
@@ -81,7 +80,7 @@ public class SysLoginLogController extends BaseController
 
     @Operation(summary = "添加登陆日志")
     @PostMapping
-    public AjaxResult add(@RequestBody SysLoginLog loginInFor)
+    public Result<String> add(@RequestBody SysLoginLog loginInFor)
     {
         return toAjax(loginInForService.insertLoginLog(loginInFor));
     }

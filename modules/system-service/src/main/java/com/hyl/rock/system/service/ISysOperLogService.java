@@ -1,6 +1,7 @@
 package com.hyl.rock.system.service;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysOperLog;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface ISysOperLogService
      * @param operLog 操作日志对象
      * @return 结果
      */
-    public int insertOperlog(SysOperLog operLog);
+    public int insertOperLog(SysOperLog operLog);
 
     /**
      * 查询系统操作日志集合
@@ -26,6 +27,7 @@ public interface ISysOperLogService
      * @return 操作日志集合
      */
     public List<SysOperLog> selectOperLogList(SysOperLog operLog);
+    public IPage<SysOperLog> selectOperLogPage(IPage page, SysOperLog operLog);
 
     /**
      * 批量删除系统操作日志

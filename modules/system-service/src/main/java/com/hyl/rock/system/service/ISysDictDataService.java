@@ -1,6 +1,7 @@
 package com.hyl.rock.system.service;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysDictData;
 
 import java.util.List;
@@ -18,6 +19,14 @@ public interface ISysDictDataService
      * @return 字典数据集合信息
      */
     public List<SysDictData> selectDictDataList(SysDictData dictData);
+
+    /**
+     * 分页查询字典数据
+     * @param page
+     * @param dictData
+     * @return
+     */
+    public IPage<SysDictData> selectDictDataPage(IPage page, SysDictData dictData);
 
     /**
      * 根据字典类型和字典键值查询字典数据信息

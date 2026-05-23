@@ -1,6 +1,7 @@
 package com.hyl.rock.system.mapper;
 
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hyl.rock.domain.SysDictType;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,8 +12,7 @@ import java.util.List;
  * 
  */
 @Mapper
-public interface SysDictTypeMapper
-{
+public interface SysDictTypeMapper extends BaseMapper<SysDictType> {
     /**
      * 根据条件分页查询字典类型
      * 

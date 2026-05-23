@@ -88,6 +88,7 @@
                 <scope>import</scope>
             </dependency>
 
+            <!--druid 依赖配置-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-3-starter</artifactId>
@@ -148,7 +149,6 @@
                 <artifactId>fastjson2</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-
 
             <!--hutool工具-->
             <dependency>

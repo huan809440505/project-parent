@@ -30,7 +30,7 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
         String requestPath = request.getPath().value(); // 获取请求路径（如/api/user/login）
-        // 判断请求是否在“无需认证的路径”中，若是则直接放行
+        // 判断请求是否在白名单中，若是则直接放行
         if (isIgnorePath(requestPath)) {
             return chain.filter(exchange);
         }

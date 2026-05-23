@@ -1,6 +1,7 @@
 package com.hyl.rock.system.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.base.Result;
 import com.hyl.rock.domain.SysDept;
 import com.hyl.rock.domain.SysRole;
@@ -10,6 +11,7 @@ import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.service.TokenService;
 import com.hyl.rock.security.utils.SecurityUtils;
+import com.hyl.rock.system.domain.vo.TreeSelect;
 import com.hyl.rock.system.service.*;
 import com.hyl.rock.text.Convert;
 import com.hyl.rock.utils.DateUtils;
@@ -17,7 +19,6 @@ import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import com.hyl.rock.web.domain.AjaxResult;
-import com.hyl.rock.entity.page.TableDataInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,9 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -68,11 +67,10 @@ public class SysUserController extends BaseController
      */
     @Operation(summary = "获取用户列表")
     @GetMapping("/list")
-    public TableDataInfo list(SysUser user)
+    public Result<IPage<SysUser>> list(IPage page, SysUser user)
     {
-        startPage();
-        List<SysUser> list = userService.selectUserList(user);
-        return getDataTable(list);
+        IPage<SysUser> pageResult = userService.selectUserPage(page,user);
+        return success(pageResult);
     }
 
     @Operation(summary = "导出用户列表")
@@ -81,14 +79,14 @@ public class SysUserController extends BaseController
     public void export(HttpServletResponse response, SysUser user)
     {
         List<SysUser> list = userService.selectUserList(user);
-        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+        ExcelUtil<SysUser> util = new ExcelUtil<>(SysUser.class);
         util.exportExcel(response, list, "用户数据");
     }
 
     @Operation(summary = "导入用户列表")
     @Log(title = "用户管理", businessType = BusinessType.IMPORT)
     @PostMapping("/importData")
-    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
+    public Result<String> importData(MultipartFile file, boolean updateSupport) throws Exception
     {
         ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
         List<SysUser> userList = util.importExcel(file.getInputStream());
@@ -164,7 +162,7 @@ public class SysUserController extends BaseController
      */
     @Operation(summary = "获取用户信息")
     @GetMapping("getInfo")
-    public AjaxResult getInfo()
+    public Result<Map<String,Object>> getInfo()
     {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         SysUser user = loginUser.getSysUser();
@@ -177,14 +175,14 @@ public class SysUserController extends BaseController
             loginUser.setPermissions(permissions);
             tokenService.refreshToken(loginUser);
         }
-        AjaxResult ajax = AjaxResult.success();
+        Map<String,Object> ajax = new HashMap<>();
         ajax.put("user", user);
         ajax.put("roles", roles);
         ajax.put("permissions", permissions);
         ajax.put("pwdChrtype", getSysAccountChrtype());
         ajax.put("isDefaultModifyPwd", initPasswordIsModify(user.getPwdUpdateDate()));
         ajax.put("isPasswordExpired", passwordIsExpiration(user.getPwdUpdateDate()));
-        return ajax;
+        return success(ajax);
     }
 
     // 获取用户密码自定义配置规则
@@ -222,9 +220,9 @@ public class SysUserController extends BaseController
      */
     @Operation(summary = "根据用户编号获取详细信息")
     @GetMapping(value = { "/", "/{userId}" })
-    public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId)
+    public Result<Map<String,Object>> getInfo(@PathVariable(value = "userId", required = false) Long userId)
     {
-        AjaxResult ajax = AjaxResult.success();
+        Map<String,Object> ajax = new HashMap<>();
         if (StringUtils.isNotNull(userId))
         {
             userService.checkUserDataScope(userId);
@@ -236,7 +234,7 @@ public class SysUserController extends BaseController
         List<SysRole> roles = roleService.selectRoleAll();
         ajax.put("roles", SecurityUtils.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
         ajax.put("posts", postService.selectPostAll());
-        return ajax;
+        return success(ajax);
     }
 
     /**
@@ -245,7 +243,7 @@ public class SysUserController extends BaseController
     @Operation(summary = "新增用户")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysUser user)
+    public Result<String> add(@Validated @RequestBody SysUser user)
     {
         deptService.checkDeptDataScope(user.getDeptId());
         roleService.checkRoleDataScope(user.getRoleIds());
@@ -272,7 +270,7 @@ public class SysUserController extends BaseController
     @Operation(summary = "修改用户")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysUser user)
+    public Result<String> edit(@Validated @RequestBody SysUser user)
     {
         userService.checkUserAllowed(user);
         userService.checkUserDataScope(user.getUserId());
@@ -300,7 +298,7 @@ public class SysUserController extends BaseController
     @Operation(summary = "删除用户")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{userIds}")
-    public AjaxResult remove(@PathVariable Long[] userIds)
+    public Result<String> remove(@PathVariable Long[] userIds)
     {
         if (ArrayUtils.contains(userIds, SecurityUtils.getUserId()))
         {
@@ -315,7 +313,7 @@ public class SysUserController extends BaseController
     @Operation(summary = "重置密码")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/resetPwd")
-    public AjaxResult resetPwd(@RequestBody SysUser user)
+    public Result<String> resetPwd(@RequestBody SysUser user)
     {
         userService.checkUserAllowed(user);
         userService.checkUserDataScope(user.getUserId());
@@ -330,7 +328,7 @@ public class SysUserController extends BaseController
     @Operation(summary = "状态修改")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
-    public AjaxResult changeStatus(@RequestBody SysUser user)
+    public Result<String> changeStatus(@RequestBody SysUser user)
     {
         userService.checkUserAllowed(user);
         userService.checkUserDataScope(user.getUserId());
@@ -343,14 +341,14 @@ public class SysUserController extends BaseController
      */
     @Operation(summary = "根据用户编号获取授权角色")
     @GetMapping("/authRole/{userId}")
-    public AjaxResult authRole(@PathVariable("userId") Long userId)
+    public Result<Map<String, Object>> authRole(@PathVariable("userId") Long userId)
     {
-        AjaxResult ajax = AjaxResult.success();
+        Map<String,Object> ajax = new HashMap<>();
         SysUser user = userService.selectUserById(userId);
         List<SysRole> roles = roleService.selectRolesByUserId(userId);
         ajax.put("user", user);
         ajax.put("roles", SecurityUtils.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
-        return ajax;
+        return success(ajax);
     }
 
     /**
@@ -359,7 +357,7 @@ public class SysUserController extends BaseController
     @Operation(summary = "用户授权角色")
     @Log(title = "用户管理", businessType = BusinessType.GRANT)
     @PutMapping("/authRole")
-    public AjaxResult insertAuthRole(Long userId, Long[] roleIds)
+    public Result<String> insertAuthRole(Long userId, Long[] roleIds)
     {
         userService.checkUserDataScope(userId);
         roleService.checkRoleDataScope(roleIds);
@@ -372,7 +370,7 @@ public class SysUserController extends BaseController
      */
     @Operation(summary = "获取部门树列表")
     @GetMapping("/deptTree")
-    public AjaxResult deptTree(SysDept dept)
+    public Result<List<TreeSelect>> deptTree(SysDept dept)
     {
         return success(deptService.selectDeptTreeList(dept));
     }

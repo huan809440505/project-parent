@@ -1,7 +1,8 @@
 package com.hyl.rock.system.controller;
 
 
-import com.hyl.rock.entity.page.TableDataInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.hyl.rock.base.Result;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
@@ -10,14 +11,15 @@ import com.hyl.rock.system.service.ISysNoticeReadService;
 import com.hyl.rock.system.service.ISysNoticeService;
 import com.hyl.rock.text.Convert;
 import com.hyl.rock.web.controller.BaseController;
-import com.hyl.rock.web.domain.AjaxResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 公告 信息操作处理
@@ -39,11 +41,10 @@ public class SysNoticeController extends BaseController
      */
     @Operation(summary = "获取通知公告列表")
     @GetMapping("/list")
-    public TableDataInfo list(SysNotice notice)
+    public Result<IPage<SysNotice>> list(IPage page, SysNotice notice)
     {
-        startPage();
-        List<SysNotice> list = noticeService.selectNoticeList(notice);
-        return getDataTable(list);
+        IPage<SysNotice> pageResult = noticeService.selectNoticePage(page,notice);
+        return success(pageResult);
     }
 
     /**
@@ -51,7 +52,7 @@ public class SysNoticeController extends BaseController
      */
     @Operation(summary = "根据通知公告编号获取详细信息")
     @GetMapping(value = "/{noticeId}")
-    public AjaxResult getInfo(@PathVariable Long noticeId)
+    public Result<SysNotice> getInfo(@PathVariable Long noticeId)
     {
         return success(noticeService.selectNoticeById(noticeId));
     }
@@ -62,7 +63,7 @@ public class SysNoticeController extends BaseController
     @Operation(summary = "新增通知公告")
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysNotice notice)
+    public Result<String> add(@Validated @RequestBody SysNotice notice)
     {
         notice.setCreateBy(SecurityUtils.getUsername());
         return toAjax(noticeService.insertNotice(notice));
@@ -74,7 +75,7 @@ public class SysNoticeController extends BaseController
     @Operation(summary = "修改通知公告")
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysNotice notice)
+    public Result<String> edit(@Validated @RequestBody SysNotice notice)
     {
         notice.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(noticeService.updateNotice(notice));
@@ -86,14 +87,15 @@ public class SysNoticeController extends BaseController
     @Operation(summary = "首页顶部公告列表")
     @GetMapping("/listTop")
     @ResponseBody
-    public AjaxResult listTop()
+    public Result<Map<String, Object>> listTop()
     {
         Long userId = SecurityUtils.getUserId();
         List<SysNotice> list = noticeReadService.selectNoticeListWithReadStatus(userId, 5);
         long unreadCount = list.stream().filter(n -> !n.getIsRead()).count();
-        AjaxResult result = AjaxResult.success(list);
-        result.put("unreadCount", unreadCount);
-        return result;
+        Map<String,Object> map = new HashMap<>();
+        map.put("unreadCount", unreadCount);
+        map.put("data", list);
+        return success(map);
     }
 
     /**
@@ -102,7 +104,7 @@ public class SysNoticeController extends BaseController
     @Operation(summary = "标记公告已读")
     @PostMapping("/markRead")
     @ResponseBody
-    public AjaxResult markRead(Long noticeId)
+    public Result<String> markRead(Long noticeId)
     {
         Long userId = SecurityUtils.getUserId();
         noticeReadService.markRead(noticeId, userId);
@@ -115,7 +117,7 @@ public class SysNoticeController extends BaseController
     @Operation(summary = "批量标记已读")
     @PostMapping("/markReadAll")
     @ResponseBody
-    public AjaxResult markReadAll(String ids)
+    public Result<String> markReadAll(String ids)
     {
         Long userId = SecurityUtils.getUserId();
         Long[] noticeIds = Convert.toLongArray(ids);
@@ -129,11 +131,10 @@ public class SysNoticeController extends BaseController
     @Operation(summary = "已读用户列表数据")
     @GetMapping("/readUsers/list")
     @ResponseBody
-    public TableDataInfo readUsersList(Long noticeId, String searchValue)
+    public Result<IPage<Map<String, Object>>> readUsersList(IPage page,Long noticeId, String searchValue)
     {
-        startPage();
-        List<?> list = noticeReadService.selectReadUsersByNoticeId(noticeId, searchValue);
-        return getDataTable(list);
+        IPage<Map<String, Object>> pageResult = noticeReadService.selectReadUsersByNoticeId(page,noticeId, searchValue);
+        return success(pageResult);
     }
 
     /**
@@ -142,7 +143,7 @@ public class SysNoticeController extends BaseController
     @Operation(summary = "删除通知公告")
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @DeleteMapping("/{noticeIds}")
-    public AjaxResult remove(@PathVariable Long[] noticeIds)
+    public Result<String> remove(@PathVariable Long[] noticeIds)
     {
         noticeReadService.deleteByNoticeIds(noticeIds);
         return toAjax(noticeService.deleteNoticeByIds(noticeIds));

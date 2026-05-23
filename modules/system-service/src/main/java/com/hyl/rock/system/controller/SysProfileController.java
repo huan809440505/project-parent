@@ -16,7 +16,6 @@ import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.utils.file.FileTypeUtils;
 import com.hyl.rock.utils.file.MimeTypeUtils;
 import com.hyl.rock.web.controller.BaseController;
-import com.hyl.rock.web.domain.AjaxResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -49,14 +49,15 @@ public class SysProfileController extends BaseController
      */
     @Operation(summary = "个人信息")
     @GetMapping
-    public AjaxResult profile()
+    public Result<Map<String, Object>> profile()
     {
         String username = SecurityUtils.getUsername();
         SysUser user = userService.selectUserByUserName(username);
-        AjaxResult ajax = AjaxResult.success(user);
-        ajax.put("roleGroup", userService.selectUserRoleGroup(username));
-        ajax.put("postGroup", userService.selectUserPostGroup(username));
-        return ajax;
+        Map<String, Object> map = new HashMap<>();
+        map.put("data",user);
+        map.put("roleGroup", userService.selectUserRoleGroup(username));
+        map.put("postGroup", userService.selectUserPostGroup(username));
+        return success(map);
     }
 
     /**
@@ -65,7 +66,7 @@ public class SysProfileController extends BaseController
     @Operation(summary = "修改用户")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult updateProfile(@RequestBody SysUser user)
+    public Result<String> updateProfile(@RequestBody SysUser user)
     {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         SysUser currentUser = loginUser.getSysUser();
@@ -96,7 +97,7 @@ public class SysProfileController extends BaseController
     @Operation(summary = "重置密码")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping("/updatePwd")
-    public AjaxResult updatePwd(@RequestBody Map<String, String> params)
+    public Result<String> updatePwd(@RequestBody Map<String, String> params)
     {
         String oldPassword = params.get("oldPassword");
         String newPassword = params.get("newPassword");
@@ -129,7 +130,7 @@ public class SysProfileController extends BaseController
     @Operation(summary = "头像上传")
     @Log(title = "用户头像", businessType = BusinessType.UPDATE)
     @PostMapping("/avatar")
-    public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file)
+    public Result<String> avatar(@RequestParam("avatarfile") MultipartFile file)
     {
         if (!file.isEmpty())
         {
@@ -152,12 +153,10 @@ public class SysProfileController extends BaseController
                 {
                     remoteFileService.delete(oldAvatarUrl);
                 }
-                AjaxResult ajax = AjaxResult.success();
-                ajax.put("imgUrl", url);
                 // 更新缓存用户头像
                 loginUser.getSysUser().setAvatar(url);
                 tokenService.setLoginUser(loginUser);
-                return ajax;
+                return success(url);
             }
         }
         return error("上传图片异常，请联系管理员");

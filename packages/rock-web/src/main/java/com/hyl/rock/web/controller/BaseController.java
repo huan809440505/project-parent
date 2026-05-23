@@ -1,11 +1,7 @@
 package com.hyl.rock.web.controller;
 
-import com.github.pagehelper.PageInfo;
-import com.hyl.rock.constant.HttpStatus;
+import com.hyl.rock.base.Result;
 import com.hyl.rock.utils.DateUtils;
-import com.hyl.rock.utils.PageUtils;
-import com.hyl.rock.web.domain.AjaxResult;
-import com.hyl.rock.entity.page.TableDataInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
@@ -13,7 +9,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 
 import java.beans.PropertyEditorSupport;
 import java.util.Date;
-import java.util.List;
 
 /**
  * web层通用数据处理
@@ -39,94 +34,59 @@ public class BaseController {
         });
     }
 
-    /**
-     * 设置请求分页数据
-     */
-    protected void startPage()
-    {
-        PageUtils.startPage();
-    }
-
-    /**
-     * 清理分页的线程变量
-     */
-    protected void clearPage()
-    {
-        PageUtils.clearPage();
-    }
-
-    /**
-     * 响应请求分页数据
-     */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    protected TableDataInfo getDataTable(List<?> list)
-    {
-        TableDataInfo rspData = new TableDataInfo();
-        rspData.setCode(HttpStatus.SUCCESS);
-        rspData.setRows(list);
-        rspData.setMsg("查询成功");
-        rspData.setTotal(new PageInfo(list).getTotal());
-        return rspData;
-    }
 
     /**
      * 返回成功
      */
-    public AjaxResult success()
-    {
-        return AjaxResult.success();
+    public Result<String> success() {
+        return Result.success();
     }
 
     /**
      * 返回成功消息
      */
-    public AjaxResult success(String message)
-    {
-        return AjaxResult.success(message);
+    public Result<String> success(String message) {
+        return Result.success(message);
     }
 
     /**
      * 返回成功消息
      */
-    public AjaxResult success(Object data)
-    {
-        return AjaxResult.success(data);
+    public <T> Result<T> success(T data){
+        return Result.success(data);
     }
 
     /**
      * 返回失败消息
      */
-    public AjaxResult error()
-    {
-        return AjaxResult.error();
+    public Result<String> error() {
+        return Result.fail();
     }
 
     /**
      * 返回失败消息
      */
-    public AjaxResult error(String message)
-    {
-        return AjaxResult.error(message);
+    public Result<String> error(String message) {
+        return Result.fail(message);
     }
 
     /**
      * 返回警告消息
      */
-    public AjaxResult warn(String message)
-    {
-        return AjaxResult.warn(message);
+    public Result<String> warn(String message) {
+        return Result.fail(message);
     }
 
     /**
      * 响应返回结果
-     * 
+     *
      * @param rows 影响行数
      * @return 操作结果
      */
-    protected AjaxResult toAjax(int rows)
-    {
-        return rows > 0 ? AjaxResult.success() : AjaxResult.error();
+    protected Result<String> toAjax(int rows) {
+        return rows > 0 ? Result.success() : Result.fail();
     }
+
 
     /**
      * 响应返回结果
@@ -134,8 +94,7 @@ public class BaseController {
      * @param result 结果
      * @return 操作结果
      */
-    protected AjaxResult toAjax(boolean result)
-    {
+    protected Result<String> toAjax(boolean result) {
         return result ? success() : error();
     }
 }

@@ -1,21 +1,24 @@
 package com.hyl.rock.system.controller;
 
 
+import com.hyl.rock.base.Result;
 import com.hyl.rock.constant.UserConstants;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.domain.SysMenu;
+import com.hyl.rock.system.domain.vo.RouterVo;
+import com.hyl.rock.system.domain.vo.TreeSelect;
 import com.hyl.rock.system.service.ISysMenuService;
 import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.web.controller.BaseController;
-import com.hyl.rock.web.domain.AjaxResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +39,7 @@ public class SysMenuController extends BaseController
      */
     @Operation(summary = "获取菜单列表")
     @GetMapping("/list")
-    public AjaxResult list(SysMenu menu)
+    public Result<List<SysMenu>> list(SysMenu menu)
     {
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuList(menu, userId);
@@ -48,7 +51,7 @@ public class SysMenuController extends BaseController
      */
     @Operation(summary = "根据菜单编号获取详细信息")
     @GetMapping(value = "/{menuId}")
-    public AjaxResult getInfo(@PathVariable Long menuId)
+    public Result<SysMenu> getInfo(@PathVariable Long menuId)
     {
         return success(menuService.selectMenuById(menuId));
     }
@@ -58,7 +61,7 @@ public class SysMenuController extends BaseController
      */
     @Operation(summary = "获取菜单下拉树列表")
     @GetMapping("/treeSelect")
-    public AjaxResult treeSelect(SysMenu menu)
+    public Result<List<TreeSelect>> treeSelect(SysMenu menu)
     {
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuList(menu, userId);
@@ -70,14 +73,14 @@ public class SysMenuController extends BaseController
      */
     @Operation(summary = "加载对应角色菜单列表树")
     @GetMapping(value = "/roleMenuTreeSelect/{roleId}")
-    public AjaxResult roleMenuTreeSelect(@PathVariable("roleId") Long roleId)
+    public Result<Map<String,Object>> roleMenuTreeSelect(@PathVariable("roleId") Long roleId)
     {
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuList(userId);
-        AjaxResult ajax = AjaxResult.success();
-        ajax.put("checkedKeys", menuService.selectMenuListByRoleId(roleId));
-        ajax.put("menus", menuService.buildMenuTreeSelect(menus));
-        return ajax;
+        Map<String,Object> map = new HashMap<>();
+        map.put("checkedKeys", menuService.selectMenuListByRoleId(roleId));
+        map.put("menus", menuService.buildMenuTreeSelect(menus));
+        return success(map);
     }
 
     /**
@@ -86,7 +89,7 @@ public class SysMenuController extends BaseController
     @Operation(summary = "新增菜单")
     @Log(title = "菜单管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysMenu menu)
+    public Result<String> add(@Validated @RequestBody SysMenu menu)
     {
         if (!menuService.checkMenuNameUnique(menu))
         {
@@ -110,7 +113,7 @@ public class SysMenuController extends BaseController
     @Operation(summary = "修改菜单")
     @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysMenu menu)
+    public Result<String> edit(@Validated @RequestBody SysMenu menu)
     {
         if (!menuService.checkMenuNameUnique(menu))
         {
@@ -138,7 +141,7 @@ public class SysMenuController extends BaseController
     @Operation(summary = "保存菜单排序")
     @Log(title = "保存菜单排序", businessType = BusinessType.UPDATE)
     @PutMapping("/updateSort")
-    public AjaxResult updateSort(@RequestBody Map<String, String> params)
+    public Result<String> updateSort(@RequestBody Map<String, String> params)
     {
         String[] menuIds = params.get("menuIds").split(",");
         String[] orderNums = params.get("orderNums").split(",");
@@ -152,7 +155,7 @@ public class SysMenuController extends BaseController
     @Operation(summary = "删除菜单")
     @Log(title = "菜单管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{menuId}")
-    public AjaxResult remove(@PathVariable("menuId") Long menuId)
+    public Result<String> remove(@PathVariable("menuId") Long menuId)
     {
         if (menuService.hasChildByMenuId(menuId))
         {
@@ -172,7 +175,7 @@ public class SysMenuController extends BaseController
      */
     @Operation(summary = "获取路由信息")
     @GetMapping("getRouters")
-    public AjaxResult getRouters()
+    public Result<List<RouterVo>> getRouters()
     {
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);

@@ -43,8 +43,8 @@ public class Result<T> {
         return new Result(MessageEnum.FAIL);
     }
 
-    public static <T> Result<T> fail(String msg) {
-        return new Result(MessageEnum.FAIL, msg);
+    public static <T> Result<T> fail(String message) {
+        return new Result(MessageEnum.FAIL.getCode(), message);
     }
 
     public static <T> Result<T> fail(Integer code, String msg) {

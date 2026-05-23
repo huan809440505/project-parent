@@ -1,7 +1,8 @@
 package com.hyl.rock.system.controller;
 
 
-import com.hyl.rock.entity.page.TableDataInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.hyl.rock.base.Result;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
@@ -9,7 +10,6 @@ import com.hyl.rock.system.domain.SysPost;
 import com.hyl.rock.system.service.ISysPostService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
-import com.hyl.rock.web.domain.AjaxResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,11 +36,10 @@ public class SysPostController extends BaseController
      */
     @Operation(summary = "获取岗位列表")
     @GetMapping("/list")
-    public TableDataInfo list(SysPost post)
+    public Result<IPage<SysPost>> list(IPage page, SysPost post)
     {
-        startPage();
-        List<SysPost> list = postService.selectPostList(post);
-        return getDataTable(list);
+        IPage<SysPost> pageResult = postService.selectPostPage(page,post);
+        return success(pageResult);
     }
 
     @Operation(summary = "导出岗位列表")
@@ -49,7 +48,7 @@ public class SysPostController extends BaseController
     public void export(HttpServletResponse response, SysPost post)
     {
         List<SysPost> list = postService.selectPostList(post);
-        ExcelUtil<SysPost> util = new ExcelUtil<SysPost>(SysPost.class);
+        ExcelUtil<SysPost> util = new ExcelUtil<>(SysPost.class);
         util.exportExcel(response, list, "岗位数据");
     }
 
@@ -58,7 +57,7 @@ public class SysPostController extends BaseController
      */
     @Operation(summary = "根据岗位编号获取详细信息")
     @GetMapping(value = "/{postId}")
-    public AjaxResult getInfo(@PathVariable Long postId)
+    public Result<SysPost> getInfo(@PathVariable Long postId)
     {
         return success(postService.selectPostById(postId));
     }
@@ -69,7 +68,7 @@ public class SysPostController extends BaseController
     @Operation(summary = "新增岗位")
     @Log(title = "岗位管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysPost post)
+    public Result<String> add(@Validated @RequestBody SysPost post)
     {
         if (!postService.checkPostNameUnique(post))
         {
@@ -89,7 +88,7 @@ public class SysPostController extends BaseController
     @Operation(summary = "修改岗位")
     @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysPost post)
+    public Result<String> edit(@Validated @RequestBody SysPost post)
     {
         if (!postService.checkPostNameUnique(post))
         {
@@ -109,7 +108,7 @@ public class SysPostController extends BaseController
     @Operation(summary = "删除岗位")
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{postIds}")
-    public AjaxResult remove(@PathVariable Long[] postIds)
+    public Result<String> remove(@PathVariable Long[] postIds)
     {
         return toAjax(postService.deletePostByIds(postIds));
     }
@@ -119,7 +118,7 @@ public class SysPostController extends BaseController
      */
     @Operation(summary = "获取岗位选择框列表")
     @GetMapping("/optionSelect")
-    public AjaxResult optionSelect()
+    public Result<List<SysPost>> optionSelect()
     {
         List<SysPost> posts = postService.selectPostAll();
         return success(posts);

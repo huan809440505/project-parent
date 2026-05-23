@@ -1,6 +1,7 @@
 package com.hyl.rock.system.service;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysUser;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public interface ISysUserService
      * @return 用户信息集合信息
      */
     public List<SysUser> selectUserList(SysUser user);
+    public IPage<SysUser> selectUserPage(IPage page, SysUser user);
 
     /**
      * 根据条件分页查询已分配用户角色列表
@@ -25,7 +27,7 @@ public interface ISysUserService
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectAllocatedList(SysUser user);
+    public IPage<SysUser> selectAllocatedPage(IPage page, SysUser user);
 
     /**
      * 根据条件分页查询未分配用户角色列表
@@ -33,7 +35,7 @@ public interface ISysUserService
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUnallocatedList(SysUser user);
+    public IPage<SysUser> selectUnallocatedPage(IPage page, SysUser user);
 
     /**
      * 通过用户名查询用户

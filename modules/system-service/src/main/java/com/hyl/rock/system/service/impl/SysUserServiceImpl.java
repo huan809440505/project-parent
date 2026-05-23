@@ -1,5 +1,6 @@
 package com.hyl.rock.system.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.constant.UserConstants;
 import com.hyl.rock.domain.SysRole;
 import com.hyl.rock.domain.SysUser;
@@ -72,6 +73,11 @@ public class SysUserServiceImpl implements ISysUserService
         return userMapper.selectUserList(user);
     }
 
+    @Override
+    public IPage<SysUser> selectUserPage(IPage page, SysUser user) {
+        return userMapper.selectUserPage(page, user);
+    }
+
     /**
      * 根据条件分页查询已分配用户角色列表
      * 
@@ -79,9 +85,8 @@ public class SysUserServiceImpl implements ISysUserService
      * @return 用户信息集合信息
      */
     @Override
-    public List<SysUser> selectAllocatedList(SysUser user)
-    {
-        return userMapper.selectAllocatedList(user);
+    public IPage<SysUser> selectAllocatedPage(IPage page, SysUser user) {
+        return userMapper.selectAllocatedPage(page,user);
     }
 
     /**
@@ -91,9 +96,8 @@ public class SysUserServiceImpl implements ISysUserService
      * @return 用户信息集合信息
      */
     @Override
-    public List<SysUser> selectUnallocatedList(SysUser user)
-    {
-        return userMapper.selectUnallocatedList(user);
+    public IPage<SysUser> selectUnallocatedPage(IPage page, SysUser user) {
+        return userMapper.selectUnallocatedPage(page,user);
     }
 
     /**

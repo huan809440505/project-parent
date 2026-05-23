@@ -1,9 +1,12 @@
 package com.hyl.rock.system.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysOperLog;
 import com.hyl.rock.system.mapper.SysOperLogMapper;
 import com.hyl.rock.system.service.ISysOperLogService;
+import com.hyl.rock.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +29,9 @@ public class SysOperLogServiceImpl implements ISysOperLogService
      * @return 结果
      */
     @Override
-    public int insertOperlog(SysOperLog operLog)
+    public int insertOperLog(SysOperLog operLog)
     {
-        return operLogMapper.insertOperlog(operLog);
+        return operLogMapper.insertOperLog(operLog);
     }
 
     /**
@@ -41,6 +44,29 @@ public class SysOperLogServiceImpl implements ISysOperLogService
     public List<SysOperLog> selectOperLogList(SysOperLog operLog)
     {
         return operLogMapper.selectOperLogList(operLog);
+    }
+
+    @Override
+    public IPage<SysOperLog> selectOperLogPage(IPage page, SysOperLog operLog) {
+        String beginTime = "";
+        if(operLog.getParams().get("beginTime")!=null){
+            beginTime = operLog.getParams().get("beginTime").toString();
+        }
+        String endTime = "";
+        if(operLog.getParams().get("endTime")!=null){
+            endTime = operLog.getParams().get("endTime").toString();
+        }
+        return operLogMapper.selectPage(page, new LambdaQueryWrapper<SysOperLog>()
+                .like(StringUtils.isNotBlank(operLog.getOperIp()), SysOperLog::getOperIp, operLog.getOperIp())
+                .like(StringUtils.isNotBlank(operLog.getTitle()), SysOperLog::getTitle, operLog.getTitle())
+                .eq(operLog.getBusinessType()!=null, SysOperLog::getBusinessType, operLog.getBusinessType())
+                .in(operLog.getBusinessTypes()!=null&&operLog.getBusinessTypes().length>0, SysOperLog::getBusinessType,operLog.getBusinessTypes())
+                .eq(operLog.getStatus()!=null, SysOperLog::getStatus, operLog.getStatus())
+                .like(StringUtils.isNotBlank(operLog.getOperName()), SysOperLog::getOperName, operLog.getOperName())
+                .gt(StringUtils.isNotBlank(beginTime),SysOperLog::getOperTime,beginTime)
+                .lt(StringUtils.isNotBlank(endTime),SysOperLog::getOperTime,endTime)
+                .orderByDesc(SysOperLog::getOperId)
+        );
     }
 
     /**

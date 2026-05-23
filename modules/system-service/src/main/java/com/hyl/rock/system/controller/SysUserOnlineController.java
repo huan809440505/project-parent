@@ -1,9 +1,9 @@
 package com.hyl.rock.system.controller;
 
 
+import com.hyl.rock.base.Result;
 import com.hyl.rock.constant.CacheConstants;
 import com.hyl.rock.entity.LoginUser;
-import com.hyl.rock.entity.page.TableDataInfo;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.redis.service.RedisService;
@@ -11,7 +11,6 @@ import com.hyl.rock.system.domain.SysUserOnline;
 import com.hyl.rock.system.service.ISysUserOnlineService;
 import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.web.controller.BaseController;
-import com.hyl.rock.web.domain.AjaxResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +38,10 @@ public class SysUserOnlineController extends BaseController
 
     @Operation(summary = "获取在线用户列表")
     @GetMapping("/list")
-    public TableDataInfo list(String ipaddr, String userName)
+    public Result<List<SysUserOnline>> list(String ipaddr, String userName)
     {
         Collection<String> keys = redisService.keys(CacheConstants.LOGIN_TOKEN_KEY + "*");
-        List<SysUserOnline> userOnlineList = new ArrayList<SysUserOnline>();
+        List<SysUserOnline> userOnlineList = new ArrayList<>();
         for (String key : keys)
         {
             LoginUser user = redisService.getCacheObject(key);
@@ -65,7 +64,7 @@ public class SysUserOnlineController extends BaseController
         }
         Collections.reverse(userOnlineList);
         userOnlineList.removeAll(Collections.singleton(null));
-        return getDataTable(userOnlineList);
+        return success(userOnlineList);
     }
 
     /**
@@ -74,7 +73,7 @@ public class SysUserOnlineController extends BaseController
     @Operation(summary = "强退用户")
     @Log(title = "在线用户", businessType = BusinessType.FORCE)
     @DeleteMapping("/{tokenId}")
-    public AjaxResult forceLogout(@PathVariable String tokenId)
+    public Result<String> forceLogout(@PathVariable String tokenId)
     {
         redisService.deleteObject(CacheConstants.LOGIN_TOKEN_KEY + tokenId);
         return success();

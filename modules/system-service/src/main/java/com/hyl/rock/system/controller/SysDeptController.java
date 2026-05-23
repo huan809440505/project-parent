@@ -1,6 +1,7 @@
 package com.hyl.rock.system.controller;
 
 
+import com.hyl.rock.base.Result;
 import com.hyl.rock.constant.UserConstants;
 import com.hyl.rock.domain.SysDept;
 import com.hyl.rock.log.annotation.Log;
@@ -9,7 +10,6 @@ import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.service.ISysDeptService;
 import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.web.controller.BaseController;
-import com.hyl.rock.web.domain.AjaxResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.ArrayUtils;
@@ -37,10 +37,10 @@ public class SysDeptController extends BaseController
      */
     @Operation(summary = "获取部门列表")
     @GetMapping("/list")
-    public AjaxResult list(SysDept dept)
+    public Result<List<SysDept>> list(SysDept dept)
     {
-        List<SysDept> depts = deptService.selectDeptList(dept);
-        return success(depts);
+        List<SysDept> deptList = deptService.selectDeptList(dept);
+        return success(deptList);
     }
 
     /**
@@ -48,11 +48,11 @@ public class SysDeptController extends BaseController
      */
     @Operation(summary = "查询部门列表（排除节点）")
     @GetMapping("/list/exclude/{deptId}")
-    public AjaxResult excludeChild(@PathVariable(value = "deptId", required = false) Long deptId)
+    public Result<List<SysDept>> excludeChild(@PathVariable(value = "deptId", required = false) Long deptId)
     {
-        List<SysDept> depts = deptService.selectDeptList(new SysDept());
-        depts.removeIf(d -> d.getDeptId().intValue() == deptId || ArrayUtils.contains(StringUtils.split(d.getAncestors(), ","), deptId + ""));
-        return success(depts);
+        List<SysDept> deptList = deptService.selectDeptList(new SysDept());
+        deptList.removeIf(d -> d.getDeptId().intValue() == deptId || ArrayUtils.contains(StringUtils.split(d.getAncestors(), ","), deptId + ""));
+        return success(deptList);
     }
 
     /**
@@ -60,7 +60,7 @@ public class SysDeptController extends BaseController
      */
     @Operation(summary = "根据部门编号获取详细信息")
     @GetMapping(value = "/{deptId}")
-    public AjaxResult getInfo(@PathVariable Long deptId)
+    public Result<SysDept> getInfo(@PathVariable Long deptId)
     {
         deptService.checkDeptDataScope(deptId);
         return success(deptService.selectDeptById(deptId));
@@ -72,7 +72,7 @@ public class SysDeptController extends BaseController
     @Operation(summary = "新增部门")
     @Log(title = "部门管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysDept dept)
+    public Result<String> add(@Validated @RequestBody SysDept dept)
     {
         if (!deptService.checkDeptNameUnique(dept))
         {
@@ -88,7 +88,7 @@ public class SysDeptController extends BaseController
     @Operation(summary = "修改部门")
     @Log(title = "部门管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysDept dept)
+    public Result<String> edit(@Validated @RequestBody SysDept dept)
     {
         Long deptId = dept.getDeptId();
         deptService.checkDeptDataScope(deptId);
@@ -114,7 +114,7 @@ public class SysDeptController extends BaseController
     @Operation(summary = "保存部门排序")
     @Log(title = "保存部门排序", businessType = BusinessType.UPDATE)
     @PutMapping("/updateSort")
-    public AjaxResult updateSort(@RequestBody Map<String, String> params)
+    public Result<String> updateSort(@RequestBody Map<String, String> params)
     {
         String[] deptIds = params.get("deptIds").split(",");
         String[] orderNums = params.get("orderNums").split(",");
@@ -128,7 +128,7 @@ public class SysDeptController extends BaseController
     @Operation(summary = "删除部门")
     @Log(title = "部门管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{deptId}")
-    public AjaxResult remove(@PathVariable Long deptId)
+    public Result<String> remove(@PathVariable Long deptId)
     {
         if (deptService.hasChildByDeptId(deptId))
         {

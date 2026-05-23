@@ -1,6 +1,8 @@
 package com.hyl.rock.system.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.hyl.rock.base.Result;
 import com.hyl.rock.domain.SysDictData;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
@@ -10,8 +12,6 @@ import com.hyl.rock.system.service.ISysDictTypeService;
 import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
-import com.hyl.rock.web.domain.AjaxResult;
-import com.hyl.rock.entity.page.TableDataInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,11 +39,10 @@ public class SysDictDataController extends BaseController
 
     @Operation(summary = "获取数据字典列表")
     @GetMapping("/list")
-    public TableDataInfo list(SysDictData dictData)
+    public Result<IPage<SysDictData>> list(IPage page,SysDictData dictData)
     {
-        startPage();
-        List<SysDictData> list = dictDataService.selectDictDataList(dictData);
-        return getDataTable(list);
+        IPage<SysDictData> pageResult = dictDataService.selectDictDataPage(page,dictData);
+        return success(pageResult);
     }
 
     @Operation(summary = "导出数据字典列表")
@@ -52,7 +51,7 @@ public class SysDictDataController extends BaseController
     public void export(HttpServletResponse response, SysDictData dictData)
     {
         List<SysDictData> list = dictDataService.selectDictDataList(dictData);
-        ExcelUtil<SysDictData> util = new ExcelUtil<SysDictData>(SysDictData.class);
+        ExcelUtil<SysDictData> util = new ExcelUtil<>(SysDictData.class);
         util.exportExcel(response, list, "字典数据");
     }
 
@@ -61,7 +60,7 @@ public class SysDictDataController extends BaseController
      */
     @Operation(summary = "查询字典数据详细")
     @GetMapping(value = "/{dictCode}")
-    public AjaxResult getInfo(@PathVariable Long dictCode)
+    public Result<SysDictData> getInfo(@PathVariable Long dictCode)
     {
         return success(dictDataService.selectDictDataById(dictCode));
     }
@@ -71,7 +70,7 @@ public class SysDictDataController extends BaseController
      */
     @Operation(summary = "根据字典类型查询字典数据信息")
     @GetMapping(value = "/type/{dictType}")
-    public AjaxResult dictType(@PathVariable String dictType)
+    public Result<List<SysDictData>> dictType(@PathVariable String dictType)
     {
         List<SysDictData> data = dictTypeService.selectDictDataByType(dictType);
         if (StringUtils.isNull(data))
@@ -87,7 +86,7 @@ public class SysDictDataController extends BaseController
     @Operation(summary = "新增字典类型")
     @Log(title = "字典数据", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysDictData dict)
+    public Result<String> add(@Validated @RequestBody SysDictData dict)
     {
         dict.setCreateBy(SecurityUtils.getUsername());
         return toAjax(dictDataService.insertDictData(dict));
@@ -99,7 +98,7 @@ public class SysDictDataController extends BaseController
     @Operation(summary = "修改保存字典类型")
     @Log(title = "字典数据", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysDictData dict)
+    public Result<String> edit(@Validated @RequestBody SysDictData dict)
     {
         dict.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(dictDataService.updateDictData(dict));
@@ -111,7 +110,7 @@ public class SysDictDataController extends BaseController
     @Operation(summary = "删除字典类型")
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{dictCodes}")
-    public AjaxResult remove(@PathVariable Long[] dictCodes)
+    public Result<String> remove(@PathVariable Long[] dictCodes)
     {
         dictDataService.deleteDictDataByIds(dictCodes);
         return success();

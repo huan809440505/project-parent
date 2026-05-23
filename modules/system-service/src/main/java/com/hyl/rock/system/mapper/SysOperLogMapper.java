@@ -1,6 +1,7 @@
 package com.hyl.rock.system.mapper;
 
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hyl.rock.domain.SysOperLog;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,14 +12,13 @@ import java.util.List;
  * 
  */
 @Mapper
-public interface SysOperLogMapper
-{
+public interface SysOperLogMapper extends BaseMapper<SysOperLog> {
     /**
      * 新增操作日志
      * 
      * @param operLog 操作日志对象
      */
-    public int insertOperlog(SysOperLog operLog);
+    public int insertOperLog(SysOperLog operLog);
 
     /**
      * 查询系统操作日志集合
