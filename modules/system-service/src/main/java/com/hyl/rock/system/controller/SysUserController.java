@@ -18,7 +18,6 @@ import com.hyl.rock.utils.DateUtils;
 import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
-import com.hyl.rock.web.domain.AjaxResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -227,7 +226,7 @@ public class SysUserController extends BaseController
         {
             userService.checkUserDataScope(userId);
             SysUser sysUser = userService.selectUserById(userId);
-            ajax.put(AjaxResult.DATA_TAG, sysUser);
+            ajax.put("data", sysUser);
             ajax.put("postIds", postService.selectPostListByUserId(userId));
             ajax.put("roleIds", sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
         }
