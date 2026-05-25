@@ -7,10 +7,13 @@ import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.domain.SysConfig;
+import com.hyl.rock.system.domain.query.SysConfigQuery;
 import com.hyl.rock.system.service.ISysConfigService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +38,16 @@ public class SysConfigController extends BaseController
      * 获取参数配置列表
      */
     @Operation(summary = "获取参数配置列表")
+    @Parameters({
+            @Parameter(name = "current", description = "页码", required = true),
+            @Parameter(name = "size", description = "每页数量", required = true),
+            @Parameter(name = "configName", description = "参数名称"),
+            @Parameter(name = "configKey", description = "参数键名"),
+            @Parameter(name = "configType", description = "系统内置（Y是 N否）")
+    })
     @GetMapping("/list")
-    public Result<IPage<SysConfig>> list(Page page, SysConfig config) {
-        IPage<SysConfig> pageResult = configService.selectConfigList(page,config);
+    public Result<IPage<SysConfig>> list(Page page, SysConfigQuery query) {
+        IPage<SysConfig> pageResult = configService.selectConfigList(page,query);
         return success(pageResult);
     }
 

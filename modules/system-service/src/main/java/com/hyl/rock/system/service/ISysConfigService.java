@@ -4,6 +4,7 @@ package com.hyl.rock.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hyl.rock.system.domain.SysConfig;
+import com.hyl.rock.system.domain.query.SysConfigQuery;
 
 import java.util.List;
 
@@ -32,10 +33,10 @@ public interface ISysConfigService
     /**
      * 查询参数配置列表
      * 
-     * @param config 参数配置信息
+     * @param query 参数配置信息
      * @return 参数配置集合
      */
-    public IPage<SysConfig> selectConfigList(Page page, SysConfig config);
+    public IPage<SysConfig> selectConfigList(Page page, SysConfigQuery query);
 
     public List<SysConfig> selectConfigList(SysConfig config);
 

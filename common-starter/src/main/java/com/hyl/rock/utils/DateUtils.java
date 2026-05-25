@@ -15,17 +15,17 @@ import java.util.Date;
 @SuppressWarnings("deprecation")
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils
 {
-    public static String YYYY = "yyyy";
+    public static final String YYYY = "yyyy";
 
-    public static String YYYY_MM = "yyyy-MM";
+    public static final String YYYY_MM = "yyyy-MM";
 
-    public static String YYYY_MM_DD = "yyyy-MM-dd";
+    public static final String YYYY_MM_DD = "yyyy-MM-dd";
 
-    public static String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+    public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
-    public static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+    public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
-    private static String[] parsePatterns = {
+    private static final String[] parsePatterns = {
             "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM",
             "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM",
             "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm", "yyyy.MM"};
@@ -184,5 +184,29 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
         LocalDateTime localDateTime = LocalDateTime.of(temporalAccessor, LocalTime.of(0, 0, 0));
         ZonedDateTime zdt = localDateTime.atZone(ZoneId.systemDefault());
         return Date.from(zdt.toInstant());
+    }
+
+    public static Date getDayStart() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return toDate(localDateTime.withHour(0).withMinute(0).withSecond(0).withNano(0));
+    }
+
+    public static Date getDayEnd() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return toDate(localDateTime.withHour(23).withMinute(59).withSecond(59).withNano(999999999));
+    }
+
+    public static String getDayStartStr(String date) {
+        if(StringUtils.isBlank(date)) {
+            return null;
+        }
+        return date+" 00:00:00";
+    }
+
+    public static String getDayEndStr(String date) {
+        if(StringUtils.isBlank(date)) {
+            return null;
+        }
+        return date+" 23:59:59";
     }
 }

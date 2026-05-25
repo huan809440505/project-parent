@@ -8,9 +8,11 @@ import com.hyl.rock.constant.UserConstants;
 import com.hyl.rock.exception.ServiceException;
 import com.hyl.rock.redis.service.RedisService;
 import com.hyl.rock.system.domain.SysConfig;
+import com.hyl.rock.system.domain.query.SysConfigQuery;
 import com.hyl.rock.system.mapper.SysConfigMapper;
 import com.hyl.rock.system.service.ISysConfigService;
 import com.hyl.rock.text.Convert;
+import com.hyl.rock.utils.DateUtils;
 import com.hyl.rock.utils.StringUtils;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,15 +88,18 @@ public class SysConfigServiceImpl implements ISysConfigService
     /**
      * 查询参数配置列表
      * @param page 分页参数
-     * @param config 参数配置信息
+     * @param query 参数配置信息
      * @return 参数配置集合
      */
     @Override
-    public IPage<SysConfig> selectConfigList(Page page, SysConfig config) {
+    public IPage<SysConfig> selectConfigList(Page page, SysConfigQuery query) {
+
         return configMapper.selectPage(page, new LambdaQueryWrapper<SysConfig>().
-                like(StringUtils.isNotEmpty(config.getConfigName()), SysConfig::getConfigName, config.getConfigName())
-                .eq(StringUtils.isNotEmpty(config.getConfigType()), SysConfig::getConfigType, config.getConfigType())
-                .like(StringUtils.isNotEmpty(config.getConfigKey()), SysConfig::getConfigKey, config.getConfigKey())
+                like(StringUtils.isNotEmpty(query.getConfigName()), SysConfig::getConfigName, query.getConfigName())
+                .eq(StringUtils.isNotEmpty(query.getConfigType()), SysConfig::getConfigType, query.getConfigType())
+                .like(StringUtils.isNotEmpty(query.getConfigKey()), SysConfig::getConfigKey, query.getConfigKey())
+                .ge(StringUtils.isNotEmpty(query.getStartDate()), SysConfig::getCreateTime, DateUtils.getDayStartStr(query.getStartDate()))
+                .le(StringUtils.isNotEmpty(query.getEndDate()), SysConfig::getCreateTime, DateUtils.getDayEndStr(query.getEndDate()))
         );
     }
 
