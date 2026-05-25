@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.constant.UserConstants;
 import com.hyl.rock.exception.ServiceException;
 import com.hyl.rock.system.domain.SysPost;
+import com.hyl.rock.system.domain.query.SysPostQuery;
 import com.hyl.rock.system.mapper.SysPostMapper;
 import com.hyl.rock.system.mapper.SysUserPostMapper;
 import com.hyl.rock.system.service.ISysPostService;
@@ -41,11 +42,11 @@ public class SysPostServiceImpl implements ISysPostService
     }
 
     @Override
-    public IPage<SysPost> selectPostPage(IPage page, SysPost post) {
+    public IPage<SysPost> selectPostPage(IPage page, SysPostQuery query) {
         return postMapper.selectPage(page, new LambdaQueryWrapper<SysPost>()
-                .like(StringUtils.isNotEmpty(post.getPostCode()),SysPost::getPostCode,post.getPostCode())
-                .eq(StringUtils.isNotEmpty(post.getStatus()),SysPost::getStatus,post.getStatus())
-                .like(StringUtils.isNotEmpty(post.getPostName()),SysPost::getPostName,post.getPostName())
+                .like(StringUtils.isNotEmpty(query.getPostCode()),SysPost::getPostCode,query.getPostCode())
+                .eq(StringUtils.isNotEmpty(query.getStatus()),SysPost::getStatus,query.getStatus())
+                .like(StringUtils.isNotEmpty(query.getPostName()),SysPost::getPostName,query.getPostName())
         );
     }
 

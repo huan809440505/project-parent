@@ -21,6 +21,8 @@ public interface ISysRoleService
      * @return 角色数据集合信息
      */
     public List<SysRole> selectRoleList(SysRole role);
+
+
     public IPage<SysRole> selectRolePage(IPage page, SysRole role);
 
     /**

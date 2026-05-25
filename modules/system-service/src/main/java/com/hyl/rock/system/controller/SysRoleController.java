@@ -16,6 +16,8 @@ import com.hyl.rock.system.service.ISysUserService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,14 @@ public class SysRoleController extends BaseController
     private ISysDeptService deptService;
 
     @Operation(summary = "获取角色列表")
+    @Parameters({
+            @Parameter(name = "current", description = "页码", required = true),
+            @Parameter(name = "size", description = "每页数量", required = true),
+            @Parameter(name = "roleId", description = "角色ID"),
+            @Parameter(name = "roleName", description = "角色名称"),
+            @Parameter(name = "status",description = "角色状态（0正常 1停用）"),
+            @Parameter(name = "roleKey", description = "角色权限"),
+    })
     @GetMapping("/list")
     public Result<IPage<SysRole>> list(IPage page, SysRole role)
     {

@@ -19,9 +19,9 @@ public class SysConfigQuery {
     @Schema(name = "系统内置")
     private String configType;
 
-    @Schema(name = "开始时间 yyyy-MM-dd")
+    @Schema(name = "开始日期,格式: yyyy-MM-dd")
     private String startDate;
 
-    @Schema(name = "结束时间 yyyy-MM-dd")
+    @Schema(name = "结束日期,格式: yyyy-MM-dd")
     private String endDate;
 }

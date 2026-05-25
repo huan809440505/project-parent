@@ -7,10 +7,13 @@ import com.hyl.rock.domain.SysDictType;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
+import com.hyl.rock.system.domain.query.SysDictTypeQuery;
 import com.hyl.rock.system.service.ISysDictTypeService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +35,17 @@ public class SysDictTypeController extends BaseController
     private ISysDictTypeService dictTypeService;
 
     @Operation(summary = "获取数据字典类型列表")
+    @Parameters({
+            @Parameter(name = "current", description = "页码", required = true),
+            @Parameter(name = "size", description = "每页数量", required = true),
+            @Parameter(name = "dictType", description = "字典类型"),
+            @Parameter(name = "startDate",description = "开始日期,格式: yyyy-MM-dd"),
+            @Parameter(name = "endDate",description = "结束日期,格式: yyyy-MM-dd")
+    })
     @GetMapping("/list")
-    public Result<IPage<SysDictType>> list(IPage page, SysDictType dictType)
+    public Result<IPage<SysDictType>> list(IPage page, SysDictTypeQuery query)
     {
-        IPage<SysDictType> pageResult = dictTypeService.selectDictTypePage(page,dictType);
+        IPage<SysDictType> pageResult = dictTypeService.selectDictTypePage(page,query);
         return success(pageResult);
     }
 

@@ -7,11 +7,14 @@ import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.domain.SysNotice;
+import com.hyl.rock.system.domain.query.SysNoticeQuery;
 import com.hyl.rock.system.service.ISysNoticeReadService;
 import com.hyl.rock.system.service.ISysNoticeService;
 import com.hyl.rock.text.Convert;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -40,10 +43,19 @@ public class SysNoticeController extends BaseController
      * 获取通知公告列表
      */
     @Operation(summary = "获取通知公告列表")
+    @Parameters({
+            @Parameter(name = "current", description = "页码", required = true),
+            @Parameter(name = "size", description = "每页数量", required = true),
+            @Parameter(name = "noticeTitle", description = "公告标题"),
+            @Parameter(name = "noticeType", description = "公告类型（1通知 2公告）"),
+            @Parameter(name = "createBy", description = "创建人"),
+            @Parameter(name = "startDate",description = "开始日期,格式: yyyy-MM-dd"),
+            @Parameter(name = "endDate",description = "结束日期,格式: yyyy-MM-dd")
+    })
     @GetMapping("/list")
-    public Result<IPage<SysNotice>> list(IPage page, SysNotice notice)
+    public Result<IPage<SysNotice>> list(IPage page, SysNoticeQuery query)
     {
-        IPage<SysNotice> pageResult = noticeService.selectNoticePage(page,notice);
+        IPage<SysNotice> pageResult = noticeService.selectNoticePage(page,query);
         return success(pageResult);
     }
 

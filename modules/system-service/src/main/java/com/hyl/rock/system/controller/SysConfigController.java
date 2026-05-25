@@ -43,7 +43,9 @@ public class SysConfigController extends BaseController
             @Parameter(name = "size", description = "每页数量", required = true),
             @Parameter(name = "configName", description = "参数名称"),
             @Parameter(name = "configKey", description = "参数键名"),
-            @Parameter(name = "configType", description = "系统内置（Y是 N否）")
+            @Parameter(name = "configType", description = "系统内置（Y是 N否）"),
+            @Parameter(name = "startDate",description = "开始日期,格式: yyyy-MM-dd"),
+            @Parameter(name = "endDate",description = "结束日期,格式: yyyy-MM-dd")
     })
     @GetMapping("/list")
     public Result<IPage<SysConfig>> list(Page page, SysConfigQuery query) {

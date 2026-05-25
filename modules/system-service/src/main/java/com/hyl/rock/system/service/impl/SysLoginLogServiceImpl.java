@@ -4,8 +4,10 @@ package com.hyl.rock.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysLoginLog;
+import com.hyl.rock.system.domain.query.SysLoginLogQuery;
 import com.hyl.rock.system.mapper.SysLoginLogMapper;
 import com.hyl.rock.system.service.ISysLoginLogService;
+import com.hyl.rock.utils.DateUtils;
 import com.hyl.rock.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,22 +49,14 @@ public class SysLoginLogServiceImpl implements ISysLoginLogService
     }
 
     @Override
-    public IPage<SysLoginLog> selectLoginLogPage(IPage page, SysLoginLog loginLog) {
+    public IPage<SysLoginLog> selectLoginLogPage(IPage page, SysLoginLogQuery query) {
 
-        String beginTime = "";
-        if(loginLog.getParams().get("beginTime")!=null){
-            beginTime = loginLog.getParams().get("beginTime").toString();
-        }
-        String endTime = "";
-        if(loginLog.getParams().get("endTime")!=null){
-            endTime = loginLog.getParams().get("endTime").toString();
-        }
         return loginInForMapper.selectPage(page,new LambdaQueryWrapper<SysLoginLog>()
-                .like(StringUtils.isNotBlank(loginLog.getIpaddr()), SysLoginLog::getIpaddr, loginLog.getIpaddr())
-                .eq(StringUtils.isNotBlank(loginLog.getStatus()), SysLoginLog::getStatus, loginLog.getStatus())
-                .like(StringUtils.isNotBlank(loginLog.getUserName()), SysLoginLog::getUserName, loginLog.getUserName())
-                .ge(StringUtils.isNotEmpty(beginTime),SysLoginLog::getCreateTime,beginTime)
-                .le(StringUtils.isNotEmpty(endTime),SysLoginLog::getCreateTime,endTime)
+                .like(StringUtils.isNotBlank(query.getIpaddr()), SysLoginLog::getIpaddr, query.getIpaddr())
+                .eq(StringUtils.isNotBlank(query.getStatus()), SysLoginLog::getStatus, query.getStatus())
+                .like(StringUtils.isNotBlank(query.getUserName()), SysLoginLog::getUserName, query.getUserName())
+                .ge(StringUtils.isNotEmpty(query.getStartDate()),SysLoginLog::getCreateTime, DateUtils.getDayStartStr(query.getStartDate()))
+                .le(StringUtils.isNotEmpty(query.getEndDate()),SysLoginLog::getCreateTime, DateUtils.getDayStartStr(query.getEndDate()))
         );
     }
 

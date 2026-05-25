@@ -11,6 +11,8 @@ import com.hyl.rock.system.service.ISysDeptService;
 import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,12 @@ public class SysDeptController extends BaseController
      * 获取部门列表
      */
     @Operation(summary = "获取部门列表")
+    @Parameters({
+            @Parameter(name = "deptId", description = "部门ID"),
+            @Parameter(name = "parentId", description = "父部门ID"),
+            @Parameter(name = "deptName", description = "部门名称"),
+            @Parameter(name = "status", description = "部门状态:0正常,1停用"),
+    })
     @GetMapping("/list")
     public Result<List<SysDept>> list(SysDept dept)
     {

@@ -8,10 +8,13 @@ import com.hyl.rock.domain.SysLoginLog;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.redis.service.RedisService;
+import com.hyl.rock.system.domain.query.SysLoginLogQuery;
 import com.hyl.rock.system.service.ISysLoginLogService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +38,19 @@ public class SysLoginLogController extends BaseController
     private RedisService redisService;
 
     @Operation(summary = "获取系统访问记录列表")
+    @Parameters({
+            @Parameter(name = "current", description = "页码", required = true),
+            @Parameter(name = "size", description = "每页数量", required = true),
+            @Parameter(name = "userName", description = "用户账号"),
+            @Parameter(name = "status", description = "状态 0成功 1失败"),
+            @Parameter(name = "ipaddr", description = "地址"),
+            @Parameter(name = "startDate",description = "开始日期,格式: yyyy-MM-dd"),
+            @Parameter(name = "endDate",description = "结束日期,格式: yyyy-MM-dd")
+    })
     @GetMapping("/list")
-    public Result<IPage<SysLoginLog>> list(IPage page, SysLoginLog loginInFor)
+    public Result<IPage<SysLoginLog>> list(IPage page, SysLoginLogQuery query)
     {
-        IPage<SysLoginLog> pageResult = loginInForService.selectLoginLogPage(page,loginInFor);
+        IPage<SysLoginLog> pageResult = loginInForService.selectLoginLogPage(page,query);
         return success(pageResult);
     }
 

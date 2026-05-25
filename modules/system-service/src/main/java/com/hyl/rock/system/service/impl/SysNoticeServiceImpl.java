@@ -4,6 +4,7 @@ package com.hyl.rock.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.system.domain.SysNotice;
+import com.hyl.rock.system.domain.query.SysNoticeQuery;
 import com.hyl.rock.system.mapper.SysNoticeMapper;
 import com.hyl.rock.system.service.ISysNoticeService;
 import com.hyl.rock.utils.StringUtils;
@@ -47,11 +48,11 @@ public class SysNoticeServiceImpl implements ISysNoticeService
     }
 
     @Override
-    public IPage<SysNotice> selectNoticePage(IPage page, SysNotice notice) {
+    public IPage<SysNotice> selectNoticePage(IPage page, SysNoticeQuery query) {
         return noticeMapper.selectPage(page,new LambdaQueryWrapper<SysNotice>()
-                .like(StringUtils.isNotBlank(notice.getNoticeTitle()), SysNotice::getNoticeTitle, notice.getNoticeTitle())
-                .eq(StringUtils.isNotBlank(notice.getNoticeType()), SysNotice::getNoticeType, notice.getNoticeType())
-                .like(StringUtils.isNotBlank(notice.getCreateBy()), SysNotice::getCreateBy, notice.getCreateBy())
+                .like(StringUtils.isNotBlank(query.getNoticeTitle()), SysNotice::getNoticeTitle, query.getNoticeTitle())
+                .eq(StringUtils.isNotBlank(query.getNoticeType()), SysNotice::getNoticeType, query.getNoticeType())
+                .like(StringUtils.isNotBlank(query.getCreateBy()), SysNotice::getCreateBy, query.getCreateBy())
                 .orderByDesc(SysNotice::getNoticeId)
         );
     }

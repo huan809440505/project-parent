@@ -10,9 +10,9 @@ public class SysErrLogQuery {
     @Schema(name = "日志标题")
     private String title;
 
-    @Schema(name = "开始时间，yyyy-MM-dd HH:mm:ss")
+    @Schema(name = "开始时间,格式:yyyy-MM-dd HH:mm:ss")
     private String startTime;
 
-    @Schema(name = "结束时间，yyyy-MM-dd HH:mm:ss")
+    @Schema(name = "结束时间,格式:yyyy-MM-dd HH:mm:ss")
     private String endTime;
 }

@@ -13,6 +13,8 @@ import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,11 @@ public class SysDictDataController extends BaseController
     private ISysDictTypeService dictTypeService;
 
     @Operation(summary = "获取数据字典列表")
+    @Parameters({
+            @Parameter(name = "current", description = "页码", required = true),
+            @Parameter(name = "size", description = "每页数量", required = true),
+            @Parameter(name = "dictType", description = "字典类型")
+    })
     @GetMapping("/list")
     public Result<IPage<SysDictData>> list(IPage page,SysDictData dictData)
     {

@@ -7,10 +7,13 @@ import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.domain.SysPost;
+import com.hyl.rock.system.domain.query.SysPostQuery;
 import com.hyl.rock.system.service.ISysPostService;
 import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +38,17 @@ public class SysPostController extends BaseController
      * 获取岗位列表
      */
     @Operation(summary = "获取岗位列表")
+    @Parameters({
+            @Parameter(name = "current", description = "页码", required = true),
+            @Parameter(name = "size", description = "每页数量", required = true),
+            @Parameter(name = "postCode", description = "岗位编码"),
+            @Parameter(name = "status", description = "状态"),
+            @Parameter(name = "postName",description = "岗位名称"),
+    })
     @GetMapping("/list")
-    public Result<IPage<SysPost>> list(IPage page, SysPost post)
+    public Result<IPage<SysPost>> list(IPage page, SysPostQuery query)
     {
-        IPage<SysPost> pageResult = postService.selectPostPage(page,post);
+        IPage<SysPost> pageResult = postService.selectPostPage(page,query);
         return success(pageResult);
     }
 

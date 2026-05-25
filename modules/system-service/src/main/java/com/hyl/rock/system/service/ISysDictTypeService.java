@@ -4,6 +4,7 @@ package com.hyl.rock.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysDictData;
 import com.hyl.rock.domain.SysDictType;
+import com.hyl.rock.system.domain.query.SysDictTypeQuery;
 
 import java.util.List;
 
@@ -20,7 +21,8 @@ public interface ISysDictTypeService
      * @return 字典类型集合信息
      */
     public List<SysDictType> selectDictTypeList(SysDictType dictType);
-    public IPage<SysDictType> selectDictTypePage(IPage page,SysDictType dictType);
+
+    public IPage<SysDictType> selectDictTypePage(IPage page, SysDictTypeQuery query);
 
     /**
      * 根据所有字典类型

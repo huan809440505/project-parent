@@ -7,10 +7,12 @@ import com.hyl.rock.constant.UserConstants;
 import com.hyl.rock.domain.SysDictData;
 import com.hyl.rock.domain.SysDictType;
 import com.hyl.rock.exception.ServiceException;
+import com.hyl.rock.system.domain.query.SysDictTypeQuery;
 import com.hyl.rock.system.mapper.SysDictDataMapper;
 import com.hyl.rock.system.mapper.SysDictTypeMapper;
 import com.hyl.rock.system.service.ISysDictTypeService;
 import com.hyl.rock.system.utils.DictUtils;
+import com.hyl.rock.utils.DateUtils;
 import com.hyl.rock.utils.StringUtils;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,23 +59,14 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService
     }
 
     @Override
-    public IPage<SysDictType> selectDictTypePage(IPage page, SysDictType dictType) {
-
-        String beginTime = "";
-        if(dictType.getParams().get("beginTime")!=null){
-            beginTime = dictType.getParams().get("beginTime").toString();
-        }
-        String endTime = "";
-        if(dictType.getParams().get("endTime")!=null){
-            endTime = dictType.getParams().get("endTime").toString();
-        }
+    public IPage<SysDictType> selectDictTypePage(IPage page, SysDictTypeQuery query) {
 
         return dictTypeMapper.selectPage(page,new LambdaQueryWrapper<SysDictType>()
-                .like(StringUtils.isNotEmpty(dictType.getDictName()),SysDictType::getDictName,dictType.getDictName())
-                .eq(StringUtils.isNotEmpty(dictType.getStatus()),SysDictType::getStatus,dictType.getStatus())
-                .like(StringUtils.isNotEmpty(dictType.getDictType()),SysDictType::getDictType,dictType.getDictType())
-                .ge(StringUtils.isNotEmpty(beginTime),SysDictType::getCreateTime,dictType.getCreateTime())
-                .le(StringUtils.isNotEmpty(endTime),SysDictType::getCreateTime,dictType.getCreateTime())
+                .like(StringUtils.isNotEmpty(query.getDictName()),SysDictType::getDictName,query.getDictName())
+                .eq(StringUtils.isNotEmpty(query.getStatus()),SysDictType::getStatus,query.getStatus())
+                .like(StringUtils.isNotEmpty(query.getDictType()),SysDictType::getDictType,query.getDictType())
+                .ge(StringUtils.isNotEmpty(query.getStartDate()),SysDictType::getCreateTime, DateUtils.getDayStartStr(query.getStartDate()))
+                .le(StringUtils.isNotEmpty(query.getEndDate()),SysDictType::getCreateTime,DateUtils.getDayStartStr(query.getEndDate()))
         );
     }
 

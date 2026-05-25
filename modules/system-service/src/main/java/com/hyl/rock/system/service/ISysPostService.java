@@ -3,6 +3,7 @@ package com.hyl.rock.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.system.domain.SysPost;
+import com.hyl.rock.system.domain.query.SysPostQuery;
 
 import java.util.List;
 
@@ -20,7 +21,9 @@ public interface ISysPostService
      */
     public List<SysPost> selectPostList(SysPost post);
 
-    public IPage<SysPost> selectPostPage(IPage page, SysPost post);
+
+
+    public IPage<SysPost> selectPostPage(IPage page, SysPostQuery query);
 
     /**
      * 查询所有岗位

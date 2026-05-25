@@ -3,6 +3,7 @@ package com.hyl.rock.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysLoginLog;
+import com.hyl.rock.system.domain.query.SysLoginLogQuery;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public interface ISysLoginLogService
      */
     public List<SysLoginLog> selectLoginLogList(SysLoginLog loginLog);
 
-    public IPage<SysLoginLog> selectLoginLogPage(IPage page, SysLoginLog loginLog);
+    public IPage<SysLoginLog> selectLoginLogPage(IPage page, SysLoginLogQuery query);
 
     /**
      * 批量删除系统登录日志

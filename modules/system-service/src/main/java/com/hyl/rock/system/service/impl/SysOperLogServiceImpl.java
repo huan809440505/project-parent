@@ -4,8 +4,10 @@ package com.hyl.rock.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysOperLog;
+import com.hyl.rock.system.domain.query.SysOperLogQuery;
 import com.hyl.rock.system.mapper.SysOperLogMapper;
 import com.hyl.rock.system.service.ISysOperLogService;
+import com.hyl.rock.utils.DateUtils;
 import com.hyl.rock.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,24 +49,17 @@ public class SysOperLogServiceImpl implements ISysOperLogService
     }
 
     @Override
-    public IPage<SysOperLog> selectOperLogPage(IPage page, SysOperLog operLog) {
-        String beginTime = "";
-        if(operLog.getParams().get("beginTime")!=null){
-            beginTime = operLog.getParams().get("beginTime").toString();
-        }
-        String endTime = "";
-        if(operLog.getParams().get("endTime")!=null){
-            endTime = operLog.getParams().get("endTime").toString();
-        }
+    public IPage<SysOperLog> selectOperLogPage(IPage page, SysOperLogQuery query) {
+
         return operLogMapper.selectPage(page, new LambdaQueryWrapper<SysOperLog>()
-                .like(StringUtils.isNotBlank(operLog.getOperIp()), SysOperLog::getOperIp, operLog.getOperIp())
-                .like(StringUtils.isNotBlank(operLog.getTitle()), SysOperLog::getTitle, operLog.getTitle())
-                .eq(operLog.getBusinessType()!=null, SysOperLog::getBusinessType, operLog.getBusinessType())
-                .in(operLog.getBusinessTypes()!=null&&operLog.getBusinessTypes().length>0, SysOperLog::getBusinessType,operLog.getBusinessTypes())
-                .eq(operLog.getStatus()!=null, SysOperLog::getStatus, operLog.getStatus())
-                .like(StringUtils.isNotBlank(operLog.getOperName()), SysOperLog::getOperName, operLog.getOperName())
-                .gt(StringUtils.isNotBlank(beginTime),SysOperLog::getOperTime,beginTime)
-                .lt(StringUtils.isNotBlank(endTime),SysOperLog::getOperTime,endTime)
+                .like(StringUtils.isNotBlank(query.getOperIp()), SysOperLog::getOperIp, query.getOperIp())
+                .like(StringUtils.isNotBlank(query.getTitle()), SysOperLog::getTitle, query.getTitle())
+                .eq(query.getBusinessType()!=null, SysOperLog::getBusinessType, query.getBusinessType())
+                .in(query.getBusinessTypes()!=null&& !query.getBusinessTypes().isEmpty(), SysOperLog::getBusinessType,query.getBusinessTypes())
+                .eq(query.getStatus()!=null, SysOperLog::getStatus, query.getStatus())
+                .like(StringUtils.isNotBlank(query.getOperName()), SysOperLog::getOperName, query.getOperName())
+                .gt(StringUtils.isNotBlank(query.getStartDate()),SysOperLog::getOperTime, DateUtils.getDayStartStr(query.getStartDate()))
+                .lt(StringUtils.isNotBlank(query.getEndDate()),SysOperLog::getOperTime,DateUtils.getDayEndStr(query.getEndDate()))
                 .orderByDesc(SysOperLog::getOperId)
         );
     }

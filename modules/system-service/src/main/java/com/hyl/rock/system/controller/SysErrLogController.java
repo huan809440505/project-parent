@@ -7,6 +7,8 @@ import com.hyl.rock.system.domain.query.SysErrLogQuery;
 import com.hyl.rock.system.service.ISysErrLogService;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,13 @@ public class SysErrLogController extends BaseController {
     private ISysErrLogService sysErrLogService;
 
     @Operation(summary = "分页查询")
+    @Parameters({
+            @Parameter(name = "current", description = "页码", required = true),
+            @Parameter(name = "size", description = "每页数量", required = true),
+            @Parameter(name = "title", description = "日志标题"),
+            @Parameter(name = "startTime",description = "开始时间,格式:yyyy-MM-dd HH:mm:ss"),
+            @Parameter(name = "endDate",description = "结束时间,格式:yyyy-MM-dd HH:mm:ss")
+    })
     @GetMapping("/list")
     public Result<IPage<SysErrLog>> list(IPage page, SysErrLogQuery query) {
         IPage<SysErrLog> pageResult = sysErrLogService.selectSysErrLogPage(page,query);
