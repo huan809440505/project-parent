@@ -11,7 +11,7 @@
  Target Server Version : 80036 (8.0.36)
  File Encoding         : 65001
 
- Date: 21/05/2026 18:23:34
+ Date: 26/05/2026 11:20:56
 */
 
 SET NAMES utf8mb4;
@@ -239,10 +239,30 @@ INSERT INTO `sys_dict_type` VALUES (9, '操作类型', 'sys_oper_type', '0', 'ad
 INSERT INTO `sys_dict_type` VALUES (10, '系统状态', 'sys_common_status', '0', 'admin', '2026-05-21 09:16:46', '', NULL, '登录状态列表');
 
 -- ----------------------------
--- Table structure for sys_logininfor
+-- Table structure for sys_err_log
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_logininfor`;
-CREATE TABLE `sys_logininfor`  (
+DROP TABLE IF EXISTS `sys_err_log`;
+CREATE TABLE `sys_err_log`  (
+  `log_id` int NOT NULL AUTO_INCREMENT COMMENT '日志主键',
+  `title` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '日志标题',
+  `content` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL COMMENT '日志内容',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`log_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统错误日志表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_err_log
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_login_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_login_log`;
+CREATE TABLE `sys_login_log`  (
   `info_id` bigint NOT NULL AUTO_INCREMENT COMMENT '访问ID',
   `user_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '用户账号',
   `ipaddr` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '登录IP地址',
@@ -255,7 +275,7 @@ CREATE TABLE `sys_logininfor`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of sys_logininfor
+-- Records of sys_login_log
 -- ----------------------------
 
 -- ----------------------------
