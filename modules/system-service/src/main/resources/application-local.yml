@@ -71,3 +71,21 @@ spring:
           max-active: 8
           # #连接池最大阻塞等待时间（使用负值表示没有限制）
           max-wait: -1ms
+  # rabbitMQ配置
+  rabbitmq:
+    host: localhost # RabbitMQ 服务器地址（本地为 localhost，远程填服务器 IP）
+    port: 5672       # 消息通信端口（默认 5672）
+    username: guest # 登录账号（Docker 启动时配置的 RABBITMQ_DEFAULT_USER）
+    password: guest # 登录密码（Docker 启动时配置的 RABBITMQ_DEFAULT_PASS）
+    virtual-host: / # 虚拟主机（默认 /）
+    # 生产者确认配置（可选，确保消息成功投递到交换机）
+    publisher-confirm-type: correlated
+    # 生产者退回配置（可选，消息无法路由到队列时回调）
+    publisher-returns: true
+    # 消费者配置（可选，手动确认消息，避免自动确认导致消息丢失）
+    listener:
+      simple:
+        acknowledge-mode: manual # 手动确认消息（Ack）
+        concurrency: 1            # 消费者最小线程数
+        max-concurrency: 5        # 消费者最大线程数
+        prefetch: 1               # 每次从队列拉取 1 条消息，处理完再拉取下一条（避免消息堆积）
