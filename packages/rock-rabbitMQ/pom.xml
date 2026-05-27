@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.hyl</groupId>
-        <artifactId>project-parent</artifactId>
+        <artifactId>packages</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>gateway-service</artifactId>
+    <artifactId>rock-rabbitMQ</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -19,19 +19,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.hyl</groupId>
-            <artifactId>common-starter</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hyl</groupId>
-            <artifactId>rock-redis</artifactId>
-            <version>1.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
     </dependencies>
-
 </project>
