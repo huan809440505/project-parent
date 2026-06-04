@@ -18,6 +18,7 @@
         <module>rock-security</module>
         <module>rock-web</module>
         <module>rock-rabbitMQ</module>
+        <module>rock-elasticsearch</module>
     </modules>
 
     <properties>
