@@ -5,12 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.hyl</groupId>
-        <artifactId>packages</artifactId>
+        <artifactId>modules</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>rock-web</artifactId>
-    <version>1.0</version>
+    <artifactId>report-service</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -21,33 +20,20 @@
     <dependencies>
         <dependency>
             <groupId>com.hyl</groupId>
-            <artifactId>common-starter</artifactId>
+            <artifactId>rock-log</artifactId>
             <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
-
         <dependency>
             <groupId>com.hyl</groupId>
-            <artifactId>api-starter</artifactId>
+            <artifactId>rock-web</artifactId>
             <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-loadbalancer</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
+            <groupId>com.hyl</groupId>
+            <artifactId>rock-elasticsearch</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 </project>

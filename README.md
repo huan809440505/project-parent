@@ -13,6 +13,7 @@ project-parent
 ├── gateway-service -- 网关服务
 ├── modules -- 自定义服务
 ├    ├── system-service -- 基础服务
+├    ├── report-service -- 报表服务
 ├    ├── file-service -- 文件服务
 ├── packages -- 组件库
 ├    ├── rock-elasticsearch elasticsearch组件

@@ -26,12 +26,6 @@
         </dependency>
         <dependency>
             <groupId>com.hyl</groupId>
-            <artifactId>api-starter</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.hyl</groupId>
             <artifactId>rock-web</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
