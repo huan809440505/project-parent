@@ -5,7 +5,7 @@ import com.hyl.rock.constant.SecurityConstants;
 import com.hyl.rock.constant.TokenConstants;
 import com.hyl.rock.constant.UserConstants;
 import com.hyl.rock.context.SecurityContextHolder;
-import com.hyl.rock.entity.LoginUser;
+import com.hyl.rock.base.LoginUser;
 import com.hyl.rock.utils.ServletUtils;
 import com.hyl.rock.utils.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;

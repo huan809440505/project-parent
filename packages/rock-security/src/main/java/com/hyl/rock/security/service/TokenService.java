@@ -3,7 +3,7 @@ package com.hyl.rock.security.service;
 
 import com.hyl.rock.constant.CacheConstants;
 import com.hyl.rock.constant.SecurityConstants;
-import com.hyl.rock.entity.LoginUser;
+import com.hyl.rock.base.LoginUser;
 import com.hyl.rock.redis.service.RedisService;
 import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.utils.IpUtils;

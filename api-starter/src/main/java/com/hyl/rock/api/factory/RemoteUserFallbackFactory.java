@@ -3,7 +3,7 @@ package com.hyl.rock.api.factory;
 import com.hyl.rock.api.RemoteUserService;
 import com.hyl.rock.base.Result;
 import com.hyl.rock.domain.SysUser;
-import com.hyl.rock.entity.LoginUser;
+import com.hyl.rock.base.LoginUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FallbackFactory;

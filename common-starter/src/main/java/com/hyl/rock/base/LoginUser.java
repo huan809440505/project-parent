@@ -1,4 +1,4 @@
-package com.hyl.rock.entity;
+package com.hyl.rock.base;
 
 import com.hyl.rock.domain.SysUser;
 import io.swagger.v3.oas.annotations.media.Schema;

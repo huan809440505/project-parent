@@ -1,7 +1,7 @@
 package com.hyl.rock.system.service;
 
 
-import com.hyl.rock.entity.LoginUser;
+import com.hyl.rock.base.LoginUser;
 import com.hyl.rock.system.domain.SysUserOnline;
 
 /**

@@ -5,7 +5,7 @@ import com.hyl.rock.api.factory.RemoteUserFallbackFactory;
 import com.hyl.rock.base.Result;
 import com.hyl.rock.constant.SecurityConstants;
 import com.hyl.rock.domain.SysUser;
-import com.hyl.rock.entity.LoginUser;
+import com.hyl.rock.base.LoginUser;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

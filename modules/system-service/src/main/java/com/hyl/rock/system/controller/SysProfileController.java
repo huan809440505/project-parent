@@ -5,7 +5,7 @@ import com.hyl.rock.api.RemoteFileService;
 import com.hyl.rock.base.Result;
 import com.hyl.rock.domain.SysFile;
 import com.hyl.rock.domain.SysUser;
-import com.hyl.rock.entity.LoginUser;
+import com.hyl.rock.base.LoginUser;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.service.TokenService;
