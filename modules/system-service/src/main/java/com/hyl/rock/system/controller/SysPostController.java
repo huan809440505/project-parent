@@ -9,7 +9,7 @@ import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.domain.SysPost;
 import com.hyl.rock.system.domain.query.SysPostQuery;
 import com.hyl.rock.system.service.ISysPostService;
-import com.hyl.rock.utils.poi.ExcelUtil;
+import com.hyl.rock.utils.ExportUtils;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -58,8 +58,7 @@ public class SysPostController extends BaseController
     public void export(HttpServletResponse response, SysPost post)
     {
         List<SysPost> list = postService.selectPostList(post);
-        ExcelUtil<SysPost> util = new ExcelUtil<>(SysPost.class);
-        util.exportExcel(response, list, "岗位数据");
+        ExportUtils.exportExcelWithStyle(list,SysPost.class,"岗位数据");
     }
 
     /**

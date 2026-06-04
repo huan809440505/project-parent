@@ -1,5 +1,6 @@
 package com.hyl.rock.domain;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hyl.rock.base.BaseEmptyEntity;
@@ -8,7 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -21,36 +22,43 @@ import java.util.List;
 public class SysUser extends BaseEmptyEntity {
 
     /** 用户ID */
+    @ExcelProperty(value = "用户ID")
     @Schema(name = "用户ID")
     @TableId(value = "user_id", type = IdType.AUTO)
     private Long userId;
 
     /** 部门ID */
+    @ExcelProperty(value = "部门编号")
     @Schema(name = "部门编号")
     @TableField("dept_id")
     private Long deptId;
 
     /** 用户账号 */
+    @ExcelProperty(value = "登录名称")
     @Schema(name = "登录名称")
     @TableField("user_name")
     private String userName;
 
     /** 用户昵称 */
+    @ExcelProperty(value = "用户名称")
     @Schema(name = "用户名称")
     @TableField("nick_name")
     private String nickName;
 
     /** 用户邮箱 */
+    @ExcelProperty(value = "用户邮箱")
     @Schema(name = "用户邮箱")
     @TableField("email")
     private String email;
 
     /** 手机号码 */
+    @ExcelProperty(value = "手机号码")
     @Schema(name = "手机号码")
     @TableField("phone_number")
     private String phoneNumber;
 
     /** 用户性别(0=男,1=女,2=未知) */
+    @ExcelProperty(value = "用户性别(0=男,1=女,2=未知)")
     @Schema(name = "用户性别(0=男,1=女,2=未知)")
     @TableField("sex")
     private String sex;
@@ -66,6 +74,7 @@ public class SysUser extends BaseEmptyEntity {
     private String password;
 
     /** 账号状态（0正常 1停用） */
+    @ExcelProperty(value = "账号状态（0正常 1停用）")
     @Schema(name = "账号状态（0正常 1停用）")
     @TableField("status")
     private String status;
@@ -77,20 +86,22 @@ public class SysUser extends BaseEmptyEntity {
     private Boolean isDelete;
 
     /** 最后登录IP */
+    @ExcelProperty(value = "最后登录IP")
     @Schema(name = "最后登录IP")
     @TableField("login_ip")
     private String loginIp;
 
     /** 最后登录时间 */
+    @ExcelProperty(value = "最后登录时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Schema(name = "最后登录时间")
     @TableField("login_date")
-    private Date loginDate;
+    private LocalDateTime loginDate;
 
     /** 密码最后更新时间 */
     @Schema(name = "密码最后更新时间")
     @TableField("pwd_update_date")
-    private Date pwdUpdateDate;
+    private LocalDateTime pwdUpdateDate;
 
     /** 部门对象 */
     @Schema(name = "部门对象")

@@ -13,7 +13,7 @@ import com.hyl.rock.system.domain.SysUserRole;
 import com.hyl.rock.system.service.ISysDeptService;
 import com.hyl.rock.system.service.ISysRoleService;
 import com.hyl.rock.system.service.ISysUserService;
-import com.hyl.rock.utils.poi.ExcelUtil;
+import com.hyl.rock.utils.ExportUtils;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -68,8 +68,7 @@ public class SysRoleController extends BaseController
     public void export(HttpServletResponse response, SysRole role)
     {
         List<SysRole> list = roleService.selectRoleList(role);
-        ExcelUtil<SysRole> util = new ExcelUtil<>(SysRole.class);
-        util.exportExcel(response, list, "角色数据");
+        ExportUtils.exportExcelWithStyle(list,SysRole.class,"角色数据");
     }
 
     /**

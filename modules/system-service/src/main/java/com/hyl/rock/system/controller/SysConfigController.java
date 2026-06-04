@@ -9,7 +9,7 @@ import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.domain.SysConfig;
 import com.hyl.rock.system.domain.query.SysConfigQuery;
 import com.hyl.rock.system.service.ISysConfigService;
-import com.hyl.rock.utils.poi.ExcelUtil;
+import com.hyl.rock.utils.ExportUtils;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -58,8 +58,7 @@ public class SysConfigController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysConfig config) {
         List<SysConfig> list = configService.selectConfigList(config);
-        ExcelUtil<SysConfig> util = new ExcelUtil<SysConfig>(SysConfig.class);
-        util.exportExcel(response, list, "参数数据");
+        ExportUtils.exportExcelWithStyle(list, SysConfig.class, "参数数据");
     }
 
     /**

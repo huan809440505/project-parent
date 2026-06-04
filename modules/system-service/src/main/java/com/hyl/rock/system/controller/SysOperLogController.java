@@ -8,7 +8,7 @@ import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.system.domain.query.SysOperLogQuery;
 import com.hyl.rock.system.service.ISysOperLogService;
-import com.hyl.rock.utils.poi.ExcelUtil;
+import com.hyl.rock.utils.ExportUtils;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -58,8 +58,7 @@ public class SysOperLogController extends BaseController
     public void export(HttpServletResponse response, SysOperLog operLog)
     {
         List<SysOperLog> list = operLogService.selectOperLogList(operLog);
-        ExcelUtil<SysOperLog> util = new ExcelUtil<>(SysOperLog.class);
-        util.exportExcel(response, list, "操作日志");
+        ExportUtils.exportExcelWithStyle(list,SysOperLog.class,"操作日志");
     }
 
     @Operation(summary = "删除操作日志")

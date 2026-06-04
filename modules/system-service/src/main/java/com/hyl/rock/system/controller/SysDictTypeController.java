@@ -9,7 +9,7 @@ import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.domain.query.SysDictTypeQuery;
 import com.hyl.rock.system.service.ISysDictTypeService;
-import com.hyl.rock.utils.poi.ExcelUtil;
+import com.hyl.rock.utils.ExportUtils;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -55,8 +55,7 @@ public class SysDictTypeController extends BaseController
     public void export(HttpServletResponse response, SysDictType dictType)
     {
         List<SysDictType> list = dictTypeService.selectDictTypeList(dictType);
-        ExcelUtil<SysDictType> util = new ExcelUtil<>(SysDictType.class);
-        util.exportExcel(response, list, "字典类型");
+        ExportUtils.exportExcelWithStyle(list,SysDictType.class,"字典类型");
     }
 
     /**

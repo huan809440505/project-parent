@@ -11,7 +11,6 @@ import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.service.TokenService;
 import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.service.ISysUserService;
-import com.hyl.rock.utils.DateUtils;
 import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.utils.file.FileTypeUtils;
 import com.hyl.rock.utils.file.MimeTypeUtils;
@@ -22,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -116,7 +116,7 @@ public class SysProfileController extends BaseController
         if (userService.resetUserPwd(userId, newPassword) > 0)
         {
             // 更新缓存用户密码&密码最后更新时间
-            loginUser.getSysUser().setPwdUpdateDate(DateUtils.getNowDate());
+            loginUser.getSysUser().setPwdUpdateDate(LocalDateTime.now());
             loginUser.getSysUser().setPassword(newPassword);
             tokenService.setLoginUser(loginUser);
             return success();

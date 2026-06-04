@@ -9,8 +9,8 @@ import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.service.ISysDictDataService;
 import com.hyl.rock.system.service.ISysDictTypeService;
+import com.hyl.rock.utils.ExportUtils;
 import com.hyl.rock.utils.StringUtils;
-import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -58,8 +58,7 @@ public class SysDictDataController extends BaseController
     public void export(HttpServletResponse response, SysDictData dictData)
     {
         List<SysDictData> list = dictDataService.selectDictDataList(dictData);
-        ExcelUtil<SysDictData> util = new ExcelUtil<>(SysDictData.class);
-        util.exportExcel(response, list, "字典数据");
+        ExportUtils.exportExcelWithStyle(list, SysDictData.class, "字典数据");
     }
 
     /**

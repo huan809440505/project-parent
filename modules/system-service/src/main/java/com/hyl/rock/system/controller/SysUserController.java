@@ -15,8 +15,8 @@ import com.hyl.rock.system.domain.vo.TreeSelect;
 import com.hyl.rock.system.service.*;
 import com.hyl.rock.text.Convert;
 import com.hyl.rock.utils.DateUtils;
+import com.hyl.rock.utils.ExportUtils;
 import com.hyl.rock.utils.StringUtils;
-import com.hyl.rock.utils.poi.ExcelUtil;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,9 +25,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -78,29 +77,9 @@ public class SysUserController extends BaseController
     public void export(HttpServletResponse response, SysUser user)
     {
         List<SysUser> list = userService.selectUserList(user);
-        ExcelUtil<SysUser> util = new ExcelUtil<>(SysUser.class);
-        util.exportExcel(response, list, "用户数据");
+        ExportUtils.exportExcelWithStyle(list,SysUser.class,"用户数据");
     }
 
-    @Operation(summary = "导入用户列表")
-    @Log(title = "用户管理", businessType = BusinessType.IMPORT)
-    @PostMapping("/importData")
-    public Result<String> importData(MultipartFile file, boolean updateSupport) throws Exception
-    {
-        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
-        List<SysUser> userList = util.importExcel(file.getInputStream());
-        String operName = SecurityUtils.getUsername();
-        String message = userService.importUser(userList, updateSupport, operName);
-        return success(message);
-    }
-
-    @Operation(summary = "导入用户列表")
-    @PostMapping("/importTemplate")
-    public void importTemplate(HttpServletResponse response) throws IOException
-    {
-        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
-        util.importTemplateExcel(response, "用户数据");
-    }
 
     /**
      * 获取当前用户信息
@@ -191,14 +170,14 @@ public class SysUserController extends BaseController
     }
 
     // 检查初始密码是否提醒修改
-    public boolean initPasswordIsModify(Date pwdUpdateDate)
+    public boolean initPasswordIsModify(LocalDateTime pwdUpdateDate)
     {
         Integer initPasswordModify = Convert.toInt(configService.selectConfigByKey("sys.account.initPasswordModify"));
         return initPasswordModify != null && initPasswordModify == 1 && pwdUpdateDate == null;
     }
 
     // 检查密码是否过期
-    public boolean passwordIsExpiration(Date pwdUpdateDate)
+    public boolean passwordIsExpiration(LocalDateTime pwdUpdateDate)
     {
         Integer passwordValidateDays = Convert.toInt(configService.selectConfigByKey("sys.account.passwordValidateDays"));
         if (passwordValidateDays != null && passwordValidateDays > 0)
@@ -208,8 +187,7 @@ public class SysUserController extends BaseController
                 // 如果从未修改过初始密码，直接提醒过期
                 return true;
             }
-            Date nowDate = DateUtils.getNowDate();
-            return DateUtils.differentDaysByMillisecond(nowDate, pwdUpdateDate) > passwordValidateDays;
+            return DateUtils.differentDaysByMillisecond(LocalDateTime.now(), pwdUpdateDate) > passwordValidateDays;
         }
         return false;
     }

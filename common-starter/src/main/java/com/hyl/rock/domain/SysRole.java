@@ -1,5 +1,6 @@
 package com.hyl.rock.domain;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.*;
 import com.hyl.rock.base.BaseEmptyEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,26 +19,31 @@ import java.util.Set;
 public class SysRole extends BaseEmptyEntity {
 
     /** 角色ID */
+    @ExcelProperty(value = "角色ID")
     @Schema(name = "角色ID")
     @TableId(value = "role_id", type = IdType.AUTO)
     private Long roleId;
 
     /** 角色名称 */
+    @ExcelProperty(value = "角色名称")
     @Schema(name = "角色名称")
     @TableField("role_name")
     private String roleName;
 
     /** 角色权限 */
+    @ExcelProperty(value = "角色权限")
     @Schema(name = "角色权限")
     @TableField("role_key")
     private String roleKey;
 
     /** 角色排序 */
+    @ExcelProperty(value = "角色排序")
     @Schema(name = "角色排序")
     @TableField("role_sort")
     private Integer roleSort;
 
     /** 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限；5：仅本人数据权限） */
+    @ExcelProperty(value = "数据范围")
     @Schema(name = "数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限；5：仅本人数据权限）")
     @TableField("data_scope")
     private String dataScope;
@@ -53,6 +59,7 @@ public class SysRole extends BaseEmptyEntity {
     private boolean deptCheckStrictly;
 
     /** 角色状态（0正常 1停用） */
+    @ExcelProperty(value = "角色状态（0正常 1停用）")
     @Schema(name = "角色状态（0正常 1停用）")
     @TableField("status")
     private String status;

@@ -1,5 +1,6 @@
 package com.hyl.rock.system.domain;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -22,11 +23,13 @@ import lombok.EqualsAndHashCode;
 public class SysPost extends BaseEmptyEntity {
 
     /** 岗位序号 */
+    @ExcelProperty(value = "岗位序号")
     @Schema(name = "岗位序号")
     @TableId(value = "post_id", type = IdType.AUTO)
     private Long postId;
 
     /** 岗位编码 */
+    @ExcelProperty(value = "岗位编码")
     @NotBlank(message = "岗位编码不能为空")
     @Size(min = 0, max = 64, message = "岗位编码长度不能超过64个字符")
     @Schema(name = "岗位编码")
@@ -34,6 +37,7 @@ public class SysPost extends BaseEmptyEntity {
     private String postCode;
 
     /** 岗位名称 */
+    @ExcelProperty(value = "岗位名称")
     @NotBlank(message = "岗位名称不能为空")
     @Size(min = 0, max = 50, message = "岗位名称长度不能超过50个字符")
     @Schema(name = "岗位名称")
@@ -41,12 +45,14 @@ public class SysPost extends BaseEmptyEntity {
     private String postName;
 
     /** 岗位排序 */
+    @ExcelProperty(value = "岗位排序")
     @NotNull(message = "岗位排序不能为空")
     @Schema(name = "岗位排序")
     @TableField("post_sort")
     private Integer postSort;
 
     /** 状态（0正常 1停用） */
+    @ExcelProperty(value = "状态（0正常 1停用）")
     @Schema(name = "状态")
     @TableField("status")
     private String status;

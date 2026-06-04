@@ -10,7 +10,7 @@ import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.redis.service.RedisService;
 import com.hyl.rock.system.domain.query.SysLoginLogQuery;
 import com.hyl.rock.system.service.ISysLoginLogService;
-import com.hyl.rock.utils.poi.ExcelUtil;
+import com.hyl.rock.utils.ExportUtils;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -60,8 +60,7 @@ public class SysLoginLogController extends BaseController
     public void export(HttpServletResponse response, SysLoginLog loginInFor)
     {
         List<SysLoginLog> list = loginInForService.selectLoginLogList(loginInFor);
-        ExcelUtil<SysLoginLog> util = new ExcelUtil<>(SysLoginLog.class);
-        util.exportExcel(response, list, "登录日志");
+        ExportUtils.exportExcelWithStyle(list,SysLoginLog.class,"登录日志");
     }
 
     @Operation(summary = "删除登录日志")
