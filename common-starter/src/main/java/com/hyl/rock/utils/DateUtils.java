@@ -60,18 +60,13 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
     /**
      * 日期型字符串转化为日期 格式
      */
-    public static Date parseDate(Object str)
-    {
-        if (str == null)
-        {
+    public static Date parseDate(Object str) {
+        if (str == null) {
             return null;
         }
-        try
-        {
+        try {
             return parseDate(str.toString(), parsePatterns);
-        }
-        catch (ParseException e)
-        {
+        } catch (ParseException e) {
             return null;
         }
     }
