@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.hyl.rock.base.BaseEmptyEntity;
+import com.hyl.rock.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Data
 @Schema(name = "操作日志")
 @TableName("sys_oper_log")
-public class SysOperLog extends BaseEmptyEntity {
+public class SysOperLog extends BaseEntity {
 
     /** 日志主键 */
     @ExcelProperty(value = "日志主键")

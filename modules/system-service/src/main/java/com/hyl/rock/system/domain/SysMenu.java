@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.hyl.rock.base.BaseEmptyEntity;
+import com.hyl.rock.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +22,7 @@ import java.util.List;
 @Data
 @Schema(name="菜单权限表")
 @TableName("sys_menu")
-public class SysMenu extends BaseEmptyEntity {
+public class SysMenu extends BaseEntity {
 
     /** 菜单ID */
     @Schema(name = "菜单ID")

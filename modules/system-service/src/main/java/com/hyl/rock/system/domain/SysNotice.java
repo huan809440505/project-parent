@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.hyl.rock.base.BaseEmptyEntity;
+import com.hyl.rock.base.BaseEntity;
 import com.hyl.rock.xss.Xss;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Schema(name = "通知公告表")
 @TableName("sys_notice")
-public class SysNotice extends BaseEmptyEntity {
+public class SysNotice extends BaseEntity {
 
     /** 公告ID */
     @Schema(name = "公告ID")

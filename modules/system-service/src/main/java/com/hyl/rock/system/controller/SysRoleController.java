@@ -10,6 +10,7 @@ import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.domain.SysUserRole;
+import com.hyl.rock.system.domain.query.SysRoleQuery;
 import com.hyl.rock.system.service.ISysDeptService;
 import com.hyl.rock.system.service.ISysRoleService;
 import com.hyl.rock.system.service.ISysUserService;
@@ -19,7 +20,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +56,7 @@ public class SysRoleController extends BaseController
             @Parameter(name = "roleKey", description = "角色权限"),
     })
     @GetMapping("/list")
-    public Result<IPage<SysRole>> list(IPage page, SysRole role)
+    public Result<IPage<SysRole>> list(IPage page, SysRoleQuery role)
     {
         IPage<SysRole> pageResult = roleService.selectRolePage(page,role);
         return success(pageResult);
@@ -65,7 +65,7 @@ public class SysRoleController extends BaseController
     @Operation(summary = "导出角色列表")
     @Log(title = "角色管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysRole role)
+    public void export(SysRoleQuery role)
     {
         List<SysRole> list = roleService.selectRoleList(role);
         ExportUtils.exportExcelWithStyle(list,SysRole.class,"角色数据");

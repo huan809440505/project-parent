@@ -53,7 +53,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService
      * @return 字典类型集合信息
      */
     @Override
-    public List<SysDictType> selectDictTypeList(SysDictType dictType)
+    public List<SysDictType> selectDictTypeList(SysDictTypeQuery dictType)
     {
         return dictTypeMapper.selectDictTypeList(dictType);
     }

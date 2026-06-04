@@ -4,6 +4,7 @@ package com.hyl.rock.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysRole;
+import com.hyl.rock.system.domain.query.SysRoleQuery;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -20,9 +21,9 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @param role 角色信息
      * @return 角色数据集合信息
      */
-    public List<SysRole> selectRoleList(SysRole role);
+    public List<SysRole> selectRoleList(SysRoleQuery role);
 
-    public IPage<SysRole> selectRolePage(IPage page, SysRole role);
+    public IPage<SysRole> selectRolePage(IPage page, SysRoleQuery role);
 
     /**
      * 根据用户ID查询角色

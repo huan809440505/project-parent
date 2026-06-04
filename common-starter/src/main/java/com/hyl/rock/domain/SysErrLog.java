@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.hyl.rock.base.BaseEmptyEntity;
+import com.hyl.rock.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Schema(name = "系统错误日志")
 @TableName("sys_err_log")
-public class SysErrLog extends BaseEmptyEntity {
+public class SysErrLog extends BaseEntity {
 
     /** 日志主键 */
     @Schema(name = "日志主键")

@@ -4,20 +4,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-@Schema(name = "角色表")
-public class SysRoleQuery {
+@Schema(name = "用户对象")
+public class SysUserQuery {
 
-    @Schema(name = "角色ID")
-    private Long roleId;
+    @Schema(name = "用户ID")
+    private Long userId;
 
-    @Schema(name = "角色名称")
-    private String roleName;
+    @Schema(name = "登录名称")
+    private String userName;
 
-    @Schema(name = "角色状态（0正常 1停用）")
+    @Schema(name = "账号状态（0正常 1停用）")
     private String status;
 
-    @Schema(name = "角色权限")
-    private String roleKey;
+    @Schema(name = "手机号码")
+    private String phoneNumber;
 
     @Schema(name = "开始日期,格式: yyyy-MM-dd")
     private String startDate;

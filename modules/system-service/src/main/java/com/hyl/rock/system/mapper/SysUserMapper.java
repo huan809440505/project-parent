@@ -3,6 +3,7 @@ package com.hyl.rock.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysUser;
+import com.hyl.rock.system.domain.query.SysUserQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,9 +22,9 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param sysUser 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUserList(SysUser sysUser);
+    public List<SysUser> selectUserList(SysUserQuery sysUser);
 
-    public IPage<SysUser> selectUserPage(IPage page,SysUser sysUser);
+    public IPage<SysUser> selectUserPage(IPage page,SysUserQuery sysUser);
 
     /**
      * 根据条件分页查询已配用户角色列表

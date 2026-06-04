@@ -26,7 +26,7 @@ public interface ISysLoginLogService
      * @param loginLog 访问日志对象
      * @return 登录记录集合
      */
-    public List<SysLoginLog> selectLoginLogList(SysLoginLog loginLog);
+    public List<SysLoginLog> selectLoginLogList(SysLoginLogQuery loginLog);
 
     public IPage<SysLoginLog> selectLoginLogPage(IPage page, SysLoginLogQuery query);
 

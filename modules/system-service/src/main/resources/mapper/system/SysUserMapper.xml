@@ -57,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    left join sys_role r on r.role_id = ur.role_id
     </sql>
     
-    <select id="selectUserList" parameterType="com.hyl.rock.domain.SysUser" resultMap="SysUserResult">
+    <select id="selectUserList" parameterType="com.hyl.rock.system.domain.query.SysUserQuery" resultMap="SysUserResult">
 		select u.user_id, u.dept_id, u.nick_name, u.user_name, u.email, u.avatar, u.phone_number, u.sex, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark, d.dept_name, d.leader from sys_user u
 		left join sys_dept d on u.dept_id = d.dept_id
 		where u.del_flag = '0'
@@ -73,20 +73,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="phoneNumber != null and phoneNumber != ''">
 			AND u.phone_number like concat('%', #{phoneNumber}, '%')
 		</if>
-		<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-			AND date_format(u.create_time,'%Y%m%d') &gt;= date_format(#{params.beginTime},'%Y%m%d')
+		<if test="startDate != null and startDate != ''"><!-- 开始时间检索 -->
+			AND date_format(u.create_time,'%Y%m%d') &gt;= date_format(#{startDate},'%Y%m%d')
 		</if>
-		<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-			AND date_format(u.create_time,'%Y%m%d') &lt;= date_format(#{params.endTime},'%Y%m%d')
+		<if test="endDate != null and endDate != ''"><!-- 结束时间检索 -->
+			AND date_format(u.create_time,'%Y%m%d') &lt;= date_format(#{endDate},'%Y%m%d')
 		</if>
 		<if test="deptId != null and deptId != 0">
 			AND (u.dept_id = #{deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE find_in_set(#{deptId}, ancestors) ))
 		</if>
-		<!-- 数据范围过滤 -->
-		${params.dataScope}
 	</select>
 
-	<select id="selectUserPage" parameterType="com.hyl.rock.domain.SysUser" resultMap="SysUserResult">
+	<select id="selectUserPage" parameterType="com.hyl.rock.system.domain.query.SysUserQuery" resultMap="SysUserResult">
 		select u.user_id, u.dept_id, u.nick_name, u.user_name, u.email, u.avatar, u.phone_number, u.sex, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark, d.dept_name, d.leader from sys_user u
 		left join sys_dept d on u.dept_id = d.dept_id
 		where u.del_flag = '0'
@@ -102,17 +100,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="phoneNumber != null and phoneNumber != ''">
 			AND u.phone_number like concat('%', #{phoneNumber}, '%')
 		</if>
-		<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-			AND date_format(u.create_time,'%Y%m%d') &gt;= date_format(#{params.beginTime},'%Y%m%d')
+		<if test="startDate != null and startDate != ''"><!-- 开始时间检索 -->
+			AND date_format(u.create_time,'%Y%m%d') &gt;= date_format(#{startDate},'%Y%m%d')
 		</if>
-		<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-			AND date_format(u.create_time,'%Y%m%d') &lt;= date_format(#{params.endTime},'%Y%m%d')
+		<if test="endDate != null and endDate != ''"><!-- 结束时间检索 -->
+			AND date_format(u.create_time,'%Y%m%d') &lt;= date_format(#{endDate},'%Y%m%d')
 		</if>
 		<if test="deptId != null and deptId != 0">
 			AND (u.dept_id = #{deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE find_in_set(#{deptId}, ancestors) ))
 		</if>
-		<!-- 数据范围过滤 -->
-		${params.dataScope}
 	</select>
 
 	<select id="selectAllocatedPage" parameterType="com.hyl.rock.domain.SysUser" resultMap="SysUserResult">
@@ -128,8 +124,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="phoneNumber != null and phoneNumber != ''">
 			AND u.phone_number like concat('%', #{phoneNumber}, '%')
 		</if>
-		<!-- 数据范围过滤 -->
-		${params.dataScope}
 	</select>
 
 	<select id="selectUnallocatedPage" parameterType="com.hyl.rock.domain.SysUser" resultMap="SysUserResult">
@@ -146,8 +140,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="phoneNumber != null and phoneNumber != ''">
 			AND u.phone_number like concat('%', #{phoneNumber}, '%')
 		</if>
-		<!-- 数据范围过滤 -->
-		${params.dataScope}
 	</select>
 	
 	<select id="selectUserByUserName" parameterType="java.lang.String" resultMap="SysUserResult">

@@ -9,6 +9,7 @@ import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.domain.SysRoleDept;
 import com.hyl.rock.system.domain.SysRoleMenu;
 import com.hyl.rock.system.domain.SysUserRole;
+import com.hyl.rock.system.domain.query.SysRoleQuery;
 import com.hyl.rock.system.mapper.SysRoleDeptMapper;
 import com.hyl.rock.system.mapper.SysRoleMapper;
 import com.hyl.rock.system.mapper.SysRoleMenuMapper;
@@ -48,13 +49,13 @@ public class SysRoleServiceImpl implements ISysRoleService
      * @return 角色数据集合信息
      */
     @Override
-    public List<SysRole> selectRoleList(SysRole role)
+    public List<SysRole> selectRoleList(SysRoleQuery role)
     {
         return roleMapper.selectRoleList(role);
     }
 
     @Override
-    public IPage<SysRole> selectRolePage(IPage page, SysRole role) {
+    public IPage<SysRole> selectRolePage(IPage page, SysRoleQuery role) {
         return roleMapper.selectRolePage(page, role);
     }
 
@@ -112,7 +113,7 @@ public class SysRoleServiceImpl implements ISysRoleService
     @Override
     public List<SysRole> selectRoleAll()
     {
-        return SpringUtils.getAopProxy(this).selectRoleList(new SysRole());
+        return SpringUtils.getAopProxy(this).selectRoleList(new SysRoleQuery());
     }
 
     /**
@@ -201,7 +202,7 @@ public class SysRoleServiceImpl implements ISysRoleService
         {
             for (Long roleId : roleIds)
             {
-                SysRole role = new SysRole();
+                SysRoleQuery role = new SysRoleQuery();
                 role.setRoleId(roleId);
                 List<SysRole> roles = SpringUtils.getAopProxy(this).selectRoleList(role);
                 if (StringUtils.isEmpty(roles))

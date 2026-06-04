@@ -3,6 +3,7 @@ package com.hyl.rock.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysUser;
+import com.hyl.rock.system.domain.query.SysUserQuery;
 
 import java.util.List;
 
@@ -18,8 +19,9 @@ public interface ISysUserService
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUserList(SysUser user);
-    public IPage<SysUser> selectUserPage(IPage page, SysUser user);
+    public List<SysUser> selectUserList(SysUserQuery user);
+
+    public IPage<SysUser> selectUserPage(IPage page, SysUserQuery user);
 
     /**
      * 根据条件分页查询已分配用户角色列表

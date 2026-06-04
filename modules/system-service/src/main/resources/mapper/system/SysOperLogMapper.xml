@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         values (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operatorType}, #{operName}, #{deptName}, #{operUrl}, #{operIp}, #{operParam}, #{jsonResult}, #{status}, #{errorMsg}, #{costTime}, sysdate())
 	</insert>
 	
-	<select id="selectOperLogList" parameterType="com.hyl.rock.domain.SysOperLog" resultMap="SysOperLogResult">
+	<select id="selectOperLogList" parameterType="com.hyl.rock.system.domain.query.SysOperLogQuery" resultMap="SysOperLogResult">
 		<include refid="selectOperLogVo"/>
 		<where>
 			<if test="operIp != null and operIp != ''">
@@ -57,11 +57,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="operName != null and operName != ''">
 				AND oper_name like concat('%', #{operName}, '%')
 			</if>
-			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-				AND oper_time &gt;= #{params.beginTime}
+			<if test="startDate != null and startDate != ''"><!-- 开始时间检索 -->
+				AND oper_time &gt;= #{startDate}
 			</if>
-			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-				AND oper_time &lt;= #{params.endTime}
+			<if test="endDate != null and endDate != ''"><!-- 结束时间检索 -->
+				AND oper_time &lt;= #{endDate}
 			</if>
 		</where>
 		order by oper_id desc

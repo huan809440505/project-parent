@@ -20,7 +20,7 @@ public interface ISysDictTypeService
      * @param dictType 字典类型信息
      * @return 字典类型集合信息
      */
-    public List<SysDictType> selectDictTypeList(SysDictType dictType);
+    public List<SysDictType> selectDictTypeList(SysDictTypeQuery dictType);
 
     public IPage<SysDictType> selectDictTypePage(IPage page, SysDictTypeQuery query);
 

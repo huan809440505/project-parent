@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from sys_dict_type
     </sql>
 
-	<select id="selectDictTypeList" parameterType="com.hyl.rock.domain.SysDictType" resultMap="SysDictTypeResult">
+	<select id="selectDictTypeList" parameterType="com.hyl.rock.system.domain.query.SysDictTypeQuery" resultMap="SysDictTypeResult">
 	    <include refid="selectDictTypeVo"/>
 		<where>
 		    <if test="dictName != null and dictName != ''">
@@ -32,11 +32,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="dictType != null and dictType != ''">
 				AND dict_type like concat('%', #{dictType}, '%')
 			</if>
-			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-				and date_format(create_time,'%Y%m%d') &gt;= date_format(#{params.beginTime},'%Y%m%d')
+			<if test="startDate != null and startDate != ''"><!-- 开始时间检索 -->
+				and date_format(create_time,'%Y%m%d') &gt;= date_format(#{startDate},'%Y%m%d')
 			</if>
-			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-				and date_format(create_time,'%Y%m%d') &lt;= date_format(#{params.endTime},'%Y%m%d')
+			<if test="endDate != null and endDate != ''"><!-- 结束时间检索 -->
+				and date_format(create_time,'%Y%m%d') &lt;= date_format(#{endDate},'%Y%m%d')
 			</if>
 	    </where>
 	</select>

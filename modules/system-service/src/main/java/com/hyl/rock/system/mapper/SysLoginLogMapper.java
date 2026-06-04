@@ -3,6 +3,7 @@ package com.hyl.rock.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hyl.rock.domain.SysLoginLog;
+import com.hyl.rock.system.domain.query.SysLoginLogQuery;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public interface SysLoginLogMapper extends BaseMapper<SysLoginLog> {
      * @param loginLog 访问日志对象
      * @return 登录记录集合
      */
-    public List<SysLoginLog> selectLoginLogList(SysLoginLog loginLog);
+    public List<SysLoginLog> selectLoginLogList(SysLoginLogQuery loginLog);
 
     /**
      * 批量删除系统登录日志

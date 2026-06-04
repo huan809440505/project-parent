@@ -2,7 +2,7 @@ package com.hyl.rock.domain;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.*;
-import com.hyl.rock.base.BaseEmptyEntity;
+import com.hyl.rock.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ import java.util.Set;
 @Data
 @Schema(name = "角色表")
 @TableName("sys_role")
-public class SysRole extends BaseEmptyEntity {
+public class SysRole extends BaseEntity {
 
     /** 角色ID */
     @ExcelProperty(value = "角色ID")

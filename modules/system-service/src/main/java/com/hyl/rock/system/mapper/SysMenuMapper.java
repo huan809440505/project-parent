@@ -1,6 +1,7 @@
 package com.hyl.rock.system.mapper;
 
 import com.hyl.rock.system.domain.SysMenu;
+import com.hyl.rock.system.domain.query.SysMenuQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,7 +20,7 @@ public interface SysMenuMapper
      * @param menu 菜单信息
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuList(SysMenu menu);
+    public List<SysMenu> selectMenuList(SysMenuQuery menu);
 
     /**
      * 根据用户所有权限
@@ -34,7 +35,7 @@ public interface SysMenuMapper
      * @param menu 菜单信息
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuListByUserId(SysMenu menu);
+    public List<SysMenu> selectMenuListByUserId(SysMenuQuery menu);
 
     /**
      * 根据角色ID查询权限

@@ -43,7 +43,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService
      * @return 操作日志集合
      */
     @Override
-    public List<SysOperLog> selectOperLogList(SysOperLog operLog)
+    public List<SysOperLog> selectOperLogList(SysOperLogQuery operLog)
     {
         return operLogMapper.selectOperLogList(operLog);
     }

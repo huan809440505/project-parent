@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.hyl.rock.base.BaseEmptyEntity;
+import com.hyl.rock.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Schema(name = "参数配置表")
 @TableName("sys_config")
-public class SysConfig extends BaseEmptyEntity {
+public class SysConfig extends BaseEntity {
 
     /** 参数主键 */
     @ExcelProperty(value = "参数主键")

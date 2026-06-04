@@ -1,7 +1,7 @@
 package com.hyl.rock.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.hyl.rock.base.BaseEmptyEntity;
+import com.hyl.rock.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @Schema(name = "部门表")
 @TableName("sys_dept")
-public class SysDept extends BaseEmptyEntity {
+public class SysDept extends BaseEntity {
 
     /** 部门ID */
     @Schema(name = "部门ID")

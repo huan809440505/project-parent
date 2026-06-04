@@ -3,6 +3,7 @@ package com.hyl.rock.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hyl.rock.system.domain.SysConfig;
+import com.hyl.rock.system.domain.query.SysConfigQuery;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public interface SysConfigMapper extends BaseMapper<SysConfig> {
      * @param config 参数配置信息
      * @return 参数配置集合
      */
-    public List<SysConfig> selectConfigList(SysConfig config);
+    public List<SysConfig> selectConfigList(SysConfigQuery config);
 
     /**
      * 根据键名查询参数配置信息

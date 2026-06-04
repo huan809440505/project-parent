@@ -2,15 +2,16 @@ package com.hyl.rock.system.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.hyl.rock.base.LoginUser;
 import com.hyl.rock.base.Result;
 import com.hyl.rock.domain.SysDept;
 import com.hyl.rock.domain.SysRole;
 import com.hyl.rock.domain.SysUser;
-import com.hyl.rock.base.LoginUser;
 import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.service.TokenService;
 import com.hyl.rock.security.utils.SecurityUtils;
+import com.hyl.rock.system.domain.query.SysUserQuery;
 import com.hyl.rock.system.domain.vo.TreeSelect;
 import com.hyl.rock.system.service.*;
 import com.hyl.rock.text.Convert;
@@ -20,14 +21,16 @@ import com.hyl.rock.utils.StringUtils;
 import com.hyl.rock.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -65,7 +68,7 @@ public class SysUserController extends BaseController
      */
     @Operation(summary = "获取用户列表")
     @GetMapping("/list")
-    public Result<IPage<SysUser>> list(IPage page, SysUser user)
+    public Result<IPage<SysUser>> list(IPage page, SysUserQuery user)
     {
         IPage<SysUser> pageResult = userService.selectUserPage(page,user);
         return success(pageResult);
@@ -74,7 +77,7 @@ public class SysUserController extends BaseController
     @Operation(summary = "导出用户列表")
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysUser user)
+    public void export(SysUserQuery user)
     {
         List<SysUser> list = userService.selectUserList(user);
         ExportUtils.exportExcelWithStyle(list,SysUser.class,"用户数据");

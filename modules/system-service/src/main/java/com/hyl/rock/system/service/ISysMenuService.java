@@ -2,6 +2,7 @@ package com.hyl.rock.system.service;
 
 
 import com.hyl.rock.system.domain.SysMenu;
+import com.hyl.rock.system.domain.query.SysMenuQuery;
 import com.hyl.rock.system.domain.vo.RouterVo;
 import com.hyl.rock.system.domain.vo.TreeSelect;
 
@@ -29,7 +30,7 @@ public interface ISysMenuService
      * @param userId 用户ID
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuList(SysMenu menu, Long userId);
+    public List<SysMenu> selectMenuList(SysMenuQuery menu, Long userId);
 
     /**
      * 根据用户ID查询权限

@@ -3,6 +3,7 @@ package com.hyl.rock.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hyl.rock.domain.SysOperLog;
+import com.hyl.rock.system.domain.query.SysOperLogQuery;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public interface SysOperLogMapper extends BaseMapper<SysOperLog> {
      * @param operLog 操作日志对象
      * @return 操作日志集合
      */
-    public List<SysOperLog> selectOperLogList(SysOperLog operLog);
+    public List<SysOperLog> selectOperLogList(SysOperLogQuery operLog);
 
     /**
      * 批量删除系统操作日志

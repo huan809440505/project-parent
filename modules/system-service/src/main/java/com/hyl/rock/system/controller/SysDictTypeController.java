@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +51,7 @@ public class SysDictTypeController extends BaseController
     @Operation(summary = "导出数据字典类型列表")
     @Log(title = "字典类型", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysDictType dictType)
+    public void export(SysDictTypeQuery dictType)
     {
         List<SysDictType> list = dictTypeService.selectDictTypeList(dictType);
         ExportUtils.exportExcelWithStyle(list,SysDictType.class,"字典类型");

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.hyl.rock.base.BaseEmptyEntity;
+import com.hyl.rock.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Schema(name = "字典类型表")
 @TableName("sys_dict_type")
-public class SysDictType extends BaseEmptyEntity {
+public class SysDictType extends BaseEntity {
 
     /** 字典主键 */
     @ExcelProperty(value = "字典主键")

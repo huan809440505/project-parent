@@ -16,7 +16,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,7 +56,7 @@ public class SysLoginLogController extends BaseController
     @Operation(summary = "导出登录日志")
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysLoginLog loginInFor)
+    public void export(SysLoginLogQuery loginInFor)
     {
         List<SysLoginLog> list = loginInForService.selectLoginLogList(loginInFor);
         ExportUtils.exportExcelWithStyle(list,SysLoginLog.class,"登录日志");

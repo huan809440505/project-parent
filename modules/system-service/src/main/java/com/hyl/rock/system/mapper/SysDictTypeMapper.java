@@ -3,6 +3,7 @@ package com.hyl.rock.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hyl.rock.domain.SysDictType;
+import com.hyl.rock.system.domain.query.SysDictTypeQuery;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface SysDictTypeMapper extends BaseMapper<SysDictType> {
      * @param dictType 字典类型信息
      * @return 字典类型集合信息
      */
-    public List<SysDictType> selectDictTypeList(SysDictType dictType);
+    public List<SysDictType> selectDictTypeList(SysDictTypeQuery dictType);
 
     /**
      * 根据所有字典类型

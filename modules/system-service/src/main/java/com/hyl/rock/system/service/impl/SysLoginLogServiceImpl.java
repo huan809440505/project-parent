@@ -43,7 +43,7 @@ public class SysLoginLogServiceImpl implements ISysLoginLogService
      * @return 登录记录集合
      */
     @Override
-    public List<SysLoginLog> selectLoginLogList(SysLoginLog loginInFor)
+    public List<SysLoginLog> selectLoginLogList(SysLoginLogQuery loginInFor)
     {
         return loginInForMapper.selectLoginLogList(loginInFor);
     }

@@ -169,7 +169,7 @@ public class SysConfigServiceImpl implements ISysConfigService
     @Override
     public void loadingConfigCache()
     {
-        List<SysConfig> configsList = configMapper.selectConfigList(new SysConfig());
+        List<SysConfig> configsList = configMapper.selectConfigList(new SysConfigQuery());
         for (SysConfig config : configsList)
         {
             redisService.setCacheObject(getCacheKey(config.getConfigKey()), config.getConfigValue());

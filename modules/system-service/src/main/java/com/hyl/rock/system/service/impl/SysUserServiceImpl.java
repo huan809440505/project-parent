@@ -9,6 +9,7 @@ import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.domain.SysPost;
 import com.hyl.rock.system.domain.SysUserPost;
 import com.hyl.rock.system.domain.SysUserRole;
+import com.hyl.rock.system.domain.query.SysUserQuery;
 import com.hyl.rock.system.mapper.*;
 import com.hyl.rock.system.service.ISysConfigService;
 import com.hyl.rock.system.service.ISysDeptService;
@@ -67,13 +68,13 @@ public class SysUserServiceImpl implements ISysUserService
      * @return 用户信息集合信息
      */
     @Override
-    public List<SysUser> selectUserList(SysUser user)
+    public List<SysUser> selectUserList(SysUserQuery user)
     {
         return userMapper.selectUserList(user);
     }
 
     @Override
-    public IPage<SysUser> selectUserPage(IPage page, SysUser user) {
+    public IPage<SysUser> selectUserPage(IPage page, SysUserQuery user) {
         return userMapper.selectUserPage(page, user);
     }
 
@@ -235,7 +236,7 @@ public class SysUserServiceImpl implements ISysUserService
     {
         if (!SecurityUtils.isAdmin())
         {
-            SysUser user = new SysUser();
+            SysUserQuery user = new SysUserQuery();
             user.setUserId(userId);
             List<SysUser> users = SpringUtils.getAopProxy(this).selectUserList(user);
             if (StringUtils.isEmpty(users))

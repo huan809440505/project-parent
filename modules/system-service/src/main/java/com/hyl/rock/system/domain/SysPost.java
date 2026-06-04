@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.hyl.rock.base.BaseEmptyEntity;
+import com.hyl.rock.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Schema(name = "岗位信息表")
 @TableName("sys_post")
-public class SysPost extends BaseEmptyEntity {
+public class SysPost extends BaseEntity {
 
     /** 岗位序号 */
     @ExcelProperty(value = "岗位序号")

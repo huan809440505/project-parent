@@ -3,7 +3,7 @@ package com.hyl.rock.domain;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.hyl.rock.base.BaseEmptyEntity;
+import com.hyl.rock.base.BaseEntity;
 import com.hyl.rock.constant.UserConstants;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -19,7 +19,7 @@ import java.util.List;
 @Data
 @Schema(name = "用户对象")
 @TableName("sys_user")
-public class SysUser extends BaseEmptyEntity {
+public class SysUser extends BaseEntity {
 
     /** 用户ID */
     @ExcelProperty(value = "用户ID")

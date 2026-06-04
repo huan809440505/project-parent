@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{userName}, #{status}, #{ipaddr}, #{msg}, sysdate())
 	</insert>
 	
-	<select id="selectLoginLogList" parameterType="com.hyl.rock.domain.SysLoginLog" resultMap="SysLoginInForResult">
+	<select id="selectLoginLogList" parameterType="com.hyl.rock.system.domain.query.SysLoginLogQuery" resultMap="SysLoginInForResult">
 		select info_id, user_name, ipaddr, status, msg, access_time from sys_login_log
 		<where>
 			<if test="ipaddr != null and ipaddr != ''">
@@ -30,11 +30,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="userName != null and userName != ''">
 				AND user_name like concat('%', #{userName}, '%')
 			</if>
-			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-				AND access_time &gt;= #{params.beginTime}
+			<if test="startDate != null and startDate != ''"><!-- 开始时间检索 -->
+				AND access_time &gt;= #{startDate}
 			</if>
-			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-				AND access_time &lt;= #{params.endTime}
+			<if test="endDate != null and endDate != ''"><!-- 结束时间检索 -->
+				AND access_time &lt;= #{endDate}
 			</if>
 		</where>
 		order by info_id desc

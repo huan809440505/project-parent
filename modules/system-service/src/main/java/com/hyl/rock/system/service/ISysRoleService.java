@@ -4,6 +4,7 @@ package com.hyl.rock.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hyl.rock.domain.SysRole;
 import com.hyl.rock.system.domain.SysUserRole;
+import com.hyl.rock.system.domain.query.SysRoleQuery;
 
 import java.util.List;
 import java.util.Set;
@@ -20,10 +21,10 @@ public interface ISysRoleService
      * @param role 角色信息
      * @return 角色数据集合信息
      */
-    public List<SysRole> selectRoleList(SysRole role);
+    public List<SysRole> selectRoleList(SysRoleQuery role);
 
 
-    public IPage<SysRole> selectRolePage(IPage page, SysRole role);
+    public IPage<SysRole> selectRolePage(IPage page, SysRoleQuery role);
 
     /**
      * 根据用户ID查询角色列表

@@ -7,6 +7,7 @@ import com.hyl.rock.domain.SysRole;
 import com.hyl.rock.exception.ServiceException;
 import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.domain.SysMenu;
+import com.hyl.rock.system.domain.query.SysMenuQuery;
 import com.hyl.rock.system.domain.vo.MetaVo;
 import com.hyl.rock.system.domain.vo.RouterVo;
 import com.hyl.rock.system.domain.vo.TreeSelect;
@@ -56,7 +57,7 @@ public class SysMenuServiceImpl implements ISysMenuService
     @Override
     public List<SysMenu> selectMenuList(Long userId)
     {
-        return selectMenuList(new SysMenu(), userId);
+        return selectMenuList(new SysMenuQuery(), userId);
     }
 
     /**
@@ -66,7 +67,7 @@ public class SysMenuServiceImpl implements ISysMenuService
      * @return 菜单列表
      */
     @Override
-    public List<SysMenu> selectMenuList(SysMenu menu, Long userId)
+    public List<SysMenu> selectMenuList(SysMenuQuery menu, Long userId)
     {
         List<SysMenu> menuList = null;
         // 管理员显示所有菜单信息
@@ -76,7 +77,7 @@ public class SysMenuServiceImpl implements ISysMenuService
         }
         else
         {
-            menu.getParams().put("userId", userId);
+            menu.setUserId(userId);
             menuList = menuMapper.selectMenuListByUserId(menu);
         }
         return menuList;

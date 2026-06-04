@@ -7,6 +7,7 @@ import com.hyl.rock.log.annotation.Log;
 import com.hyl.rock.log.enums.BusinessType;
 import com.hyl.rock.security.utils.SecurityUtils;
 import com.hyl.rock.system.domain.SysMenu;
+import com.hyl.rock.system.domain.query.SysMenuQuery;
 import com.hyl.rock.system.domain.vo.RouterVo;
 import com.hyl.rock.system.domain.vo.TreeSelect;
 import com.hyl.rock.system.service.ISysMenuService;
@@ -39,7 +40,7 @@ public class SysMenuController extends BaseController
      */
     @Operation(summary = "获取菜单列表")
     @GetMapping("/list")
-    public Result<List<SysMenu>> list(SysMenu menu)
+    public Result<List<SysMenu>> list(SysMenuQuery menu)
     {
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuList(menu, userId);
@@ -61,7 +62,7 @@ public class SysMenuController extends BaseController
      */
     @Operation(summary = "获取菜单下拉树列表")
     @GetMapping("/treeSelect")
-    public Result<List<TreeSelect>> treeSelect(SysMenu menu)
+    public Result<List<TreeSelect>> treeSelect(SysMenuQuery menu)
     {
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuList(menu, userId);

@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,7 +54,7 @@ public class SysOperLogController extends BaseController
     @Operation(summary = "导出操作日志列表")
     @Log(title = "操作日志", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysOperLog operLog)
+    public void export(SysOperLogQuery operLog)
     {
         List<SysOperLog> list = operLogService.selectOperLogList(operLog);
         ExportUtils.exportExcelWithStyle(list,SysOperLog.class,"操作日志");

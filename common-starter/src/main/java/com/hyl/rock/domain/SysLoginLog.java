@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.hyl.rock.base.BaseEmptyEntity;
+import com.hyl.rock.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Data
 @Schema(name = "系统访问记录表")
 @TableName("sys_login_log")
-public class SysLoginLog extends BaseEmptyEntity {
+public class SysLoginLog extends BaseEntity {
 
     /** ID */
     @ExcelProperty(value = "序号")
