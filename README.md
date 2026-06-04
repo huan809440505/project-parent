@@ -15,9 +15,12 @@ project-parent
 ├    ├── system-service -- 基础服务
 ├    ├── file-service -- 文件服务
 ├── packages -- 组件库
+├    ├── rock-elasticsearch elasticsearch组件
 ├    ├── rock-log 日志组件
 ├    ├── rock-mybatis 数据库组件
+├    ├── rock-rabbitMQ rabbitMQ组件
 ├    ├── rock-redis 缓存组件
 ├    ├── rock-security 安全组件
+├    ├── rock-web 网络组件
 └── pom.xml -- 工程 Maven 顶级依赖，统一控制版本和依赖
 ```
