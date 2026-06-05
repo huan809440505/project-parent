@@ -1,22 +1,26 @@
 package com.hyl.rock.gateway.filter;
 
-import com.hyl.rock.gateway.config.TokenConfig;
 import com.hyl.rock.gateway.config.IgnoreWhiteProperties;
+import com.hyl.rock.gateway.config.TokenConfig;
 import com.hyl.rock.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+@Slf4j
+@Order(10)
 @Component
-public class JwtAuthFilter implements GlobalFilter, Ordered {
+public class JwtAuthFilter implements GlobalFilter {
 
     @Resource
     private TokenConfig tokenConfig;
@@ -30,8 +34,10 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
         String requestPath = request.getPath().value(); // 获取请求路径（如/api/user/login）
+        log.info("请求路径: {}", requestPath);
         // 判断请求是否在白名单中，若是则直接放行
         if (isIgnorePath(requestPath)) {
+            log.info("在白名单内，放行");
             return chain.filter(exchange);
         }
         // 提取请求头中的JWT token
@@ -58,14 +64,13 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
      * 判断请求路径是否在白名单的列表中
      */
     private boolean isIgnorePath(String requestPath) {
-        return whiteProperties.getWhites().contains(requestPath);
+        AntPathMatcher matcher = new AntPathMatcher();
+        for (String white : whiteProperties.getWhites()) {
+            if (matcher.match(white, requestPath)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    /**
-     * 设置过滤器优先级（值越小，优先级越高，确保认证过滤器先执行）
-     */
-    @Override
-    public int getOrder() {
-        return -100;
-    }
 }

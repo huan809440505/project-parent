@@ -21,7 +21,7 @@ import java.util.Map;
 @Tag(name = "商品基础功能控制器")
 @Slf4j
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/products")
 public class ProductController extends BaseController {
 
     @Resource

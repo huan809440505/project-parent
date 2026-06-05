@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  main:
+    web-application-type: reactive
   application:
     name: gateway-service
   cloud:
@@ -23,6 +25,13 @@ spring:
                 - Path=/api/file/**
               filters:
                 - StripPrefix=1
+            #报表服务
+            - id: report-service
+              uri: http://localhost:8093
+              predicates:
+                - Path=/api/report/**
+              filters:
+                - StripPrefix=1
 
 #token相关配置
 token:
@@ -34,5 +43,8 @@ token:
 security:
   ignore:
     whites:
-      - /api/user/login
-      - /api/user/register
+      - /user/login
+      - /user/register
+      - /report/*
+      - /file/*
+      - /system/*
