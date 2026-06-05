@@ -11,13 +11,6 @@ import java.time.LocalDateTime;
 public class BaseEntity implements Serializable {
 
     /**
-     * 主键Id
-     */
-    @Schema(name = "主键Id")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
-
-    /**
      * 创建时间
      */
     @Schema(name = "创建时间")

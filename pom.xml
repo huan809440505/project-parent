@@ -40,6 +40,7 @@
         <spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
         <jwt.version>0.9.1</jwt.version>
         <springdoc.version>2.8.8</springdoc.version>
+        <springdoc.webflux.version>2.8.17</springdoc.webflux.version>
         <mybatis-plus.version>3.5.15</mybatis-plus.version>
         <pagehelper.boot.version>1.4.7</pagehelper.boot.version>
         <fastjson.version>2.0.61</fastjson.version>
@@ -122,11 +123,16 @@
                 <scope>compile</scope>
             </dependency>
 
-            <!--swagger 已经停止维护了，使用springdoc替代-->
+            <!-- springdoc -->
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+                <version>${springdoc.webflux.version}</version>
             </dependency>
 
             <!-- Elasticsearch Java Client (用于高级查询) -->

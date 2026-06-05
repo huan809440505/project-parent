@@ -6,6 +6,8 @@ spring:
     web-application-type: reactive
   application:
     name: gateway-service
+  profiles:
+    active: local
   cloud:
     gateway:
       server:
@@ -33,6 +35,20 @@ spring:
               filters:
                 - StripPrefix=1
 
+#springdoc配置
+springdoc:
+  swagger-ui:
+    # 手动聚合所有服务的 API 文档
+    urls:
+      - name: 系统服务
+        url: /api/system/v3/api-docs    # 该路径会被上面的 user-service 路由规则匹配
+      - name: 文件服务
+        url: /api/file/v3/api-docs
+      - name: 报表服务
+        url: /api/report/v3/api-docs
+    # 可选：自定义网关的Swagger UI访问路径
+    path: /swagger-ui.html
+
 #token相关配置
 token:
   secret: my-secret-key
@@ -43,8 +59,7 @@ token:
 security:
   ignore:
     whites:
-      - /user/login
-      - /user/register
+      - /*/v3/api-docs
       - /report/*
       - /file/*
       - /system/*

@@ -23,16 +23,6 @@ spring:
     active: local
 
 
-springdoc:
-  packages-to-scan: com.hyl.rock.system.controller
-  swagger-ui:
-    enabled: true
-  api-docs:
-    enabled: true
-    path: /api-docs
-
-
-
 # 日志配置
 logging:
   level:
@@ -57,10 +47,11 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
-# Swagger配置
-swagger:
-  # 是否开启swagger
-  enabled: true
-  # 请求前缀
-  pathMapping: /dev-api
-
+#springdoc配置
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
