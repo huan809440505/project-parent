@@ -26,11 +26,7 @@ spring:
     connection-timeout: 5000ms
     socket-timeout: 60000ms
 
-# 自定义配置
-elasticsearch:
-  index:
-    product: products
-  enable-ssl: false  # 是否启用SSL
+
 
 # 日志配置
 logging:
