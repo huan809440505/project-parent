@@ -50,7 +50,7 @@
         <druid.version>1.2.27</druid.version>
         <jackson.version>2.21.3</jackson.version>
         <hutool.version>5.7.16</hutool.version>
-        <elasticsearch.version>9.4.2</elasticsearch.version>
+        <elasticsearch.version>8.18.1</elasticsearch.version>
         <easyexcel.version>4.0.3</easyexcel.version>
     </properties>
 

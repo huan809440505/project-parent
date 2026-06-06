@@ -12,7 +12,6 @@ import co.elastic.clients.elasticsearch.core.search.Highlight;
 import co.elastic.clients.elasticsearch.core.search.HighlightField;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.core.search.SourceConfig;
-import co.elastic.clients.util.NamedValue;
 import com.hyl.rock.report.domain.Product;
 import com.hyl.rock.report.mapper.CustomProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -157,7 +156,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
         try {
             // 构建高亮查询
             Highlight.Builder highlightBuilder = new Highlight.Builder();
-            highlightBuilder.fields(NamedValue.of("name",HighlightField.of(hf->hf.preTags("<em>").postTags("</em>"))));
+            highlightBuilder.fields("name", HighlightField.of(hf->hf.preTags("<em>").postTags("</em>")));
 
             SearchResponse<Product> response = elasticsearchClient.search(s -> s
                             .index("products")
