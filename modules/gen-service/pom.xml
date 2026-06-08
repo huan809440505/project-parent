@@ -5,18 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.hyl</groupId>
-        <artifactId>project-parent</artifactId>
+        <artifactId>modules</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>modules</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>system-service</module>
-        <module>file-service</module>
-        <module>report-service</module>
-        <module>gen-service</module>
-    </modules>
+    <artifactId>gen-service</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -27,18 +20,31 @@
     <dependencies>
         <dependency>
             <groupId>com.hyl</groupId>
-            <artifactId>common-starter</artifactId>
+            <artifactId>rock-log</artifactId>
             <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
+            <groupId>com.hyl</groupId>
+            <artifactId>rock-security</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.hyl</groupId>
+            <artifactId>rock-web</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.hyl</groupId>
+            <artifactId>rock-mybatis</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
         </dependency>
     </dependencies>
 </project>
