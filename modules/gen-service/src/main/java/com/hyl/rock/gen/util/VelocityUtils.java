@@ -2,6 +2,7 @@ package com.hyl.rock.gen.util;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.hyl.rock.constant.GenConstants;
 import com.hyl.rock.gen.domain.GenTable;
 import com.hyl.rock.gen.domain.GenTableColumn;
 import com.hyl.rock.utils.StringUtils;
@@ -138,8 +139,7 @@ public class VelocityUtils
 
     /**
      * 获取模板信息
-     * @param tplCategory 生成的模板
-     * @param tplWebType 前端类型
+     * table 模版
      * @return 模板列表
      */
     public static List<String> getTemplateList(GenTable table)
